@@ -1,0 +1,143 @@
+/* LES COULEURS */
+:root{
+    --color1-green: #025239;
+    --color2-yellow: #ce9c2d;
+    --color3-white: #effbf7;
+    --color4-yellow2: #c99a32;
+    --colorUstensils-brown: #945738;
+    --color2-brownLeger: #b98c6b;
+    --white: #fff;
+    --black: #000;
+    --white-transparent1: #ffffffa8;
+    --black-transparent1: #000000d8;
+    --gray-leger1: #f1f1f1;
+    --sidebar-width: 270px;
+    --topBarHeight-md: 70px;
+    --topBarHeight: 60px;
+    /* #041007 */
+}
+
+@font-face {
+	font-family : 'font1-roboto' ;
+	src : url('../fonts/Roboto-Light.ttf');
+}
+@font-face {
+	font-family : 'font2-allura' ;
+	src : url('../fonts/Allura-Regular.ttf');
+}
+
+@font-face {
+	font-family : 'font3-poppins' ;
+	src : url('../fonts/Poppins-Medium.ttf');
+}
+
+@font-face {
+	font-family : 'font4-sofia' ;
+	src : url('../fonts/SofiaProBold.woff');
+}
+
+@font-face {
+	font-family : 'font5-playwrite' ;
+	src : url('../fonts/PlaywriteVN-VariableFont_wght.ttf');
+}
+
+*{
+    transition: .3s;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+.roboto{
+    font-family: 'font1-roboto', Georgia, 'Times New Roman', Times, serif;
+}
+
+.allura{
+    font-family: 'font2-allura', Georgia, 'Times New Roman', Times, serif;
+}
+
+.poppins{
+    font-family: 'font3-poppins', Georgia, 'Times New Roman', Times, serif;
+}
+
+.sofia{
+    font-family: 'font4-sofia', Georgia, 'Times New Roman', Times, serif;
+}
+
+.playwrite{
+    font-family: 'font5-playwrite', Georgia, 'Times New Roman', Times, serif;
+}
+
+.text-green1{
+    color: var(--color1-green);
+}
+.text-yellow1{
+    color: var(--color2-yellow);
+}
+.text-yellow2{
+    color: var(--color4-yellow2);
+}
+.text-white1{
+    color: var(--color3-white);
+}
+.text-brow1{
+    color: var(--colorUstensils-brown);
+}
+.text-browLeger{
+    color: var(--color2-brownLeger);
+}
+.text-white{
+    color: var(--white);
+}
+.text-black{
+    color: var(--black);
+}
+.text-white-transparent1{
+    color: var(--white-transparent1);
+}
+.text-white-transparent1{
+    color: var(--white-transparent1);
+}
+.text-black-transparent1{
+    color: var(--black-transparent1);
+}
+.text-gray-leger1{
+    color: var(--gray-leger1);
+}
+
+.flexCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flexLeft{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.flexBetween{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flexAround{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flexColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* POUR GARDER LES MODAL FERMEES ALPINE AU CHARGEMENT DE LA PAGE */
+[x-cloak] {
+    display: none !important;
+}
+
+
+/* Product Card Styles */

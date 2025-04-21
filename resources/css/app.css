@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "tailwindcss";
+@source "../views";
+
+/* Les styles du backOffice */
+@import './settings.css';
+@import './admin/profile.css';
+
+
