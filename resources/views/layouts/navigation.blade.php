@@ -1,100 +1,175 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+
+@php
+    $exceptRoutes = ['cart.index', 'cart.checkout', 'cart.order.confirmation', 'cart.wishlist', 'product.view', 'login', 'register', 'buy.now']; // toutes les routes où l'icône doit être noire
+    $fillColor = request()->routeIs(...$exceptRoutes) ? '#000' : '#fff';
+@endphp
+
+<!-- NAVIGATION PETITS ECRAN -->
+<div class="header-mobile" id="header-mobile">
+        <div class="header-mobile-container">
+            <div class="logo">
+                <a href="{{route('home.index')}}">
+                <img src="{{asset('logoAuth.png')}}" alt="logo" class="w-[150px]">
+                </a>
+            </div>
+
+            <div class="">
+
+            </div>
+            <div class="open">
+       
+
+                <div class="icones">
+                    @guest()
+                    <div class="header-tools__item hover-container">
+                        <a href="{{ route('login')}}" class="header-tools__item">
+                            <x-icon name="user-vide" :fill="$fillColor" size="20" class="headerIcon userLogin" />
+                        </a>
+                    </div>
+                    @else
+                    <div class="header-tools__item hover-container">
+                        <a href="{{ auth()->user()->hasRole('Admin') ? route('filament.admin.pages.dashboard'):route('filament.client.pages.dashboard') }}" class="header-tools__item">
+                            <x-icon name="user-plein" :fill="$fillColor" size="20" class="headerIcon userLogin" />
+                        </a>
+                    </div>
+                    @endguest
+
+                    <livewire:interface-user.page-index.cart-counter />
+
+                </div>
+
+                <button class="nav-open-btn" id="openBtn">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </button>
+        
+                <div class="overlay" data-nav-toggler data-overlay></div>
+            </div>
+
+
+            <!-- SIDEBAR -->
+            <div class="header-sidebar">
+                <div class="closeBtn">
+                    <span class="text-4xl">&times;</span>
+                </div>
+                <div class="navbar-logo mt-[30px] mb-[20px]">
+                    <a href="route('home.index')">
+                    <img src="{{asset('logoAuth.png')}}" alt="logo" class="w-[150px]">
                     </a>
                 </div>
+                <nav class="navigation">
+                    <ul class="navbar-list">
+                        <li class="navbar-item">
+                            <a href="route('home.index')" class="Route::is('home.index') ? 'navbar-active' : 'navbarlink'">
+                                <span>Accueil</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                        <a href="{{route('home.menu')}}" class="{{Route::is('home.menu') ? 'navbar-active' : 'navbarlink'}}">Menu</a>
+                        </li>
+                        <li class="navbar-item">
+                        <a href="{{route('reservation.create')}}" class="{{Route::is('reservation.index') ? 'navbar-active' : 'navbarlink'}}">Reservation</a>
+                        </li>
+                        <li class="navbar-item">
+                        <a href="{{route('home.about')}}" class="{{Route::is('home.about') ? 'navbar-active' : 'navbarlink'}}">A propos</a>
+                        </li>
+                        <li class="navbar-item">
+                        <a href="{{route('home.contact')}}" class="{{Route::is('home.contact') ? 'navbar-active' : 'navbarlink'}}">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                <div class="mt-5 flexCenter">
+                    <livewire:interface-user.reservation.reservation-modal />
+                </div>
+
+                <div class="sidebar-infos">
+                    <p class="adresse">Dixinn Terasse</p>
+                    <p class="contact"><a href="#tel=629836668">629-83-66-67</a></p>
+                    <p class="email">authantik@gmail.com</p>
+                </div>
+
+                <!-- <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum odit maiores autem dolore eos soluta? Similique ut doloremque perspiciatis culpa quis sunt ab voluptates alias, eveniet iste aliquam accusantium sit?
+                </div> -->
+            </div>
+            <!-- FIN SIDEBAR -->
+        </div>
+    </div>
+    <!-- FIN NAVIGATION PETITS ECRAN -->
+
+    <!-- HEADER GRANDS ECRANS -->
+
+    <header id="header" class="header">
+        <div class="header-flex">
+
+            
+            <div class="header-right">
+                <nav class="navigation">
+                    <ul class="navigation-list">
+                        <li class="navigation-item">
+                            <a href="{{route('home.index')}}" class="{{Route::is('home.index') ? 'navigation-active' : 'navlink' }} navlink">
+                                <span>Accueil</span>
+                            </a>
+                        </li>
+                        <li class="navigation-item">
+                            <a href="{{route('home.menu')}}" class="{{ Route::is('home.menu') ? 'navigation-active' : 'navlink' }} navlink">Menu</a>
+                        </li>
+                        
+                        <li class="navigation-item">
+                            <a href="{{route('reservation.create')}}" class="{{ Route::is('reservation.create') ? 'navigation-active' : 'navlink' }} navlink">Reservation</a>
+                        </li>
+                        
+                        <li class="navigation-item">
+                            <a href="{{route('home.about')}}" class="{{ Route::is('home.about') ? 'navigation-active' : 'navlink' }} navlink">A propos</a>
+                        </li>
+                        <!-- logo -->
+                        <div class="logo">
+                            <a href="{{route('home.index')}}">
+                            <img src="{{asset('logoAuth.png')}}" alt="logo" class="w-[150px]">
+                            </a>
+                        </div>
+                        <!-- logo -->
+                        <li class="navigation-item">
+                            <a href="{{route('home.contact')}}" class="{{ Route::is('home.contact') ? 'navigation-active' : 'navlink' }} navlink">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Button reserver -->
+                
+                <div class="">
+                    <livewire:interface-user.reservation.reservation-modal />
+                </div>
+
+                <div class="header-tools">
+                    <!-- Icone user -->
+                    @guest()
+                    <div class="header-tools__item hover-container">
+                        <a href="{{ route('login') }}">
+                            <x-icon name="user-vide" :fill="$fillColor" size="20" class="userLogin headerIcon" />
+                        </a>
+                        <livewire:interface-user.page-index.cart-counter />
+                    </div>
+                    @else
+                    <div class="header-tools__item hover-container">
+                        <a href="{{ Auth::user()->hasAnyRole(['superAdmin', 'admin', 'manager', 'caissier', 'serveur']) ? route('filament.admin.pages.dashboard'):route('filament.client.pages.dashboard') }}" class="header-tools__item">
+                            <!-- <span class="pr-6px">{{Auth::user()->name}}</span>   -->
+                            <x-icon name="user-plein" :fill="$fillColor" size="20" class="userLogin headerIcon" />
+                        </a>
+                        <livewire:interface-user.page-index.cart-counter />
+                    </div>
+                    @endguest
+
+                    <!-- Icone wishlist -->
+
+                    
+
+                    <!-- Icone cart -->
+                    
                 </div>
             </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+            
         </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+    </header>

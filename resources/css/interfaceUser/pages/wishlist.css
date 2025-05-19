@@ -1,0 +1,108 @@
+.pageWishlist{
+    @apply w-[100%] mt-5 mb-10;
+}
+
+.pageWishlist .main{
+    @apply w-[95%] md:w-[70%] mx-auto mt-[100px];
+}
+
+/* PERSONNALISATION DU HEADER */
+.pageWishlist .header, .pageCartProducts .header, .pageOneProduit .header{
+    position: fixed !important;
+    top: 0 !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 5px #2a272741;
+}
+
+.pageWishlist .header .navlink, .pageCartProducts .header .navlink, .pageOneProduit .header .navlink{
+    color: var(--black) !important;
+}
+
+.pageWishlist .header .logo, .pageCartProducts .header .logo, .pageOneProduit .header .logo{
+    width: 100px;
+}
+
+.pageWishlist .header .navlink:hover, .pageCartProducts .header .navlink:hover, .pageOneProduit .header .navlink:hover {
+    color: var(--color2-yellow) !important;
+    transition: 0.4s;
+}
+
+.pageWishlist .header .navigation-active, .pageCartProducts .header .navigation-active, .pageOneProduit .header .navigation-active {
+    color: var(--color2-yellow) !important;
+}
+
+.pageWishlist .header .nav-open-btn .line, .pageCartProducts .header .nav-open-btn .line, .pageOneProduit .header .nav-open-btn .line {
+    background: #000;
+}
+
+.pageWishlist .header-mobile, .pageCartProducts .header-mobile, .pageOneProduit .header-mobile{
+    width: 100%;
+    padding: 15px;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 2px 2px 5px #2a272741;
+}
+
+.pageWishlist .nav-open-btn .line, .pageCartProducts .nav-open-btn .line, .pageOneProduit .nav-open-btn .line{
+    background: var(--color1-green);
+}
+
+.pageWishlist .items{
+    @apply w-full bg-gray-100 shadow-md shadow-[#e3e1e1] ;
+    background: #f8f8f8;
+}
+
+.pageWishlist table.table-cart-items{
+    @apply w-full roboto ;
+    background: #f8f8f8;
+}
+
+.pageWishlist .btnViderPanier{
+    @apply py-2 px-3 my-3 md:mx-7 mx-5 bg-[--color2-yellow] text-xs roboto md:text-sm text-white rounded-sm font-bold
+    /* background: #f8f8f8; */
+}
+
+.pageWishlist table.table-cart-items thead{
+    @apply border-b;
+}
+
+.pageWishlist table.table-cart-items th{
+    @apply py-5 px-[30px] border-none font-bold text-sm;
+    background: #e3e1e1;
+}
+
+.pageWishlist table.table-cart-items tr{
+    @apply py-3 border-b text-[0.74rem] sm:text-[0.84rem] font-semibold;
+}
+
+.pageWishlist table.table-cart-items .tbody .name_image{
+    @apply md:pl-[30px] pl-5 py-3 flex items-center gap-3 ;
+}
+
+.pageWishlist table.table-cart-items .tbody .price{
+    @apply text-gray-500 font-medium;
+}
+
+.pageWishlist table.table-cart-items .name_image img{
+    @apply w-14 h-14 md:w-20 md:h-20 object-cover rounded-sm;
+}
+
+.pageWishlist table.table-cart-items .table_col{
+    @apply text-center;
+}
+
+.pageWishlist table.table-cart-items .col_action div{
+    @apply h-full py-3 flex justify-center gap-5 items-center cursor-pointer;
+}
+
+.btnDeplacer{
+    @apply py-2 px-3 text-xs bg-[#000] text-white border rounded-sm hover:bg-[--white] hover:text-[#252323];
+    background: #252323;
+}
+
+.footer{
+    @apply hidden md:block;
+}

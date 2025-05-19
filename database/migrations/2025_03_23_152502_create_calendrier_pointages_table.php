@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('calendrier_pointages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_member_id')->constrained();
+            $table->foreignId('employee_id')->constrained();
             $table->foreignId('pointage_id')->constrained();
             $table->date('date');
             $table->timestamps();

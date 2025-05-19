@@ -1,0 +1,307 @@
+
+
+
+.topbar {
+    display: block;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-block: 10px;
+    border-block-end: 1px solid var(--white-alpha-20);
+    z-index: 4;
+    transition: var(--transition-1);
+    background: rgb(3, 58, 8);
+    color: #ffffff;
+}
+.topbar .topbar-container{
+    max-width: 1200px;
+    margin: auto;
+    @apply flexBetween;
+}
+.topbar-item{
+    margin-bottom: 0;
+}
+
+.topbar-container .top-gauche{
+    display: flex;
+    gap: 20px
+}
+.topbar-container .top-droite{
+    display: flex;
+    gap: 20px
+}
+
+
+
+/* BANNIERE PAGE INDEX VIDEO ARRIERE PLAN */
+  
+  
+  /* PAGE D'ACCUEIL */
+
+  /* Product slide */
+
+  .sectionProducts{
+    @apply bg-[#f3f3f3] py-10 w-[100%] overflow-hidden relative;
+  }
+
+  .products-slide{
+    @apply w-[90%] mx-auto overflow-hidden relative;
+  }
+  .products-slide .product-slide{
+    /* width: 160px !important; */
+    /* min-width: 210px;
+    max-width: 220px; */
+    flex: 1 0 20%;
+    box-shadow: 0 -2px 5px #e6dfdf;
+    background: #fff;
+    transition: .4s;
+
+    @apply w-[150px] min-w-[170px] max-w-[170px] md:w-[200px] md:min-w-[200px] md:max-w-[220px] bg-white rounded-[5px] flexColumn py-[10px] !important;
+  }
+
+  
+
+  .product-slide:hover {
+    transform: scale(1.05);
+  }
+
+  .product-slide img{
+    @apply w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-[50%] object-cover border-4 border-[--color2-yellow];
+  }
+
+
+  /* SECTION3 */
+
+  .section3Accueil{
+    @apply mt-10 bg-[#f3f3f3];
+  }
+  .galleryAccueil{
+    @apply  h-[270px] md:h-[350px] bg-green-950 relative;
+  }
+  .galleryAccueil .boxes{
+    @apply  w-[90%] md:w-[70%] md:w-[60%] mx-auto py-10 flex justify-center gap-[20px] absolute left-[50%];
+  }
+  .galleryAccueil .boxImage{
+    @apply w-[300px] h-[200px] md:h-[300px] rounded-sm shadow-lg bg-white relative;
+  }
+
+  .galleryAccueil .boxes{
+    transform: translate(-50%, -50%);
+  }
+
+  .galleryAccueil .boxes .box{
+    transform: translateY(20%);
+  }
+.galleryAccueil h1{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    transform: translateX(-50%);
+}
+
+
+/* CATEGORIES DE LA PAGE D'ACCUEIL */
+.section4 .categoriesIndex{
+    @apply flexCenter gap-[20px] overflow-x-scroll;
+}
+.section4 .categoriesIndex .category{
+    @apply min-w-[140px] h-[170px] bg-white shadow-md rounded-md text-center flexColumn;
+}
+.section4 .categoriesIndex .category img{
+    @apply rounded-full;
+}
+
+
+.categoriesIndex img{
+    width: 70px;
+    height: 70px;
+    max-width: 70px !important;
+}
+
+
+/* SECTION POURQUOI NOUS */
+
+
+.features .grid-list{
+  @apply flexCenter flex-wrap md:grid md:grid-cols-3 md:justify-center;
+  gap: 20px;
+}
+.features .grid-list li{
+  @apply w-full;
+}
+
+.features .grid-list li:nth-child(4){
+  @apply md:col-start-2 md:col-end-3;
+}
+
+.section-subtitle { 
+  @apply allura font-bold text-[1.1rem] text-yellow1 mt-10;
+  letter-spacing: 1px
+
+}
+.section-title { 
+  @apply sofia;
+  margin-block-end: 40px; 
+  font-size: 2.8rem;
+  color: #171717f9;
+  margin-top: -23px !important;
+  padding-top: 0 !important;
+}
+
+.feature-card { 
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-shadow: 2px 2px 5px #ccccccdd;
+ }
+
+.feature-item:nth-child(2n+1) .feature-card { 
+  background-color: rgb(237, 237, 237); 
+}
+
+.feature-item:nth-child(2n) .feature-card { 
+  background-color: whitesmoke; 
+}
+
+.feature-card .card-icon {
+  max-width: max-content;
+  margin-inline: auto;
+  transition: 500ms ease;
+}
+.feature-card .card-icon img {
+  width: 70px;
+}
+
+.feature-card:hover .card-icon { transform: scale(-1) rotate(180deg); }
+
+.feature-card .card-title { 
+  @apply playwrite;
+  margin-block: 20px; 
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #272525f9;
+}
+
+.feature-card .card-text {
+  color: black;
+  line-height: 30px;
+  font-size: 14px;
+}
+
+  /* FIN PAGE D'ACCUEIL */
+
+  /* page Menu */
+  /* .products-list .product{
+    @apply flex flex-col justify-center items-center;
+  } */
+  
+  .products-list .product{
+    min-width: 220px;
+    max-width: 230px;
+    /* max-height: 330px; */
+    height: 100%;
+    flex: 1 0 18%;
+    border-radius: 5px;
+    box-shadow: 0 -2px 5px #e6dfdf;
+    margin-top: 0;
+    padding: 10px 0;
+    transition: .4s;
+    background: #fff;
+    @apply flexColumn;
+  }
+
+  .product:hover{
+    transform: scale(1.05);
+  }
+
+  /* .productsPageMenu .shop-list .products-list .product-slide img{
+    @apply w-[100px] h-[100px] md:w-[150px] md:h-[150px] border-[--color2-yellow];
+} */
+  .product img{
+    @apply w-[100px] h-[100px] md:w-[150px] md:h-[150px] border-[--color2-yellow];
+  }
+  .searchProduct{
+    outline: none;
+    box-shadow: 2px 2px 5px #cbc5c57a;
+    border-radius: 5px;
+    position: relative;
+  }
+  .iconSearch{
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+  }
+
+
+  
+/*-----------------------------------*\
+  #SERVICE
+\*-----------------------------------*/
+/* .services{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+.services .grid-list{
+  @apply grid md:grid-cols-3;
+  margin-top: -20px;
+  padding-inline: 10%;
+  gap: 20px;
+  /* flex-wrap: wrap; */
+}
+.services .grid-list .service-card{
+  height: 300px;
+}
+.services .grid-list .service-card div{
+  height: 200px;
+}
+.services .service-card img{
+  transition: .4s;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.services .service-card:hover ~ img{
+  transform: scale(1.08);
+}
+
+
+.services .card-content .card-title{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.services .card-content a{
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+
+.coverServiceImage{
+  @apply bg-black/40 absolute w-full h-full top-0 left-0 z-10;
+
+}
+
+/* SWIPER PAGINATION */
+.swiper-pagination{
+  @apply flexCenter mt-5 text-red-500 relative !important;
+}
+
+.swiper-pagination .swiper-pagination-bullet{
+  @apply w-2 h-2 md:w-3 md:h-3;
+}
+
+.swiper-pagination .swiper-pagination-bullet-active{
+  @apply bg-[--color2-yellow];
+}
+
+.swiper-button-next::after, .swiper-button-prev::after{
+  width: 35px;
+  height: 35px;
+  @apply font-bold p-3 rounded-full flexCenter text-white;
+  font-size: 20px !important;
+  background: #c27107af;
+}

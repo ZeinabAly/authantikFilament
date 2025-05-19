@@ -17,7 +17,7 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-gift';
 
     public static function getNavigationBadge(): ?string
     {
@@ -28,32 +28,36 @@ class CouponResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('value')
-                    ->label('Valeur de coupon')
-                    ->numeric()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cart_value')
-                    ->label('Achat minimum pour appliquer')
-                    ->numeric()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('type')
-                    ->label('Type ')
-                    ->options([
-                        'fixed' => 'Valeur',
-                        'percent' => 'Pourcentage',
-                    ])
-                    ->native(false),
-                Forms\Components\DatePicker::make('expiry_date')
-                    ->label('Date d\'expiration')
-                    ->required(),
+                Forms\Components\Section::make('')
+                ->schema([
+                    Forms\Components\TextInput::make('value')
+                        ->label('Valeur de coupon')
+                        ->numeric()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('cart_value')
+                        ->label('Achat minimum pour appliquer')
+                        ->numeric()
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Select::make('type')
+                        ->label('Type ')
+                        ->options([
+                            'fixed' => 'Valeur',
+                            'percent' => 'Pourcentage',
+                        ])
+                        ->native(false),
+                    Forms\Components\DatePicker::make('expiry_date')
+                        ->label('Date d\'expiration')
+                        ->required(),
+                ])->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Coupon::latest())
             ->columns([
                 Tables\Columns\TextColumn::make('code') 
                     ->label('Code')
@@ -89,9 +93,13 @@ class CouponResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\RestoreAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                 ])
             ])
             ->bulkActions([

@@ -17,17 +17,12 @@ class SousCategoriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'sous_categories';
 
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true, debounce:500)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
@@ -53,8 +48,6 @@ class SousCategoriesRelationManager extends RelationManager
             ]);
     }
 
-
-
     public function table(Table $table): Table
     {
         return $table
@@ -70,6 +63,12 @@ class SousCategoriesRelationManager extends RelationManager
                     ->label('Description')
                     ->toggleable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('products_count')
+                    ->label('Nbre produits')
+                    ->default(0)
+                    ->getStateUsing(function ($record) {
+                        return $record->products()->count();
+                    }),
                 
             ])
             ->filters([
@@ -93,5 +92,11 @@ class SousCategoriesRelationManager extends RelationManager
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withCount('products');
     }
 }

@@ -27,6 +27,16 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            if (!$user->hasRole('user')) {
+                $user->assignRole('user');
+            }
+        });
+    }
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -42,6 +52,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -78,4 +89,9 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    // Pour avoir le slug a la place de l'id dans l'url
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 }

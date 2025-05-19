@@ -1,0 +1,233 @@
+.pageAbout{
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    background: var(--gray-leger1);
+}
+.aboutPage .banniere{
+    @apply w-[100%] h-[60vh] md:h-[80vh] relative flexCenter;
+}
+.aboutPage .banniere .cover{
+    @apply h-[100%] w-[100%] flexCenter;
+    background: var(--black-transparent1);
+}
+.aboutPage .page-title{
+    @apply text-center text-white text-4xl md:text-4xl lg:text-5xl font-bold;
+}
+.aboutPage .page-title span{
+    @apply text-orange-500;
+}
+
+/* SECTION1: NOTRE HISTOIRE */
+
+.section1Histoire {
+    @apply px-5 md:px-20 py-20 grid grid-cols-1 md:grid-cols-2 gap-3;
+}
+.section1Histoire .histoireTexteContent{
+    @apply w-[100%] bg-white md:py-5 py-3 border-[4px] border-[var(--color2-yellow)] text-center shadow-lg rounded-sm flex flex-col items-center justify-center;
+}
+
+
+
+.section2About{
+    width: 100%;
+    background: url('../../../../public/assets/images/pageIndex/service-2.jpg');
+}
+.section2About .section2Cover{
+    @apply w-full h-full bg-black/90 px-5 flex md:flex-row flex-col justify-center items-center md:gap-20 gap-10;
+    padding-block: 30px;
+    background-size: cover; /* Important pour maintenir les proportions */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+.section2About .section2Cover .left{
+    @apply max-w-[400px];
+}
+.section2About .section2Cover .section-title{
+    @apply mb-3 mt-2;
+}
+.section2About .section2Cover .right{
+    @apply h-[250px] w-[250px] p-2 rounded-full object-cover shadow-lg shadow-black/10;
+    border: 3px solid var(--color2-yellow); 
+    position: relative;
+    box-shadow: 3px 3px 3px rgba(200, 174, 174, 0.121), -3px -3px 3px rgba(133, 118, 118, 0.587);
+
+}
+.section2About .section2Cover .border{
+    @apply h-full w-full p-2 rounded-full object-cover;
+    border: 3px solid white; 
+    position: relative;
+    box-shadow: 3px 3px 3px rgba(200, 174, 174, 0.121), -3px -3px 3px rgba(133, 118, 118, 0.587);
+    animation: smoothScalePlat 2s linear infinite alternate;
+    animation-delay: 3s
+}
+.section2About .section2Cover .right .aboutImageBorder{
+    @apply h-full w-full rounded-full object-cover shadow-lg shadow-black/10;
+    position: relative;
+    animation: smoothScalePlat 2s linear infinite;
+    animation-delay: 2s
+}
+
+
+
+/* Les boutons section2 */
+.buttons{
+    @apply gap-3 mt-5 flex;
+}
+.btnAbout{
+    @apply px-5 py-1 rounded-full border-[1px] sofia border-[--color2-yellow] text-[--color2-yellow];
+}
+.btnAbout1:hover{
+    @apply bg-[--color2-yellow] text-white;
+}
+.btnAbout2{
+    @apply bg-[--color2-yellow] text-white;
+}
+.btnAbout2:hover{
+    @apply text-[--color2-yellow] bg-transparent;
+}
+
+
+/* SECTION3: PRODUCTS */
+.productByCategory{
+    @apply pb-10 pt-5 bg-[--gray-leger1];
+}
+.productByCategory .productByCategoryContent{
+    @apply mx-10;
+}
+.productByCategory .productByCategoryContent .titres{
+    @apply text-center;
+}
+.listeCategories{
+    @apply mb-10 flex flex-wrap items-center justify-center gap-5;
+}
+.listeCategories .list-item{
+    @apply text-center border border-[--color2-yellow] bg-white px-4 py-[6px] rounded-full sofia text-sm text-[--color2-yellow] hover:bg-[--color2-yellow] hover:text-white;
+    transition: .4s
+}
+
+.aboutProducts{
+    @apply flex flex-wrap items-center justify-center gap-4;
+}
+
+.categoryAbout:checked + li{
+    @apply bg-[--color2-yellow] text-white;
+}
+
+
+
+/********** SECTION4 ******/
+.section4About{
+    @apply w-[100%] bg-[--white] pb-10;
+}
+.section4Content{
+    @apply w-[90%] md:w-[80%] lg:w-[70%] mx-auto;
+}
+.section4About .zoneTexte{
+    @apply mx-5 md:mx-0 mb-5 grid grid-cols-1 md:grid-cols-[2fr_3fr] items-center justify-center gap-4;
+}
+.section4About .section-title{
+    @apply text-[1.5rem] text-green-950 poppins font-extrabold -mt-2 mb-2 !important;
+    line-height: 35px;
+}
+
+.section4About .zoneTexte .texte{
+    @apply text-justify mt-4 md:block hidden;
+}
+
+.section4About .serviceGrid{
+    @apply flex flex-wrap md:flex-nowrap gap-14 text-justify items-center;
+}
+
+.section4About .serviceGrid .service{
+    @apply md:max-w-[270px] p-5 md:p-0 border-r-4 border-b-4 border-[--color2-yellow] md:border-0  rounded-sm shadow-lg md:shadow-none grid gap-3 ;
+}
+
+.section4About .serviceGrid .service .serviceTitre{
+    @apply text-lg font-bold playwrite;
+}
+
+.section4About .serviceGrid .service .serviceTexte{
+    @apply text-sm leading-[25px] font-medium;
+}
+
+.section4About .serviceGrid .service .serviceImage{
+    @apply h-[160px] md:h-[300px] w-full object-cover rounded-sm;
+}
+
+.service .imgContent{
+    overflow: hidden;
+}
+.section4About .serviceGrid .service .serviceImage:hover{
+    transform: scale(1.05);
+    transition: .4s all ease-in-out;
+}
+
+.section4About .serviceGrid .service2{
+    @apply md:mt-32 border-r-0 border-b-4 border-l-4 md:border-0;
+}
+
+
+/* SECTION5 */
+.section5About{
+    @apply h-[350px] overflow-hidden;
+}
+.section5About .imgSection5{
+    @apply h-full w-[100%] object-cover relative;
+    animation: smoothScalePlat 2s infinite alternate;
+}
+.section5About .cover{
+    @apply h-[350px] w-[100%] bg-black/70 absolute top-0 flex flex-col items-center;
+}
+
+.section5About .cover{
+    @apply h-[350px] w-[100%] bg-black/70 absolute top-0 flex flex-col items-center;
+}
+
+.section5About .horaires{
+    @apply flexColumn;
+}
+.section5About .horaires .horairesContent{
+    @apply flexCenter gap-6 md:gap-20;
+}
+
+.section5About .horaires .horairesContent h4{
+    @apply text-[--color2-yellow] text-lg playwrite font-bold text-[0.9rem] md:text-[1.1rem] ;
+}
+
+.section5About .horaires .horairesContent p{
+    @apply text-[--white] text-lg sofia font-bold text-center mt-2;
+}
+
+
+/* LA PARTIE PRODUCTS SE TROUVANT DANS LIVEWIRE */
+/* .aboutProducts .product{
+    @apply w-[150px] md:w-[200px] bg-white !important;
+}
+
+.aboutProducts .product .image{
+    @apply w-[100px] h-[100px] md:w-[150px] md:h-[150px] border-[--color2-yellow];
+} */
+
+
+
+@keyframes smoothScalePlat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.025); }
+}
+
+@keyframes smoothScaleImage {
+    0% { 
+        opacity: 1;
+        transform: scale(0); 
+    }
+    100% {
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+
+
+  

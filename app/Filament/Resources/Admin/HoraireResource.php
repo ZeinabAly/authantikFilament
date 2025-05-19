@@ -17,7 +17,7 @@ class HoraireResource extends Resource
 {
     protected static ?string $model = Horaire::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clock';
 
     public static function getNavigationBadge(): ?string
     {
@@ -28,24 +28,28 @@ class HoraireResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('name')
-                    ->label('Nom')
-                    ->options([
-                        'Matinée' => 'Matinée',
-                        'Soirée' => 'Soirée',
-                    ])
-                    ->default('Matinée')
-                    ->native(false),
-                Forms\Components\TimePicker::make('start_time')
-                    ->label('Heure de début'),
-                Forms\Components\TimePicker::make('end_time')
-                    ->label('Heure de fin'),
+                Forms\Components\Section::make('')
+                ->schema([
+                    Forms\Components\Select::make('name')
+                        ->label('Nom')
+                        ->options([
+                            'Matinée' => 'Matinée',
+                            'Soirée' => 'Soirée',
+                        ])
+                        ->default('Matinée')
+                        ->native(false),
+                    Forms\Components\TimePicker::make('start_time')
+                        ->label('Heure de début'),
+                    Forms\Components\TimePicker::make('end_time')
+                        ->label('Heure de fin'),
+                ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Horaire::latest())
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
@@ -75,9 +79,13 @@ class HoraireResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\RestoreAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                 ]),
             ])
             ->bulkActions([

@@ -1,0 +1,100 @@
+.fi-main{
+    background: #e8e8e8;
+}
+
+.dark .fi-main{
+    background: #000000;
+}
+
+.fi-ta {
+    /* wrapper général : pas de styles spécifiques pour le moment */
+}
+
+.table-wrapper{
+    margin-block: 2.5rem;
+}
+
+.table-wrapper h2{
+    margin-block: 0.7rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.fi-ta-ctn {
+    overflow: hidden;
+    border-radius: 0.75rem; /* 12px */
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .fi-ta-ctn {
+    background-color: #18181b; /* dark:bg-gray-900 */
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.searchZone {
+    /* Vide pour le moment */
+}
+
+.fi-ta-content {
+    position: relative;
+    overflow-x: auto;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .fi-ta-content {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.fi-ta-table {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+    text-align: left;
+    border-top: 1px solid #e5e7eb;
+}
+
+.dark .fi-ta-table {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.fi-ta-thead {
+    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e7eb;
+}
+
+.dark .fi-ta-thead {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.fi-ta-tr {
+    background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.fi-ta th {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.dark .fi-ta-tr {
+    background-color: #ffffff0d;
+}
+
+.fi-ta-tbody {
+    white-space: nowrap;
+    border-top: 1px solid #e5e7eb;
+}
+
+.dark .fi-ta-tbody {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.fi-ta-tbody td{
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+}

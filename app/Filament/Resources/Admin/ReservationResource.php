@@ -17,48 +17,55 @@ class ReservationResource extends Resource
 {
     protected static ?string $model = Reservation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        if(auth()->check()){
+            return static::getModel()::where('user_id', auth()->user()->id)->count();
+        }
+        return '';
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Hidden::make('user_id')
-                    ->default(auth()->id())
-                    ->dehydrated(true),
-                Forms\Components\TextInput::make('name')
-                    ->label('Nom')
-                    ->required(),
-                Forms\Components\TextInput::make('phone')
-                    ->label('Téléphone')
-                    ->numeric()
-                    ->Length(9)
-                    ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->label('Email')
-                    ->email(),
-                Forms\Components\TextInput::make('nbrPers')
-                    ->label('Nombre de personnes')
-                    ->required(),
-                Forms\Components\DatePicker::make('date')
-                    ->label('Date')
-                    ->required(),
-                Forms\Components\TimePicker::make('heure')
-                    ->label('Heure')
-                    ->required(),
-                Forms\Components\Textarea::make('details')
-                    ->label('Note'),
+                Forms\Components\Section::make('')
+                ->schema([
+                    Forms\Components\Hidden::make('user_id')
+                        ->default(auth()->id())
+                        ->dehydrated(true),
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nom')
+                        ->required(),
+                    Forms\Components\TextInput::make('phone')
+                        ->label('Téléphone')
+                        ->numeric()
+                        ->Length(9)
+                        ->required(),
+                    Forms\Components\TextInput::make('email')
+                        ->label('Email')
+                        ->email(),
+                    Forms\Components\TextInput::make('nbrPers')
+                        ->label('Nombre de personnes')
+                        ->required(),
+                    Forms\Components\DatePicker::make('date')
+                        ->label('Date')
+                        ->required(),
+                    Forms\Components\TimePicker::make('heure')
+                        ->label('Heure')
+                        ->required(),
+                    Forms\Components\Textarea::make('details')
+                        ->label('Note'),
+                ])->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Reservation::latest())
             ->columns([
                 Tables\Columns\TextColumn::make('name') 
                     ->label('Nom')
@@ -97,9 +104,13 @@ class ReservationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\RestoreAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                 ])
             ])
             ->bulkActions([

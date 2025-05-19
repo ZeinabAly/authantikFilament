@@ -1,0 +1,195 @@
+.pageReservation{
+    width: 100%;
+    overflow-x: hidden;
+}
+.pageReservation .banniere{
+    @apply h-[60vh] md:h-[80vh];
+    width: 100%;
+    background: url('../../../public/assets/images/pageIndex/resto-design.jpg');
+}
+
+.pageReservation .cover{
+    width: 100%;
+    height: 100%;
+    background: #000000b9;
+    @apply flexCenter;
+}
+
+.pageReservation .cover h1{
+    @apply md:text-7xl sm:text-5xl text-5xl text-white font-bold;
+}
+
+/* FIN BANNIERE */
+.dinnerElegant{
+    @apply w-[90%] mx-auto py-10 grid md:grid-cols-2 items-center gap-3 text-center;
+}
+.dinnerElegant .images{
+    @apply grid grid-cols-3 gap-2 h-[200px] md:h-[300px];
+}
+.dinnerElegant .images img{
+    @apply grid grid-cols-3 h-full w-full object-cover;
+}
+
+/* SECTION1: Formulaire */
+
+.pageReservation  .form-cover{
+    @apply w-[100%] text-center py-5;
+}
+
+.pageReservation .section-form{
+    @apply w-[100%] bg-gray-100 py-5;
+}
+.pageReservation .section-container{
+    @apply w-[90%] lg:w-[80%] mx-auto my-5 shadow-lg  items-center  rounded-sm shadow-md;
+    background: url('../../../public/images/design/img-pattern.svg');
+}
+.pageReservation .section-container .form-cover{
+    background: #ffffffdd;
+}
+
+.pageReservation .section-form .champInput{
+    border: 0;
+    border-bottom: 1px solid rgb(210, 210, 210);
+}
+
+.pageReservation .reservation-accro{
+    @apply text-[--color2-yellow] allura font-bold text-lg relative inline-block;
+    letter-spacing: 1px;
+}
+.pageReservation .reservation-accro::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -55%;
+    width: 40px;
+    height: 1px;
+    background: var(--color2-yellow);
+}
+.pageReservation .reservation-accro::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -55%;
+    width: 40px;
+    height: 1px;
+    background: var(--color2-yellow);
+}
+.pageReservation .reservation-title{
+    @apply text-[1.5rem] md:text-3xl mt-1 mb-2 font-bold roboto font-bold text-gray-800;
+}
+.pageReservation .reservation-texte{
+    @apply w-[80%] mx-auto text-[0.9rem] mt-2 mb-10 text-gray-800 font-medium;
+}
+
+.pageReservation .reservation-inputs{
+    @apply w-[100%] px-6 grid grid-cols-1 md:grid-cols-2 gap-[20px];
+    grid-template-areas: 
+            "nbre"
+            "date"
+            "heure"
+            "nom"
+            "phone"
+            "email"
+            "textearea"
+        ;
+}
+
+
+@media screen and (min-width: 768px) {
+    .pageReservation .reservation-inputs{
+        grid-template-areas: 
+            "nbre date"
+            "heure nom"
+            "phone email"
+            "textearea textearea"
+        ;
+    }
+}
+
+.pageReservation select, .pageReservation input, .pageReservation textarea{
+    @apply py-3 px-2 border-[1px] border-gray-300 bg-[#fff] outline-none text-[1rem];
+}
+
+
+
+.pageReservation .btnPageRersever{
+    @apply w-[170px] mt-7 py-2 px-3 text-white text-[0.85rem] md:text-[0.95rem] md:text-lg bg-black rounded-sm border border-black;
+}
+
+.pageReservation button:hover{
+    transform: scale(1.05);
+    background: #fff;
+    color: #000;
+}
+
+.reservation-btn button:hover{
+    transform: scale(1);
+}
+
+/* SECTION CONTACT */
+.pageReservation .contact{
+    @apply grid grid-cols-1 md:grid-cols-3 justify-center items-center
+}
+
+.pageReservation .contact .image{
+    @apply w-full h-full;
+}
+
+.pageReservation .contact .image img{
+    @apply w-full h-full object-cover;
+}
+.pageReservation .image, .pageReservation .horaires, .pageReservation .contact-infos{
+    @apply w-[100%] max-h-[400px];
+}
+.pageReservation .image img{
+    @apply w-[100%] max-h-[400px] object-cover;
+}
+.pageReservation .horaires{
+    @apply w-[100%] h-[100%] text-center flex items-center;
+}
+.pageReservation .horaires{
+    background: url('../../../public/assets/images/pageIndex/img-pattern.svg');
+}
+.pageReservation .horaires-cover{
+    @apply py-4 px-3 bg-[#000000d8] w-[100%] h-[100%] flexColumn leading-[30px];
+}
+.pageReservation .contact-infos{
+    @apply py-4 px-3 bg-[#f2f2f2] w-[100%] h-[100%] text-center flex items-center flex-col justify-around leading-[30px] border;
+    color: #d9600a;
+}
+
+.pageReservation .contact-infos h2{
+    @apply mb-4 text-[--color2-yellow] font-bold text-3xl leading-[30px];
+}
+.pageReservation .contact-infos p{
+    @apply text-[0.9rem] mt-3 text-black text-left;
+}
+.pageReservation .contact-infos p{
+    transition: 0.4s;
+    cursor: pointer;
+}
+.pageReservation .contact-infos p:hover{
+    transform: scale(1.05);
+    margin-left: 7px;
+}
+.pageReservation .appel{
+    @apply text-lg leading-[30px] py-2 px-3 rounded-sm bg-black border border-black;
+}
+.pageReservation .appel:hover{
+    color: #000;
+    background: #fff;
+}
+.pageReservation .appel:hover a{
+    color: #000;
+}
+
+.pageReservation a{
+    @apply py-2 px-3;
+    color: #fff;
+}
+
+.pageReservation a.login{
+    @apply px-3 py-2 mt-2 mx-1 mb-7 border-2 border-red-500 rounded-sm text-red-500 text-[14px] !important;
+}

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
+use App\Models\{User, Employee};
 use Carbon\Carbon;
 
 class Reservation extends Model
@@ -29,6 +29,12 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
+    // public function employee(){
+    //     return $this->hasOneTrough(Employee::class, User::class);
+    // }
+
+
+
     protected static function boot()
     {
         parent::boot();
@@ -45,6 +51,12 @@ class Reservation extends Model
         
         // Ensuite retourner une nouvelle requête pour chaîner d'autres opérations
         return self::query();
+    }
+
+    // Pour avoir le slug a la place de l'id dans l'url
+    public function getRouteKeyName(): string
+    {
+        return 'id';
     }
 
 }

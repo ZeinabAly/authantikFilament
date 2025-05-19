@@ -1,11 +1,21 @@
+
+/* LES STYLES DE L'INTERFACE UTILISATEUR */
+@import './settings.css';
+@import './interfaceUser/header.css';
+@import './interfaceUser/pages/index.css';
+@import './interfaceUser/pages/reservation.css';
+@import './interfaceUser/pages/contact.css';
+@import './interfaceUser/pages/apropos.css';
+@import './interfaceUser/pages/menu.css';
+@import './interfaceUser/pages/cart.css';
+@import './interfaceUser/pages/checkout.css';
+@import './interfaceUser/pages/wishlist.css';
+@import './interfaceUser/pages/order-confirmation.css';
+@import './interfaceUser/pages/userProfile.css';
+@import './interfaceUser/pages/facture.css';
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "tailwindcss";
-@source "../views";
-
-/* Les styles du backOffice */
-@import './settings.css';
-@import './admin/profile.css';
-
 

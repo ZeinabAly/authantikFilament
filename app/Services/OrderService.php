@@ -26,7 +26,7 @@ class OrderService
     /**
      * Créer une commande à partir des produits du panier.
      */
-    public function createOrder(bool $print = false, string $mode_payment = "liquide", $note = '', $adresse = "", $lieu = "surPlace", $name = "", $phone = "", $email = "", $commander_par = "client")
+    public function createOrder(bool $print = false, string $mode_payment = "liquide", $note = '', $adresse_id = null, $lieu = "surPlace", $name = "", $phone = "", $email = "", $serveur_id = null)
     {
 
         // Vérifier si le panier contient des produits
@@ -35,7 +35,7 @@ class OrderService
             Notification::make()
                 ->title('Erreur de commande')
                 ->danger()
-                ->body('Une erreur est survenue. Veuillez réessayer.')
+                ->body('Une erreur est survenue. Veuillez réessayer ! ')
                 ->send();
             // session()->flash('error', 'Le panier est vide ! ');
             return null; 
@@ -46,14 +46,15 @@ class OrderService
         $name = $name ?? $user->name;
         $phone = $phone ?? $user->phone;
 
-        $addressAuthentik = Address::where('name', 'Authantik')->firstorFail();
+        // $addressAuthentik = Address::where('name', 'Authantik')->firstorFail();
 
 
-        if($adresse == ""){
-            $adresse_id = $addressAuthentik->id;
-        }else{
-            $adresse_id = $adresse->id;
-        }
+        // if($adresse == ""){
+        //     $adresse_id = $addressAuthentik->id;
+        // }else{
+            // }
+         
+        // $adresse_id = $adresse->id;
 
         // Calculer les totaux et informations de checkout
         $this->checkoutService->calculateCheckout();
@@ -71,7 +72,7 @@ class OrderService
             'total' => (float)str_replace(',', '', $checkoutData['total']),
             'status' => "En cours",
             'note' => $note,
-            'commander_par' => $commander_par,
+            'employee_id' => $serveur_id,
         ]);
 
         // Ajouter les items de la commande       
@@ -122,7 +123,7 @@ class OrderService
         Notification::make()
             ->title('Commande réussie !')
             ->success()
-            ->body('Votre commande a bien été enregistrée.')
+            ->body('Votre commande a bien été enregistrée')
             ->send();
         return $order;
     }

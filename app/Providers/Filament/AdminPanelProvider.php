@@ -11,7 +11,11 @@ use Filament\Support\Assets\Css;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\UserMenuItem;
+use Illuminate\Support\Facades\Route;
+use Filament\Notifications\Notification;
 use Filament\Http\Middleware\Authenticate;
+use Filament\Support\Facades\FilamentIcon;
+use App\Http\Middleware\EnsureUserIsActive;
 use Illuminate\Support\Facades\{Auth, Hash};
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -29,6 +33,18 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot()
     {
+
+        Filament::serving(function () {
+            if (auth()->check() && !auth()->user()->is_active) {
+                auth()->logout();
+                redirect()->route('filament.admin.auth.login');
+                return Notification::make()
+                    ->title('Votre compte a été desactivé ! ')
+                    ->success()
+                    ->send();
+            }
+        });
+
         Filament::serving(function () {
             if(auth()->check()){
                 // Ajouter un item au menu utilisateur
@@ -38,8 +54,17 @@ class AdminPanelProvider extends PanelProvider
                         ->url(route('filament.admin.resources.admin.employees.profile', ['record' => auth()->user()->id]))  // URL du lien
                         ->icon('heroicon-o-user')  // Icône (optionnel)
                     ]);
+
                 }
+
         });
+        
+        FilamentIcon::register([
+            // 'panels::topbar.global-search.field' => 'fas-magnifying-glass',
+            // 'panels::sidebar.collapse-button' => 'fas-magnifying-glass',
+            // 'panels::sidebar.collapse-button.rtl' => 'fas-magnifying-glass'
+        ]);
+
     }
 
     public function panel(Panel $panel): Panel
@@ -48,16 +73,20 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->middleware([
+                EnsureUserIsActive::class
+            ])
             ->login()
-            ->registration()
+            // ->registration()
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->sidebarCollapsibleOnDesktop() //Pour afficher le bouton qui reduit la sidebar
             ->discoverResources(in: app_path('Filament/Resources/Admin'), for: 'App\\Filament\\Resources\\Admin')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            // ->pages([
-            //     Pages\Dashboard::class,
-            // ])
+            ->discoverPages(in: app_path('Filament/Pages/Admin'), for: 'App\\Filament\\Pages\\Admin')
+            ->pages([
+                // Pages\Dashboard::class,
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 // Widgets\AccountWidget::class,
@@ -85,12 +114,6 @@ class AdminPanelProvider extends PanelProvider
             // ->brandLogoHeight('4rem')
             ->favicon(asset('favicon.png'))
             
-
-            // Les assets
-            ->assets([
-                Css::make('custom-stylesheet', resource_path('css/filament/pages/profile.css')),
-                // Css::make('custom-stylesheet', resource_path('css/filament/pages/modal-styles.css')),
-            ])
             // INSERER LE BOUTON PASSER UNE COMMANDE A DROITE DANS LA TOPBAR 
             ->renderHook(
                 'panels::user-menu.before',

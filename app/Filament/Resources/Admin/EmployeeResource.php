@@ -20,7 +20,7 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function getNavigationBadge(): ?string
     {
@@ -160,6 +160,7 @@ class EmployeeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Employee::latest())
             ->columns([
                 Tables\Columns\ImageColumn::make('image') 
                     ->label('Image')
@@ -230,14 +231,18 @@ class EmployeeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager']) || auth()->user()->id === $record->id),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                     Tables\Actions\Action::make('viewProfile')
                     ->label('Voir profil')
                     ->icon('heroicon-o-user')
                     ->url(fn (Employee $employee) => route('filament.admin.resources.admin.employees.profile', ['record' => $employee->user->id]))
-                    // ->visible(fn () => auth()->user()->hasRole('admin')),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager']) || auth()->user()->id === $record->id),
+                    Tables\Actions\RestoreAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                 ]),
             ])
             ->bulkActions([

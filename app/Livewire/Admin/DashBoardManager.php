@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Tables\Table;
 use App\Models\{Product, SousCategory, Order};
+use Filament\Tables\Concerns\InteractsWithTable;
+
 
 class DashBoardManager extends Component
 {
@@ -31,7 +33,6 @@ class DashBoardManager extends Component
         $this->orders();
         $this->totalsData = $this->orders();
 
-        // dd($this->dayOrders);
     }
 
     public function setSelectedCategory($id){
@@ -43,6 +44,7 @@ class DashBoardManager extends Component
 
         $today = Carbon::now()->toDateString(); // Format : YYYY-MM-DD
         $this->dayOrders = Order::whereDate('created_at', $today)
+                                ->where('status', $this->statusSelected)
                                 ->orderBy('created_at', 'desc')->get();
 
 
@@ -115,7 +117,7 @@ class DashBoardManager extends Component
         $this->products = $query->get();
 
         // Toutes les commandes
-        $this->orders = Order::take(10)->orderBy('created_at', 'desc')->get();
+        $this->orders = Order::where('status', $this->statusSelected)->take(10)->latest()->get();
         
         // Plats du jour
         $this->platsDuJour = Product::where('platDuJour', 1)->get();
@@ -129,71 +131,5 @@ class DashBoardManager extends Component
         ]);
     }
 
-
-
-
-
-
-
-    protected static ?string $model = Order::class;
-
-
-
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('nocmd') 
-                    ->label('NoCMD')
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('orderItems_count')
-                    ->label('Nbre produits')
-                    ->toggleable()
-                    ->counts('orderItems'),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nom client')
-                    ->toggleable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->label('Téléphone')
-                    ->toggleable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('address.quartier')
-                    ->toggleable()
-                    ->counts('orderItems'),
-                Tables\Columns\TextColumn::make('lieu')
-                    ->label('Lieu')
-                    ->toggleable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->label('Lieu')
-                    ->toggleable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('total')
-                    ->label('Total')
-                    ->toggleable()
-                    ->toggleable()
-                    ->sortable(),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
 
 }

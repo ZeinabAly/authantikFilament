@@ -1,0 +1,12 @@
+.facture-content .imgLogo{
+    @apply w-28;
+}
+.facture-content table.table{
+    @apply w-full border-t border-b;
+}
+.facture-content thead{
+    @apply w-full border-b;
+}
+.facture-content thead th{
+    @apply py-3;
+}

@@ -1,0 +1,139 @@
+.pageCartProducts{
+    @apply w-full;
+    background: #f5f5f5;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+}
+.page-title{
+    @apply   text-3xl font-bold mb-10;
+}
+.checkout-steps{
+    @apply mx-auto md:grid md:grid-cols-3 gap-3 flex w-full bg-white;
+    max-width: 1200px;
+    /* box-shadow: 2px 0 10px #cccccc90; */
+}
+.checkout-steps__item{
+    @apply flex items-center gap-3;
+    border-bottom: 2px dotted rgb(181, 177, 177);
+}
+.checkout-steps__item.active{
+    border-bottom: 2px solid var(--color2-yellow);
+    padding: 10px;
+}
+.number1{
+    @apply text-white font-bold   w-10 h-10 flexCenter rounded-full hover:text-[--color2-yellow] bg-[--color2-yellow] border-[--color2-yellow] hover:bg-[var(--white)] !important;
+}
+.number-1_title{
+    @apply text-gray-800 !important;
+}
+
+.checkout-steps__item-number{
+    @apply text-white font-bold   w-10 h-10 flexCenter rounded-full bg-[#9a9999] border border-[#9a9999] hover:bg-[var(--white)] hover:text-[#9a9999];
+}
+.checkout-steps__item-title{
+    @apply text-gray-500 flex flex-col  ;
+}
+.checkout-steps__item-title span{
+    @apply font-semibold sofia text-xl;
+}
+.checkout-steps__item-title em{
+    @apply text-sm font-medium;
+    font-style: normal;
+}
+
+
+/* LA SECTION DES PRODUITS */
+
+.pageCartProducts .sectionProducts{
+    @apply py-0 mx-auto flex flex-col md:flex-row items-start gap-5 md:gap-10 ;
+    max-width: 1200px;
+    /* box-shadow: 2px 0 10px #cccccc90; */
+}
+
+
+
+.pageCartProducts .sectionProducts .items{
+    @apply w-[100%] h-full md:w-[65%] py-10;
+    min-height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 3px #ccccccdc;
+}
+
+.pageCartProducts table.table-cart-items{
+    @apply w-full ;
+}
+
+.pageCartProducts .btnViderPanier{
+    @apply py-2 px-3 my-5 mx-8 bg-[--color2-yellow] text-sm text-white rounded-sm font-bold
+    /* background: #f8f8f8; */
+}
+
+.pageCartProducts table.table-cart-items thead{
+    @apply border-b;
+}
+
+.pageCartProducts table.table-cart-items th{
+    @apply py-5 px-[30px] border-none font-bold text-sm;
+    background: #f3f3f3;
+}
+
+.pageCartProducts table.table-cart-items tr{
+    @apply py-3 border-b text-[0.74rem] sm:text-[0.84rem] font-semibold;
+}
+
+.pageCartProducts table.table-cart-items .tbody .name_image{
+    @apply pl-[30px] py-3 flex items-center gap-3 ;
+}
+
+.pageCartProducts table.table-cart-items .name_image img{
+    @apply w-14 h-12 object-cover rounded-md;
+}
+
+.pageCartProducts table.table-cart-items .table_col{
+    @apply text-center;
+}
+
+.pageCartProducts table.table-cart-items .col_action div{
+    @apply h-full py-3 flex justify-center items-center cursor-pointer;
+}
+
+.pageCartProducts table.table-cart-items .col_qty .content{
+    @apply max-w-[80px] md:max-w-[90px] mx-auto py-[3px] rounded-full flex items-center justify-center gap-5 text-[0.83rem] md:text-[0.84rem] font-bold border;
+    background: #f0f0f0;
+}
+
+
+/* DETAILS DE PAYEMENT */
+
+
+.pageCartProducts .sectionProducts .payement_details{
+    @apply w-[100%] md:w-[40%] border rounded-md shadow-md my-5;
+    background: #ffffff;
+}
+
+.pageCartProducts .couponForm .formContent{
+    @apply flex items-center px-5;
+}
+
+.pageCartProducts .payement_details .title{
+    @apply my-3 text-2xl text-left   font-bold px-5;
+}
+
+.pageCartProducts .formContent input{
+    @apply min-w-[230px] py-2 px-3 rounded-tl-md rounded-bl-md text-sm  bg-[--white] border border-gray-500 outline-none;
+}
+
+.pageCartProducts .formContent button{
+    @apply py-2 px-3 rounded-tr-md rounded-br-md text-sm  bg-[--color1-green] text-[--white] border border-gray-500 outline-none;
+}
+
+.pageCartProducts .payement_details .details{
+    @apply py-2 px-5 text-[0.9rem] flexBetween;
+}
+
+.pageCartProducts .payement_details .total{
+    @apply bg-[#e7e6e6] text-[1rem] font-bold;
+}
+
+.pageCartProducts .payement_details .btnPasserCaisse{
+    @apply bg-[--color1-green] text-[1rem] text-gray-100 px-3 py-2 mb-3 mt-5 flexCenter max-w-[200px] mx-auto rounded-sm border border-[--color1-green] hover:text-[--color1-green] hover:bg-white;
+}

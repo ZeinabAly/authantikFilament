@@ -27,4 +27,10 @@ class Horaire extends Model
             ->first()
             ->id ?? 1; // return le shift actuel
     }
+
+    // Pour avoir le slug a la place de l'id dans l'url
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 }

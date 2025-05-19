@@ -23,7 +23,7 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
     public static function getNavigationBadge(): ?string
     {
@@ -34,36 +34,34 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->label('Nom')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true, debounce:500)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->label('Description')
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->label('Image')
-                    // ->image()
-                    // ->directory('uploads/categories') 
-                    // ->disk('public') 
-                    // ->imageEditor()
-                    // ->imageEditorAspectRatios([
-                    //     '16:9',
-                    //     '4:3',
-                    //     '1:1',
-                    // ]),
+                Forms\Components\Section::make('')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->label('Nom')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Textarea::make('description')
+                        ->label('Description')
+                        ->maxLength(255),
+                    Forms\Components\FileUpload::make('image')
+                        ->label('Image')
+                        // ->image()
+                        // ->directory('uploads/categories') 
+                        // ->disk('public') 
+                        // ->imageEditor()
+                        // ->imageEditorAspectRatios([
+                        //     '16:9',
+                        //     '4:3',
+                        //     '1:1',
+                        // ]),
+                ])->columns(2)
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Category::latest())
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Image')
@@ -97,9 +95,13 @@ class CategoryResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\RestoreAction::make()
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
                 ])
             ])
             ->bulkActions([
@@ -122,6 +124,7 @@ class CategoryResource extends Resource
             'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'view' => Pages\ViewCategory::route('/{record}'),
         ];
     }
 }

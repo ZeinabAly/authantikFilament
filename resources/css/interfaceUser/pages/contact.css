@@ -1,0 +1,107 @@
+.contactPage{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.contactPage .banniere{
+    @apply h-[60vh] md:h-[70vh] w-[100%];
+    background: url('../../../../public/assets/images/pageIndex/Poulet-Yassa.jpg');
+}
+.contactPage .cover{
+    height: 100%;
+    width: 100%;
+    background: #000000d7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+.contactPage .page-title{
+    @apply text-[2.5rem] md:text-[3rem] lg:text-[3.2rem] sofia;
+    color: var(--white);
+}
+.contactPage .pageFilAriane{
+    @apply text-sm text-[--color2-yellow] font-bold;
+}
+
+.form_infos-contact{
+    @apply w-[100%] grid grid-cols-[1fr] md:grid-cols-[1fr_2fr] gap-[20px] md:gap-0;
+}
+
+.contact_infos{
+    @apply w-[100%] h-full text-center rounded-tl-sm rounded-bl-sm;
+    background: url('../../../../public/assets/images/pageIndex/img-pattern.svg');
+}
+.contact_infos .contactInfosContent{
+    @apply bg-[#000000d8] h-full w-full py-5;
+}
+.contact_infos .contactsContainer{
+    @apply flex flex-col justify-center items-center gap-10 text-center mt-7;
+}
+
+.contact_infos .contact_title{
+    @apply my-2 text-gray-400 font-bold text-[14px] playwrite;
+}
+
+.contact_infos .horaires, .contact, .adresse{
+    @apply mt-2 text-gray-100 roboto text-sm font-semibold;
+}
+
+/* LE FORMULAIRE DE CONTACT */
+
+.contactForm{
+    /* @apply w-[100%] h-[100%] mt-0 pt-0; */
+    /* background: url('../../../../public/assets/images/pageIndex/img-pattern.svg'); */
+}
+
+.contactForm .formCover{
+    @apply w-[100%] h-[100%] bg-[--gray-leger1] py-5 px-5;
+}
+
+.contactForm .formCover .section-title{
+    @apply text-3xl sofia font-bold -mt-2 !important;
+}
+.contactForm .formCover .nom_phone{
+    @apply grid grid-cols-2 gap-4;
+}
+
+.contactForm .inputContent input, .contactForm .inputContent textarea{
+    @apply w-full bg-gray-300 py-2 px-2 my-4 border-b border-gray-400 text-gray-700 outline-none rounded-sm;
+    background: #eaeaea;
+    box-shadow: 2px 2px 5px #c6c4c481 inset;
+}
+
+.contactForm .inputContent input::placeholder, .contactForm .inputContent textarea::placeholder{
+    @apply text-gray-500;
+    background: #eaeaea;
+}
+
+.contactPage button{
+    @apply font-semibold py-2 px-5 bg-black text-white rounded-sm shadow-lg border border-black;
+}
+
+.contactPage button:hover{
+    @apply bg-white text-black;
+    transform: scale(1.005);
+}
+
+/* CARTE GOOGLE MAP */
+iframe{
+    @apply md:h-[400px] h-[300px] w-full;
+}
+
+/* RESERVATION */
+.reservation{
+    background: url('../../../../public/assets/images/pageIndex/resto-design.jpg') center/cover;
+}
+
+.reservationCover{
+    @apply h-[300px] md:h-[400px] mt-5 bg-black/90 flexColumn;
+}
+/* .texteContent{
+    @apply h-[200px] w-[300px] border bg-black/80 text-white;
+} */

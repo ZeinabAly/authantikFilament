@@ -1,0 +1,197 @@
+/**************** DEBUT SIDEBAR *************/
+
+.productsPageMenu{
+    @apply w-[100%] bg-[#f2f2f2] flex ;
+}
+.productsPageMenu .menuSidebar{
+    @apply w-[350px] min-w-[280px] bg-white hidden md:block;
+}
+.productsPageMenu .menuSidebar .section-title{
+    @apply text-[1.4rem] mt-10 mb-3 roboto font-extrabold !important;
+}
+
+.productsPageMenu .categories{
+    @apply px-4  flex flex-col justify-start gap-2;
+}
+.productsPageMenu .categories li{
+    @apply py-2 px-2 bg-[#f5f5f5] rounded-md font-semibold text-gray-700  text-sm;
+    box-shadow: 2px 2px 2px #00000018;
+    transition: .4s;
+}
+.productsPageMenu .categories li:hover{
+    @apply bg-[--color1-green] text-white;
+}
+.productsPageMenu .categories li .chk-cat{
+    @apply w-full flex justify-between;
+}
+
+.categorySidebar:checked + li{
+    @apply bg-[--color1-green] text-white;
+}
+
+
+.productsPageMenu .fproducts {
+    @apply px-4 mt-20;
+}
+
+.productsPageMenu .fproductContent {
+    @apply flex gap-2 items-center border-b border-gray-200 pb-2;
+    transition: .4s;
+}
+
+.productsPageMenu .fproductContent:hover {
+    @apply ml-3 bg-gray-100;
+}
+
+.productsPageMenu .fproductContent .image{
+    @apply w-[70px] h-[60px] object-cover rounded-sm shadow-md border-[1px]  border-gray-300;
+}
+
+.productsPageMenu .fproductContent .title{
+    @apply font-bold roboto text-[0.9rem] font-bold;
+}
+
+.productsPageMenu .fproductContent .priceContent{
+    @apply text-[0.85rem] font-bold;
+}
+
+.productsPageMenu .fproductContent s{
+    @apply text-[0.80rem] font-medium;
+}
+
+.productsPageMenu .fproductContent .sousCategory{
+    @apply text-[#6d6969] text-xs roboto font-bold;
+    /* color: #6d6969; */
+}
+
+
+/**************** FIN SIDEBAR *************/
+
+
+
+/**************** AFFICHAGE DES PRODUITS ************/
+
+.productsPageMenu .shop-list{
+    @apply w-[100%];
+}
+.productsPageMenu .shop-list .filtres select{
+    @apply max-w-[250px] min-w-[150px] py-2 px-3 text-sm rounded-sm shadow-md shadow-[#cbc5c57a] text-gray-500 outline-none;
+}
+.shop-list .filtres select option:checked{
+    @apply bg-blue-700 text-white !important;
+}
+
+.shop-list .filtres select option:hover{
+    @apply bg-blue-500 !important;
+}
+
+.productsPageMenu .shop-list .recherche-filtres-ariane{
+    @apply w-[90%] mx-auto my-5 flex items-center md:justify-between justify-end;
+}
+
+.shop-list .recherche-filtres-ariane .filAriane{
+    @apply flex justify-between ml-3 hidden md:block;
+}
+
+.productsPageMenu .listeCategories{
+    @apply md:hidden block flex mb-1 gap-4;
+}
+
+.productsPageMenu .listeCategories .list-item{
+    @apply py-[5px] text-gray-700 border-gray-300 font-bold roboto text-xs;
+}
+.productsPageMenu .listeCategories .listCat:checked + li{
+    @apply bg-[--color2-yellow] text-white;
+}
+
+.productsPageMenu .listeCategories .list-item:hover{
+    @apply text-white;
+}
+.productsPageMenu .listeCategories .list-item-all{
+    @apply bg-white;
+}
+.productsPageMenu .listeCategories .list-item-all:hover{
+    @apply bg-[--color2-yellow];
+}
+
+
+.products-list{
+    @apply w-[90%] mx-auto my-5 flexCenter flex-wrap gap-3 ;
+}
+
+.products-list .product-slide{
+    /* flex: 1 0 20%; */
+    width: 200px;
+    max-width: 210px;
+    @apply w-[150px] md:w-[200px] max-w-[210px] flexColumn py-[10px];
+}
+/* .productsPageMenu .shop-list .products-list .product-slide{
+} */
+
+.products-list .product-slide img{
+    @apply w-[100px] h-[100px] md:w-[150px] md:h-[150px] border-[--color2-yellow];
+}
+
+/* PAGE UN PRODUIT */
+
+/* .pageOneProduit{
+    @apply ;
+} */
+.pageOneProduit .banniere{
+    @apply h-[40vh] lg:h-[50vh] w-[100%];
+    background: url('../../../../public/assets/images/pageIndex/Poulet-Yassa.jpg');
+}
+
+.pageOneProduit .cover{
+    width: 100%;
+    height: 100%;
+    background: #000000db;
+    @apply flexColumn ;
+}
+
+.pageOneProduit .cover .page-title{
+    @apply text-[2.2rem] md:text-[2.5rem] lg:text-[3.2rem] sofia mb-5;
+    color: var(--white);
+}
+
+.pageOneProduit .pageFilAriane{
+    @apply text-sm text-[--color2-yellow] font-bold;
+}
+.pageOneProduit .detailsProducts{
+    @apply grid grid-cols-1 md:grid-cols-[45%_50%] lg:grid-cols-[40%_50%] items-center py-10 gap-5 lg:gap-10;
+}
+
+.pageOneProduit .section{
+    @apply px-4;
+}
+
+.pageOneProduit .petitesImagesContent{
+    @apply h-[300px] flex flex-col gap-2 overflow-y-scroll;
+}
+
+.pageOneProduit .petitesImagesContent .petiteImage{
+    @apply h-[60px] w-[60px] rounded-md object-cover;
+}
+
+.pageOneProduit .imgPrincipaleContent{
+    @apply w-full h-[300px];
+}
+.pageOneProduit .imgPrincipale{
+    @apply w-full h-full object-cover rounded-sm;
+}
+
+.pageOneProduit .details{
+    @apply text-center md:text-justify;
+}
+
+.pageOneProduit .section3{
+    @apply mt-5 mb-10;
+}
+
+.pageOneProduit .section3 .section-title{
+    @apply text-3xl text-center mb-1;
+}
+
+.pageOneProduit .section3 .description{
+    @apply text-center leading-[30px] max-w-[800px] mx-auto mt-3;
+}

@@ -5,21 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{Variante, Accompagnement, Supplement, SousCategory, OrderItem};
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
-    use softDeletes;
+    use softDeletes, HasSlug;
 
     protected $guarded = ['id'];
 
-    public function scopeSearch($query, $value){
-        $query->where('name', 'like', "%{$value}%")
-            ->orWhere('description', 'like', "%{$value}%");
-    }
+    // public function scopeSearch($query, $value){
+    //     $query->where('name', 'like', "%{$value}%")
+    //         ->orWhere('description', 'like', "%{$value}%");
+    // }
 
     protected $casts = [
-        'sale_price' => 'integer',
-        'regular_price' => 'integer',
+        'sale_price' => 'double',
+        'regular_price' => 'double',
         'images' => 'array',
         'featured' => 'boolean', 
     ];
@@ -50,4 +52,18 @@ class Product extends Model
         return $this->belongsToMany(Supplement::class, 'product_supplement')->withTimestamps();
     }
 
+
+    // GENERATEUR DE SLUG
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    // Pour avoir le slug a la place de l'id dans l'url
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

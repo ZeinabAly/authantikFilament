@@ -1,0 +1,27 @@
+
+.orderConfirmationContent{
+    @apply text-center py-10 gap-10 flexColumn;
+}
+
+.orderConfirmationContent h5{
+    @apply font-bold text-lg py-3;
+}
+
+.orderConfirmationContent .btnContinuerAchats{
+    @apply font-medium text-sm py-2 px-4 my-3 rounded-full border bg-[--color2-yellow] text-white;
+}
+
+.orderConfirmationContent .btnContinuerAchats{
+    @apply font-medium text-sm py-2 px-4 my-3 rounded-full border border-[--color2-yellow] bg-[--color2-yellow] text-white;
+}
+
+.orderConfirmationContent .btnContinuerAchats:hover{
+    @apply bg-white text-[--color2-yellow];
+}
+
+.orderConfirmationContent .btnTelechargerFacture{
+    @apply font-medium text-sm py-2 px-4 my-3 rounded-full border border-[--color2-yellow] text-[--color2-yellow] bg-white;
+}
+.orderConfirmationContent .btnTelechargerFacture:hover{
+    @apply border border-[--color2-yellow] text-white bg-[--color2-yellow];
+}

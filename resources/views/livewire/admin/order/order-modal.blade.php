@@ -4,7 +4,7 @@
     <!-- vue livewire:open-modal -->
 
     <!-- orderModal: blade -->
-    <div class="modalContent" x-data="{ openModalCmd: false }" x-cloak @open-modal.window="openModalCmd = true">
+    <div class="modalContent" x-data="{ openModalCmd: false }" x-cloak @open-order-modal.window="openModalCmd = true">
   
         <div class="orderModal" x-show="openModalCmd" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"  x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
             <!-- Les messages d'erreur  -->
@@ -38,20 +38,21 @@
                     <!-- btnRechercher -->
                     <div class="zoneSearchContent">
                         <div class="">
-                            <div class="divIconSearchContent">
+                            <div class="searchBox">
                                 <div class="divIconSearch">
                                     <x-icon name="btn-search2"/>
                                 </div>
-                                <input type="text" wire:model.live.debounce.300ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
+                                <input type="text" wire:model.live.debounce.100ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
                             </div>
+    
                         </div>
                     </div>
             
                     <!-- Fin zone recheche -->
                      <!-- Zone categorie -->
                     <div class="">
+                        <h2 class="titre2">Les categories</h2>
                         <div class="adminCategoriesContent">
-                            
                         @foreach($sousCategories as $sCategory)
                             <button type="button" wire:click="setSelectedCategory({{$sCategory->id}})" class="btnModalCategory md:bg-[--white]">
                                 <div class="adminCatImageContent">
@@ -67,65 +68,64 @@
      
                     
                         <!-- AFFICHAGE DES PRODUITS -->
-                        <div class="flex items-center gap-2 flex-wrap mt-5">
+                        <h2 class="titre2">Les plats</h2>
+                        <div class="displayModalProducts">
                             @foreach($products as $product)
                                 <!-- Si le produit est deja dans le panier alors il suffit de cliquer sur plus ou moins -->
                                 @if(Cart::instance('cart')->content()->where('id', $product->id)->count() > 0 )
-                                <div class="productDiv min-w-[145px] md:min-w-[200px] max-w-[220px] pt-2 px-2 overflow-x-hidden text-center rounded-md shadow-md bg-[--white]">
-                                    <div class="flexLeft gap-2 pt-2">
-                                        <img class="w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-md object-cover" src="{{asset('storage/'.$product->image)}}" alt="{{$product->name}}">
-                                        <div class="text-left">
-                                            <h5 class="text-gray-800 font-semibold text-[13px] md:text-sm">{{ $product->name }}</h5>
-                                            <p class="font-semibold text-[11px] text-gray-500 hidden md:block">{{ Str::limit($product->description, 40) }}</p>
-                                            <p class="font-semibold text-[11px] text-gray-500 md:hidden block">{{ Str::limit($product->sousCategory->name, 20) }}</p>
+                                <div class="productDiv">
+                                    <div class="productContent">
+                                        <img class="productImage" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                                        <div class="productText">
+                                            <h5 class="productName">{{ $product->name }}</h5>
+                                            <p class="productDescription desktop">{{ Str::limit($product->description, 40) }}</p>
+                                            <p class="productSousCategory mobile">{{ Str::limit($product->sousCategory->name, 20) }}</p>
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <!-- <h5 class="mt-2 text-gray-700 font-semibold text-sm">{{ $product->name }}</h5> -->
-                                        <div class="my-2 flex justify-between gap-1">
-                                            <p class="text-[--color1-green] font-bold md:text-sm text-[12px] mt-1">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '')  }} GNF</p>
-                                            @php
-                                                $cartItem = Cart::instance('cart')->content()->firstWhere('id', $product->id);
-                                                $qty = $cartItem ? $cartItem->qty : 0;
-                                                $rowId = $cartItem->rowId;
-                                            @endphp
+                                    <div class="priceAndActions">
+                                        <p class="productPrice">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '') }} GNF</p>
 
-                                            <div class="flexCenter gap-1 md:gap-2 rounded-full bg-[#e5e7eb] p-1">
-                                                <button wire:click="decreaseQuantity('{{$rowId}}')">
-                                                    <x-icon name="circle-moins" fill="#fff" color="#fff" size="20" class="shadow-md rounded-full" />
-                                                </button>
-                                                <p class="text-xs md:text-sm font-semibold">{{ $qty }}</p>
-                                                <button wire:click="increaseQuantity('{{$rowId}}')">
-                                                    <x-icon name="circle-plus" fill="{{ $qty > 0 ? '#ce9c2d' : '#fff' }}" size="20" class="shadow-md rounded-full" />
-                                                </button>
-                                            </div>
+                                        @php
+                                            $cartItem = Cart::instance('cart')->content()->firstWhere('id', $product->id);
+                                            $qty = $cartItem ? $cartItem->qty : 0;
+                                            $rowId = $cartItem->rowId;
+                                        @endphp
+
+                                        <div class="quantityControl">
+                                            <button wire:click="decreaseQuantity('{{ $rowId }}')">
+                                                <x-icon name="circle-moins" fill="#fff" color="#fff" size="20" class="icon" />
+                                            </button>
+                                            <p class="quantity">{{ $qty }}</p>
+                                            <button wire:click="increaseQuantity('{{ $rowId }}')">
+                                                <x-icon name="circle-plus" fill="{{ $qty > 0 ? '#ce9c2d' : '#fff' }}" size="20" class="icon" />
+                                            </button>
                                         </div>
                                     </div>
-            
                                 </div>
+
                                 @else 
-                                <button wire:click="addToCart({{$product}})" class="productDiv min-w-[145px] md:min-w-[200px] max-w-[220px] pt-2 px-2 overflow-x-hidden text-center rounded-md shadow-md bg-[--white]">
-                                    <div class="flexLeft gap-2 pt-2">
-                                        <img class="w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-md object-cover" src="{{asset('storage/'.$product->image)}}" alt="{{$product->name}}">
+                                <button wire:click="addToCart({{$product}})" class="productDiv">
+                                    <div class="productContent">
+                                        <img class="productImage" src="{{asset('storage/'.$product->image)}}" alt="{{$product->name}}">
                                         <div class="text-left">
-                                            <h5 class="text-gray-800 font-semibold text-[13px] md:text-sm">{{ $product->name }}</h5>
-                                            <p class="font-semibold text-[11px] text-gray-500 hidden md:block">{{ Str::limit($product->description, 40) }}</p>
-                                            <p class="font-semibold text-[11px] text-gray-500 md:hidden block">{{ Str::limit($product->sousCategory->name, 20) }}</p>
+                                            <h5 class="productName">{{ $product->name }}</h5>
+                                            <p class="productDescription desktop">{{ Str::limit($product->description, 40) }}</p>
+                                            <p class="productSousCategory mobile">{{ Str::limit($product->sousCategory->name, 20) }}</p>
                                         </div>
                                     </div>
                                     <div class="">
                                         <!-- <h5 class="mt-2 text-gray-700 font-semibold text-sm">{{ $product->name }}</h5> -->
-                                        <div class="my-2 flex justify-between">
-                                            <p class="text-[--color2-yellow] font-bold md:text-sm text-[12px] mt-1">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '')  }} GNF</p>
+                                        <div class="priceAndActions">
+                                            <p class="productPrice">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '')  }} GNF</p>
                                             @php
                                                 $cartItem = Cart::instance('cart')->content()->firstWhere('id', $product->id);
                                                 $qty = $cartItem ? $cartItem->qty : 0;
                                             @endphp
 
-                                            <div class="flexCenter gap-1 md:gap-2 rounded-full bg-[#e5e7eb] p-1">
-                                                <x-icon name="circle-moins" fill="#fff" color="#fff" size="17" class="shadow-md rounded-full" />
+                                            <div class="quantityControl">
+                                                <x-icon name="circle-moins" fill="#fff" color="#fff" size="17" class="icon" />
                                                 <p class="text-xs md:text-sm font-semibold">{{ $qty }}</p>
-                                                <x-icon name="circle-plus" fill="{{ $qty > 0 ? '#025239' : '#fff' }}" size="17" class="shadow-md rounded-full" />
+                                                <x-icon name="circle-plus" fill="{{ $qty > 0 ? '#025239' : '#fff' }}" size="17" class="icon" />
                                             </div>
                                         </div>
                                     </div>
@@ -147,37 +147,39 @@
                             <div class="productsContent">
                                 @foreach($cartContent as $item)
                                     <div class="invoiceProduct">
-                                        <button wire:click="removeProduct('{{$item['rowId']}}')" class="absolute right-3 top-2">
-                                            <x-icon name="delete" fill="#b91c13" size="14" class="cursor-pointer"/>
+                                        <button wire:click="removeProduct('{{$item['rowId']}}')" class="delete">
+                                            <x-icon name="delete" fill="#7b1818" size="14" class="cursor-pointer"/>
                                         </button>
-                                        <div class="">
-                                            <img class="w-16 h-full object-cover shadow-xs rounded-sm" src="{{asset('storage/'.$item['image'])}}" alt="$item['name']">
+                                        <div class="invoiceProductHeader">
+                                            <div class="">
+                                                <img class="" src="{{asset('storage/'.$item['image'])}}" alt="$item['name']">
+                                            </div>
+                                            <div class="w-full">
+                                                <p class="productName">{{$item['name']}}</p>
+                                                <p class="productDesc">{{Str::limit($item['description'], 40)}}</p>
+                                            </div>
                                         </div>
-                                        <div class="w-full">
-                                            <p class="text-[12px] md:text-sm font-bold roboto">{{$item['name']}}</p>
-                                            <p class="text-xs font-medium text-gray-500">{{Str::limit($item['description'], 30)}}</p>
-                                            <div class="w-full pt-2 flex justify-between">
-            
-                                            <div class="flexCenter gap-2 rounded-full bg-[#e9e9e9] p-1 shadow-sm">
+                                        <div class="productFooter">
+        
+                                            <div class="quantityControl">
                                                 <button wire:click="decreaseQuantity('{{$item['rowId']}}')">
-                                                    <x-icon name="circle-moins" fill="#fff" color="#fff" size="17" class="rounded-full bg-[#ccc]" />
+                                                    <x-icon name="circle-moins" fill="#fff" color="#fff" size="20" class="" />
                                                 </button>
-                                                <p class="text-xs font-semibold">{{ $item['qty'] }}</p>
+                                                <p class="font-semibold">{{ $item['qty'] }}</p>
                                                 <button wire:click="increaseQuantity('{{$item['rowId']}}')">
-                                                    <x-icon name="circle-plus" fill="#fff" size="17" class="rounded-full bg-[#ccc]" />
+                                                    <x-icon name="circle-plus" fill="#fff" size="20" class="" />
                                                 </button>
+                                            </div>
+    
+        
+                                            <div class="">
+                                                <p class="subtotal">{{number_format($item['subtotal'], 0, '.', '')}} GNF</p>
                                             </div>
         
-            
-                                                <div class="">
-                                                    <p class="text-xs font-semibold text-gray-500">{{number_format($item['subtotal'], 0, '.', '')}} GNF</p>
-                                                </div>
-            
-                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
-                                <button wire:click="clearCart" class="px-2 py-2 text-[12px] md:text-sm bg-[--color2-yellow] text-white rounded-sm shadow-md font-bold">Vider le panier</button>
+                                <button wire:click="clearCart" class="btnVider">Vider le panier</button>
                             </div>
                         @endif
                     </div>
@@ -187,12 +189,12 @@
                         @if(!Cart::instance('cart')->content()->isEmpty())
                         <div class="coupon_payement">
                             <form wire:submit="applyCoupon">
-                                <div class="w-3/3 flex gap-2 py-3">
-                                    <input type="text" name="coupon" class="w-2/3 text-xs outline-none border border-gray-200 py-2 md:py-3 px-2 rounded-sm" wire:model="couponCode" placeholder="Appliquer un coupon">
+                                <div class="couponContent">
+                                    <input type="text" name="coupon" class="couponInput" wire:model="couponCode" placeholder="Appliquer un coupon">
                                     @error('coupon')
                                         <p class="alert-danger">{{$message}}</p>
                                     @enderror
-                                    <button class="w-1/3 text-xs bg-green-900 text-white px-2 py-1 rounded-sm font-semibold">Appliquer</button>
+                                    <button class="couponApplyBtn">Appliquer</button>
                                 </div>
                                 @if(Session::has('discounts'))
                                     <div class="flex items-center gap-2">
@@ -204,64 +206,27 @@
 
 
                             <!-- INFORMATIONS DU CLIENT -->
-                             
-                            <div class="mb-4">
-                                @if($lieu == "aLivrer")
-                                <h2 class="font-bold text-md text-gray-800">1. Veuillez remplir les Informations du client</h2>
-                                @else
-                                <h2 class="font-bold text-md text-gray-800">1. Le serveur</h2>
-                                @endif
-                            </div>
-                            @if($lieu == "aLivrer")
-                            <div class="contactInfos">
-                                <div class="infosContent">
-                                    <div class="">
-                                        <div class="icon-input">
-                                            <x-icon name="user-vide" fill="#939393" />
-                                            <input type="text" wire:model="name" value="{{old('name')}}" placeholder="Nom complet">
-                                        </div>
-                                        @error('name')
-                                            <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
-                                        @enderror
-                                    
-                                    </div>
-                                    <div class="">
-                                        <div class="icon-input">
-                                            <x-icon name="phone" fill="#939393" />
-                                            <input type="number" wire:model="phone" value="{{old('phone')}}" placeholder="Téléphone">
-                                        </div>
-                                        @error('phone')
-                                            <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="">
-                                        <div class="icon-input">
-                                            <x-icon name="enveloppe" fill="#939393" />
-                                            <input type="email" wire:model="email" value="{{old('email')}}" placeholder="Email">
-                                        </div>
-                                        @error('email')
-                                            <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
-                                        @enderror
-                                    </div>
+                            
+                            @if(!$isManager)
+                                <div class="mb-4">
+                                    <h2 class="font-bold text-md text-gray-800">. Qui a passé la commande ? </h2>
                                 </div>
-                            </div>
-                            @else 
-                            <select wire:change="choice($event.target.value)" class="py-2 px-3 bg-[#ececec] my-3 rounded-md shadow-md min-w-[150px]">
-                                <option value="">Sélectionnez un serveur</option>
-                                @foreach($serveurs as $serveur)
-                                    <option value="{{$serveur->id}}">{{$serveur->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('serveur')
-                                <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
-                            @enderror
+                                <select wire:change="choice($event.target.value)" class="selectServeur">
+                                    <option value="">Sélectionnez un serveur</option>
+                                    @foreach($serveurs as $serveur)
+                                        <option value="{{$serveur->id}}">{{$serveur->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('serveur')
+                                    <span class="alert alert-danger">{{$message}}</span>
+                                @enderror
                             @endif
 
                             <!-- FIN INFORMATIONS DU CLIENT -->
     
                             <!-- MODE DE PAYEMENT -->
                             <div class="">
-                                <h4 class="text-md font-semibold">2. Mode de payement</h4>
+                                <h4 class="text-md font-semibold">. Mode de payement</h4>
 
                                 <div class="payementModesContent">
 
@@ -281,7 +246,7 @@
                             <!-- MODE DE LIVRAISON -->
                             <div class=" ">
                         
-                                <h2 class="text-md font-semibold">3. Mode de livraison</h2>
+                                <h2 class="text-md font-semibold">. Mode de livraison</h2>
                                 <div class="modesDeLivraisonContent ">
                                     <input type="radio" checked name="modeLivraison" id="surPlace" class="hidden">
                                     <label for="surPlace" wire:click="choisirLieu('surPlace')">Sur place</label>
@@ -300,6 +265,34 @@
                                     <h4 class="font-bold text-lg my-5">Veuillez remplir ce formulaire pour la livraison</h4>
                                     <div class="contactInfos">
                                         <div class="infosContent">
+                                            <div class="">
+                                                <div class="icon-input">
+                                                    <x-icon name="user-vide" fill="#939393" />
+                                                    <input type="text" wire:model="name" value="{{old('name')}}" placeholder="Nom complet">
+                                                </div>
+                                                @error('name')
+                                                    <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
+                                                @enderror
+                                            
+                                            </div>
+                                            <div class="">
+                                                <div class="icon-input">
+                                                    <x-icon name="phone" fill="#939393" />
+                                                    <input type="number" wire:model="phone" value="{{old('phone')}}" placeholder="Téléphone">
+                                                </div>
+                                                @error('phone')
+                                                    <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="">
+                                                <div class="icon-input">
+                                                    <x-icon name="enveloppe" fill="#939393" />
+                                                    <input type="email" wire:model="email" value="{{old('email')}}" placeholder="Email">
+                                                </div>
+                                                @error('email')
+                                                    <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
+                                                @enderror
+                                            </div>
                                             <div class="">
                                                 <div class="icon-input">
                                                     <x-icon name="ville" fill="#939393" />
@@ -357,13 +350,12 @@
 
         
                         <div class="py-5 px-3">
-                            <p class="text-lg font-bold text-gray-700">Nbre Produits : <span class="">{{count($cartContent)}}</span></p>
+                            <p class="nbreProduits">Nbre Produits : <span class="">{{count($cartContent)}}</span></p>
                             @if(Session::has('discounts'))
-                                <p class="text-sm text-gray-800">Rabais : <span>{{ number_format(Session::get('discounts')['discount'], 0, '.', '')}}</span></p>
-                                <h3 class="text-sm text-gray-600">Total : <span>{{ number_format(Session::get('discounts')['total'], 0, '.', '')}}</span></h3>
+                                <p class="rabais">Rabais : <span>{{ number_format(Session::get('discounts')['discount'], 0, '.', '')}}</span></p>
+                                <h3 class="total">Total : <span>{{ number_format(Session::get('discounts')['total'], 0, '.', '')}}</span></h3>
                             @else
-                                
-                                <h3 class="text-lg text-gray-900 font-bold">Total: <span>{{$total}} GNF</span></h3>
+                                <h3 class="text-lg text-gray-900 font-bold">Total: <span>{{number_format((float) str_replace(',', '', $total), 0, '.', '.')}} GNF</span></h3>
                             @endif
                         </div>
         
@@ -379,14 +371,14 @@
                     </div>
     
                     @if(!$cartContent == [] && $commandeCreee == false)
-                        <button class="px-3 py-2 bg-[--color1-green] text-white rounded-sm w-full font-semibold" wire:click="createOrder">Commander</button>
+                        <button class="btnClickCommande" wire:click="createOrder">Commander</button>
                     @else
                         @if(isset($order))
-                        <div class="text-[--color1-green] flexLeft gap-3">
+                        <div class="text-[--color1-green] flex gap-3 items-center">
                             <x-icon name="success" fill="#05821c"/>
                             <span>Commande validée ! </span>
                         </div>
-                        <div class="telechargementBtns flex gap-4 mt-7">
+                        <div class="telechargementBtns">
                             <a href="{{route('facture.telecharger', ['order' => $order])}}" class="btnCommander">Télecharger la facture</a> 
                             <a href="{{route('recu.telecharger', ['order' => $order])}}" class="btnCommander">Télecharger le recu de cuisine</a>
                         </div>

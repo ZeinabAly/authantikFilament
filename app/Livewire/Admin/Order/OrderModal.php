@@ -3,14 +3,13 @@
 namespace App\Livewire\Admin\Order;
 
 use Livewire\Component;
-use App\Models\Employee;
 use Livewire\Attributes\On;
 use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\CheckoutService;
 use App\Jobs\OrderNotificationJob;
 use Illuminate\Support\Facades\Session;
-use App\Models\{Product, SousCategory, Address, User, Order};
+use App\Models\{Product, SousCategory, Address, User, Order, Employee};
 
 class OrderModal extends Component
 {
@@ -47,11 +46,18 @@ class OrderModal extends Component
     public $serveurs;
     public $serveur;
     public $selectedServeur = null;
+    public $isManager = false;
+    
 
 
     public function mount(CartService $cartService){
 
-        $this->total = $cartService->getCartTotal();
+        if(auth()->check() && auth()->user()->hasAnyRole(['Admin', 'Manager'])){
+            $this->isManager = true;
+            $this->serveur = auth()->user();
+        }
+
+        $this->total =  $cartService->getCartTotal();
 
         $this->products = Product::all();
         $this->sousCategories = SousCategory::all();
@@ -62,12 +68,13 @@ class OrderModal extends Component
         // Je change de logique, il n'y a pas que les serveurs, tous les employés peuvent passer une cmd
  
         $this->serveurs = Employee::get();
+
     }
 
     protected function rules()
     {
         return [
-            'serveur' => $this->lieu !== 'aLivrer' ? 'required' : 'nullable',
+            'serveur' => 'required',
             'name' => $this->lieu == 'aLivrer' ? 'required|string|min:3' : '',
             'phone' => $this->lieu == 'aLivrer' ? 'required|digits:9' : '',
             'email' => $this->lieu == 'aLivrer' ? 'email|nullable' : '',
@@ -94,11 +101,12 @@ class OrderModal extends Component
             'adresse.min' => 'Ce champ doit contenir au moins 3 caractères',
             'quartier.required' => 'Ce champ est obligatoire',
             'quartier.min' => 'Ce champ doit contenir au moins 3 caractères',
+            'serveur.required' => 'Veuillez selectionner un serveur',
         ];
     }
 
     public function choice(int $serveurId){
-        $this->serveur = User::find($serveurId)->first();
+        $this->serveur = Employee::findOrFail($serveurId);
     }
 
 
@@ -241,6 +249,7 @@ class OrderModal extends Component
     }
 
     public function createOrder(OrderService $orderService, CartService $cartService, CheckoutService $checkoutService){
+        
         $this->validate();
 
         if($this->lieu == "aLivrer"){
@@ -257,15 +266,32 @@ class OrderModal extends Component
             ];
 
             $this->newAdresse = Address::create($data);
-            $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse = $this->newAdresse, $lieu = $this->lieu, $name = $this->name, $phone = $this->phone, $email = $this->email);
+
+            $serveur_id = null;
+            if(auth()->check() && auth()->user()->hasAnyRole(['Admin', 'Manager'])){
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null);
+            }else{
+                $serveur_id = $this->serveur->id;
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id);
+            }
+
         
             $this->commandeCreee = true;
-            $this->clearCart($cartService, $checkoutService);
-    
             OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
             
+            $this->clearCart($cartService, $checkoutService);
+    
+            
         }else if($this->lieu == "aEmporter" || $this->lieu == "surPlace"){
-            $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse = $this->newAdresse, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $commander_par = "serveur");
+            
+            $serveur_id = null;
+            if(auth()->check() && auth()->user()->hasAnyRole(['Admin', 'Manager'])){
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null);
+            }else{
+                $serveur_id = $this->serveur->id;
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id);
+            }
+
             $this->commandeCreee = true;
             $this->clearCart($cartService, $checkoutService);
     
@@ -294,7 +320,7 @@ class OrderModal extends Component
                 'image' => $item->model->image ?? null,
                 'description' => $item->model->description,
                 'short_description' => $item->model->short_description,
-                
+
             ];
         })->toArray();
 

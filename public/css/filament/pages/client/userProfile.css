@@ -1,0 +1,242 @@
+.fi-main {
+    position: relative;
+    background: #e8e8e8;
+}
+.monCompte{
+    /* @apply md:mt-[--topBarHeight-md] mt-[--topBarHeight] h-full px-5 bg-[#e8e8e8] h-full py-5 flex flex-wrap; */
+    min-height: 100vh;
+    padding-inline: 10px;
+    padding-block: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+.dark .monCompte{
+    background: #18181b;
+    box-shadow: 2px 2px 5px #00000099;
+}
+
+
+.monCompte section{
+    /* @apply min-w-full md:min-w-[400px] w-full shadow-md rounded-md p-5; */
+    background: #f9f8f8;
+    width: 100%;
+    /* min-width: 400px; */
+    box-shadow: 2px 2px 2px #cccccc94;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.dark .monCompte section{
+    background: #2d2d2d;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+}
+
+
+
+.monCompte .section-img-infos{
+    width: 100%;
+    display: flex;
+    gap: 12px;
+
+}
+
+@media screen and (max-width: 680px) {
+    .monCompte .section-img-infos{
+        flex-direction: column;
+    }
+}
+
+.monCompte .section-img-infos .section1, .monCompte .section-img-infos .section2 {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .monCompte .section-img-infos .section1, .monCompte .section-img-infos .section2 {
+        width: 100%;
+    }
+}
+
+.monCompte .section1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.monCompte .section1{
+    text-align: center;
+}
+/* @media screen and (min-width: 768px) {
+    .monCompte .sectionContent{
+        text-align: left;
+    }
+} */
+
+.monCompte .sectionTitre{
+    /* mb-4 text-lg font-medium text-gray-900 dark:text-gray-100 */
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(53, 53, 53);
+}
+
+.dark .monCompte .sectionTitre{
+    color: rgb(244, 244, 244);
+}
+
+.monCompte .img-btn-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.monCompte .userImgContent img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.btnCommander {
+    background-color: #1A1F2C;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: 2px;
+    border: 1px solid #1A1F2C;
+    transition: 0.4s;
+}
+@media (min-width: 768px) {
+.btnCommander {
+    font-size: 15px;
+}
+}
+
+.btnCommander:hover {
+    background-color: white;
+    color: #1A1F2C;
+}
+
+.dark .btnCommander {
+    background-color: rgb(189, 185, 185);
+    color: #1A1F2C;
+}
+
+.btnsContent{
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.monCompte .btnAnnuler{
+    background: #670b0b;
+    border: 1px solid #670b0b;
+    color: white;
+}
+
+.btnAnnuler:hover {
+    background-color: white;
+    color: #320503;
+}
+
+
+.monCompte .profilInput{
+    width: 100%;
+    margin-top: 3px;
+    display: block;
+    box-shadow: 2px 2px 2px #cccccc94 inset, -2px -2px 2px #cccccc94 inset;
+}
+
+.dark .monCompte .profilInput{
+    box-shadow: 2px 2px 2px #63636394 inset, -2px -2px 2px #63636394 inset;
+}
+
+.monCompte .formLabel{
+    color: #000;
+}
+
+.dark .monCompte .formLabel{
+    color: #fff;
+}
+.badge.bg-success{
+    @apply bg-[--color1-green] text-white px-2 py-1 rounded-sm font-semibold;
+}
+
+.badge.bg-warning{
+    @apply bg-yellow-500 text-white px-2 py-1 rounded-sm font-semibold;
+}
+
+.badge.bg-danger{
+    @apply bg-red-700 text-white px-2 py-1 rounded-sm font-semibold;
+}
+
+.photoModaleContainer{
+    /* fixed z-[200] inset-0 flex items-center justify-center bg-black bg-opacity-50 */
+    width: 100%;
+    min-height: 100vh;
+    position: fixed;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0000008f;
+    /* opacity: .5; */
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px;
+}
+
+.photoModaleContainer .formContent{
+    /* bg-white absolute p-6 rounded-lg shadow-lg w-[60%] top-[20%] left-[0%] */
+    background: #fff;
+    padding: 20px;
+    position: absolute;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px #cccccc94 inset, -2px -2px 2px #cccccc94 inset;
+    width: 60%;
+    top: 20%;
+    left: 0;
+}
+
+.photoModaleContainer .photoTitre{
+    /* text-xl font-semibold mb-4
+     */
+     font-size: 25px;
+     font-weight: 600;
+     margin-bottom: 8px;
+     color: #000;
+}
+
+.photoModaleContainer .photoModale{
+    /* max-h-[50px] max-w-[50px] */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.icon-light{
+    display: block;
+}
+
+.icon-dark{
+    display: none;
+}
+
+.dark .icon-light{
+    display: none;
+}
+
+.dark .icon-dark{
+    display: block;
+}

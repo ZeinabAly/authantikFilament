@@ -42,4 +42,10 @@ class Coupon extends Model
 
         return "C{$datePart}{$valuePart}{$randomPart}";
     }
+
+    // Pour avoir le slug a la place de l'id dans l'url
+    public function getRouteKeyName(): string
+    {
+        return 'code';
+    }
 }
