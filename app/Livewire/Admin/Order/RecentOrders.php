@@ -14,7 +14,9 @@ use App\Filament\Resources\Admin\OrderResource\Pages;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Livewire\Attributes\On;
 
+#[On('commandeModifiée')]
 class RecentOrders extends Component implements HasForms,HasTable
 {
 
@@ -73,8 +75,14 @@ class RecentOrders extends Component implements HasForms,HasTable
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->toggleable()
-                    ->toggleable()
+                    ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('table')
+                    ->label('Table')
+                    ->toggleable()
+                    ->searchable()
+                    ->sortable()
+                    ->default('-'),
                 Tables\Columns\TextColumn::make('total')
                     ->label('Total')
                     ->searchable()
@@ -100,6 +108,7 @@ class RecentOrders extends Component implements HasForms,HasTable
                         ->color('') // Couleur du bouton
                         ->action(function (Order $record) {
                             $this->editOrder($record->id);
+
                     }),
                     Tables\Actions\DeleteAction::make(),
                 ]),

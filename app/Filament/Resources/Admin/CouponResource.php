@@ -106,7 +106,10 @@ class CouponResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -121,6 +124,7 @@ class CouponResource extends Resource
         return [
             'index' => Pages\ListCoupons::route('/'),
             'create' => Pages\CreateCoupon::route('/create'),
+            'view' => Pages\ViewCoupon::route('/{record}'),
             'edit' => Pages\EditCoupon::route('/{record}/edit'),
         ];
     }

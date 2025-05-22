@@ -24,7 +24,7 @@
                     @endif
                     <div class="platsContent">
                         @foreach($platsDuJour as $platDuJour)
-                            <button class="productDiv">
+                            <div class="productDiv">
                                 <div class="">
                                     <img class="productDivImg" src="{{asset('storage/'.$platDuJour->image)}}" alt="{{$platDuJour->name}}">
                                 </div>
@@ -36,7 +36,11 @@
                                         
                                     </div>
                                 </div>
-                            </button>
+
+                                <button class="btnRetirerPlats" wire:click="retirerDesPlats({{$platDuJour->id}})">
+                                    <x-icon name="btn-fermer" fill="#741704" size="14" class="cursor-pointer"/>
+                                </button>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -61,7 +65,9 @@
     
                     <!-- Fin zone recheche -->
                     <div class="">
-                        <h2 class="titre2">Les categories</h2>
+                        <div class="titre2Content">
+                            <h2 class="titre2">Les categories</h2>
+                        </div>
                         <!-- Zone categorie -->
                         <div class="adminCategoriesContent">
                             
@@ -79,10 +85,13 @@
                         </div>
                     
                         <!-- AFFICHAGE DES PRODUITS -->
-                        <h2 class="titre2">Les plats</h2>
+                        <div class="titre2Content">
+                            <h2 class="titre2">Les plats</h2>
+                            <span>Cliquer sur ajouter pour l'ajouter un plat aux plats du jour</span>
+                        </div>
                         <div class="platsContent">
                             @foreach($products as $product)
-                                <button class="productDiv">
+                                <div class="productDiv {{$platsDuJour->contains('id', $product->id) ? 'hidden' : ''}}">
                                     <div class="">
                                         <img class="productDivImg" src="{{asset('storage/'.$product->image)}}" alt="{{$product->name}}">
                                     </div>
@@ -91,11 +100,14 @@
                                         <div class="productTextContent">
                                             <p class="prix">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '')  }} GNF</p>
                                             <p class="category">{{ Str::limit($product->sousCategory->name, 10) }}</p>
-                                            
+                                            <button class="btnAjouterPlats" wire:click="ajouterAuxPlats({{$product->id}})">
+                                                <x-icon name="plus" size="12" fill="#fff" />
+                                                <span>Ajouter</span>
+                                            </button>
                                         </div>
                                     </div>
-    
-                                </button>
+
+                                </div>
                             @endforeach
 
                         </div>
@@ -128,32 +140,40 @@
                                             <span class="font-semibold">{{$item->product->name}}</span>,
                                         @endforeach
                                     </div>
+
                                     <p class="">
                                         <span>{{$dayOrder->note == "" ? 'Aucune note' : $dayOrder->note}}</span>
                                     </p>
-                                    <div class="flexBetween">
+                                    
+                                    
+                                    <div class="flex items-center gap-4">
                                         <p class="">
                                             <span class="font-bold">Lieu : </span>
                                             <span>{{$dayOrder->lieu}}</span>
                                         </p>
-                                        {{-- <p class="">
+                                        
+                                        <p class="">
+                                            <span class="font-bold">{{$dayOrder->table}}</span>
+                                        </p>
+                                    </div>
+
+                                    <!-- STATUS -->
+                                    <div class="">
+                                        <p class="">
+                                            <span class="font-bold">Status : </span>
                                             @if($dayOrder->status == "En cours")
-                                            <span class="bg-[--color2-yellow] py-[1px] px-2 rounded-sm text-white font-semibold">{{$dayOrder->status}}</span>
+                                            <span class="badge badge-warning">{{$dayOrder->status}}</span>
                                             @elseif($dayOrder->status == "Livrée")
-                                            <span class="bg-[--color1-green] py-[1px] px-2 rounded-sm text-white font-semibold">{{$dayOrder->status}}</span>
+                                            <span class="badge badge-success">{{$dayOrder->status}}</span>
                                             @elseif($dayOrder->status == "Annulée")
-                                            <span class="bg-red-600 py-[1px] px-2 rounded-sm text-white font-semibold">{{$dayOrder->status}}</span>
+                                            <span class="badge badge-danger">{{$dayOrder->status}}</span>
                                             @endif
-                                        </p> --}}
+                                        </p>
                                     </div>
     
-                                    <div class="flexBetween gap-5">
-                                        {{-- @if($dayOrder->lieu == "Sur place") 
-                                        <p class="">
-                                            <span class="font-bold">Table : </span>
-                                            <span>1</span>
-                                        </p>
-                                        @endif --}}
+
+                                    <!-- Total -->
+                                    <div class="">
                                         <p class="">
                                             <span class="text-[--color1-green]"><span class="font-bold mr-2">Total : </span>{{number_format($dayOrder->total, 0, ',', '.')}} GNF</span>
                                         </p>

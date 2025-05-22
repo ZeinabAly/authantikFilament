@@ -119,11 +119,17 @@ class AdminPanelProvider extends PanelProvider
                 'panels::user-menu.before',
                 fn (): string => view('filament.custom.topbar-button')->render()
             )
+            // Inserer l'icone de notification
+            ->renderHook(
+                'panels::user-menu.before',
+                fn (): string => view('filament.custom.notification-icon')->render()
+            )
             // INSERER LA MODAL DANS LE MAIN DU BODY
             ->renderHook(
                 'panels::content.start',
                 fn (): string => view('filament.resources.admin.order-resource.pages.create-order-modal')->render()
-            );;
+            )
+            ->databaseNotifications();
             
     }
 }

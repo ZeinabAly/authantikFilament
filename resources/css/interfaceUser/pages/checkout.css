@@ -74,8 +74,22 @@
 .modes .btnSubmit{
     @apply bg-[--color2-yellow] text-white px-5 py-2 rounded-sm font-bold my-7;
     box-shadow: 2px 2px 2px #4543434f;
+    cursor: pointer;
 }
 
+  /* LES TABLES DU RESTAURANTS */
+  .modes .restaurantTableContent select{
+    width: 100%;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 2px 2px 2px #00000022;
+    background: #f0f0f0;
+    border: 1px solid rgb(218, 218, 218);
+  }
+  .modes .restaurantTableContent select:focus{
+    outline: none;
+    border: 1px solid rgb(218, 218, 218);
+  }
 
 /* MODE DE PAYEMENT */
 
@@ -88,8 +102,9 @@
     margin: 0.75rem 0;
     width: 100%;
     border-radius: 6px;
+    box-shadow: 2px 2px 2px #00000022;
     background: #f0f0f0;
-    box-shadow: 2px 2px 2px #7c7b7b35, -2px -2px 2px #7c7b7b35;
+    border: 1px solid rgb(218, 218, 218);
 }
 
 .modePayement .modesPayementContent div, .modeDeLivraison .modesDeLivraisonContent div{
@@ -149,4 +164,50 @@
 /* Message dd'erreur */
 .alert-danger{
     @apply font-bold;
+}
+
+/* BOITE DE CONFIRMATION  */
+ .confirmationBox{
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00000041;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+
+.confirmationContent{
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px #00000012;
+}
+
+.confirmationContent h3, .confirmationContent p{
+    color: black;
+}
+
+.confirmationContent .btnAnnulerCmd{
+    padding: 8px 8px;
+    background: #e4e4e7;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+}
+
+.confirmationContent .btnConfirmerCmd{
+    padding: 8px 8px;
+    background: #003b27;
+    border-radius: 2px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
 }

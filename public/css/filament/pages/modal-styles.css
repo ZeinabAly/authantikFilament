@@ -83,12 +83,20 @@
   
 /******************* LES CATEGORIES ******************/
 
-.titre2{
+.titre2Content{
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  border-bottom: 1px dotted #7a7a7a73;
+}
+
+.titre2{
   font-weight: bold;
   font-size: 1.8rem;
-  border-bottom: 1px dotted #7a7a7a73;
+}
+
+.titre2Content span{
+  font-size: 0.8rem;
+  color: #3c3a3a;
 }
 
 .adminCategoriesContent {
@@ -682,17 +690,6 @@
   .orderModal .productFooter .quantityControl p{
     padding-inline: 3px;
   }
-  
-  /* .orderModal .invoiceContent .invoiceProduct .quantityControl {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    background: #e9e9e9;
-    border-radius: 9999px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-  } */
-  
     
 .orderModal .quantityControl {
   display: flex;
@@ -803,6 +800,18 @@
     color: #000000;
   }
 
+  /* LES TABLES DU RESTAURANTS */
+  .modalContent .restaurantTableConten select{
+    width: 100%;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 2px 2px 2px #00000022;
+  }
+  .modalContent .restaurantTableConten select:focus{
+    outline: none;
+    border: 1px solid rgb(104, 102, 102);
+  }
+
   .btnClickCommande{
     /* px-3 py-2 bg-[--color1-green] text-white rounded-sm w-full font-semibold */
     width: 100%;
@@ -855,8 +864,6 @@
     color: #b7b4b4;
   }
 
-  
-  
   
   .telechargementBtns {
     display: flex;

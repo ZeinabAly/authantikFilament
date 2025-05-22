@@ -35,12 +35,18 @@ class ClientPanelProvider extends PanelProvider
             ->pages([
                 // Pages\Client\Dashboard::class,
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
                 // StatsClient::class,
             ])
+            // Inserer l'icone de notification
+            ->renderHook(
+                'panels::user-menu.before',
+                fn (): string => view('filament.custom.notification-icon')->render()
+            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -52,6 +58,7 @@ class ClientPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ]);

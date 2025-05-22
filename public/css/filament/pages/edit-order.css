@@ -3,17 +3,22 @@
 
 .fi-main{
     position: relative;
+    background: rgb(233, 233, 233);
 } 
 
 .editOrderModal {
     width: 100%;
     height: 100%;
-    min-height: 150vh;
-    background: rgb(233, 233, 233);
     padding: 15px;
+    background: rgb(233, 233, 233);
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
+}
+
+.clientEditModal input{
+    color: #484646 !important;
 }
 
 .dark .editOrderModal {
@@ -59,6 +64,11 @@
 .editOrderModal .contactInfos input::placeholder {
     color: #939393;
 }
+  
+  
+.dark .editOrderModal .contactInfos input::placeholder {
+    color: #66636349;
+}
 
 .editOrderModal .contactInfos .icon-input {
     display: flex;
@@ -80,12 +90,16 @@
 
 .editOrderModal .contactInfos .icon-input input {
     outline: 0;
-    border: 0;
+    border: none;
+    box-shadow: 0 0 0;
     width: 100%;
     background: transparent;
-    color: #ccc;
+    color: #303030;
 }
 
+.dark .editOrderModal .contactInfos .icon-input input {
+    color: #c9c8c8;
+}
 
 .editOrderModal .btnRetirer, .editOrderModal .btnAjouter{
     /* text-center px-2 py-[2px] rounded-sm text-white bg-[--color1-green] text-xs */
@@ -138,7 +152,7 @@
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 0.45rem;
+    gap: 0.7rem;
 }
   
 
@@ -161,9 +175,16 @@
     background: #025239;
     border-radius: 0.35rem;
     color: white;
-    padding: 5px 10px;
-    box-shadow: 2px 2px 2px #6464646e;
+    padding: 10px 15px;
+    box-shadow: 2px 2px 2px #5d5b5b45;
     font-size: 15px;
+    cursor: pointer;
+}
+
+.editOrderModal .payementItem, .editOrderModal .livraisonItem{
+    padding: 10px 15px;
+    box-shadow: 2px 2px 2px #5d5b5b45;
+    cursor: pointer;
 }
 
 .dark .editOrderModal .modePayementSelected, .dark .editOrderModal .modeLivraisonSelected{
@@ -297,7 +318,7 @@
     justify-content: center;
     background: #00000063;
     position: fixed;
-    z-index: 100;
+    z-index: 200;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -362,4 +383,26 @@
 
 .btnRetour .dark{
     display: none;
+}
+
+.alert.alert-danger{
+    color: #ff0404;
+    font-size: 12px;
+}
+
+
+
+.adresseLivraison{
+    margin-left: 20px;
+}
+
+.adresseTitre{
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.adresseLivraison .detailAdresse{
+    font-size: 15px;
+    margin-top: 8px;
 }

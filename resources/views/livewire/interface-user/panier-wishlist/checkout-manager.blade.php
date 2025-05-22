@@ -2,6 +2,7 @@
     <div class="infosClient">
         <form wire:submit="createOrder">
             <h2 class="font-bold text-lg mb-2 text-gray-800">1. Informations de contact</h2>
+            <p class="text-xs text-gray-500 font-semibold mb-5">Veuillez noter que ces données ne sont utilisées que dans le cadre professionnel</p>
             <div class="contactInfos">
                 <div class="infosContent">
                     <div class="">
@@ -39,19 +40,19 @@
             <div class="modePayement">
                 <h2 class="font-bold text-lg mb-1 mt-5 text-gray-800">2. Mode de payement</h2>
                 <div class="modesPayementContent">
-                    <div class="">
+                    <div class="" wire:click="getModePayemeent('liquide')">
                         <input type="radio" checked name="modePayement" id="cash">
                         <label for="cash">En espèce</label>
                     </div>
-                    <div class="">
+                    <div class="" wire:click="getModePayemeent('OM')">
                         <input type="radio" name="modePayement" id="OM">
                         <label for="OM">Orange Money</label>
                     </div>
-                    <div class="">
+                    <div class="" wire:click="getModePayemeent('MM')">
                         <input type="radio" name="modePayement" id="MM">
                         <label for="MM">Mobile Money</label>
                     </div>
-                    <div class="">
+                    <div class="" wire:click="getModePayemeent('livraison')">
                         <input type="radio" name="modePayement" id="livraison">
                         <label for="livraison">A livraison</label>
                     </div>
@@ -80,6 +81,7 @@
                 <div class="adresseLivraison">
                     @if($lieu === "aLivrer")
                     <h4 class="font-bold text-lg my-5">Veuillez remplir ce formulaire pour la livraison</h4>
+                    
                     <div class="contactInfos">
                         <div class="infosContent">
                             <div class="">
@@ -149,6 +151,17 @@
                     @endif
                 </div>
                 <!-- FIN ADRESSE DE LIVRAISON -->
+
+                <!-- CHOISIR UNE TABLE -->
+                <div class="restaurantTableContent">
+                    <h2 class="font-bold text-lg mb-2 mt-5 text-gray-800">4. Veuillez indiquer votre position </h2>
+                    <select wire:click="selectTable(event.target.value)">
+                        <option value="">Choisir une table</option>
+                        @foreach($restaurantTables as $table)
+                        <option value="{{$table->name}}">{{$table->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             @if($commandeCreee == false)
@@ -181,7 +194,7 @@
         <div class="payement_details">
         <div class="detail">
             <span>Sous-total</span>
-            <span>{{Cart::instance('cart')->subtotal()}}</span>
+            <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->subtotal()), 0, '.', '.')}} GNF</span>
         </div>
 
         <div class="detail">
@@ -196,7 +209,7 @@
 
         <div class="total detail">
             <span>Total : </span>
-            <span class="text-[--color2-yellow]">{{Cart::instance('cart')->total()}} GNF</span>
+            <span class="text-[--color2-yellow]">{{number_format((float) str_replace(',', '', Cart::instance('cart')->total()), 0, '.', '.')}} GNF</span>
         </div>
 
         <div class="detail">

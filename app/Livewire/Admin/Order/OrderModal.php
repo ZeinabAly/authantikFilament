@@ -9,7 +9,7 @@ use App\Services\OrderService;
 use App\Services\CheckoutService;
 use App\Jobs\OrderNotificationJob;
 use Illuminate\Support\Facades\Session;
-use App\Models\{Product, SousCategory, Address, User, Order, Employee};
+use App\Models\{Product, SousCategory, Address, User, Order, Employee, RestaurantTable};
 
 class OrderModal extends Component
 {
@@ -48,6 +48,9 @@ class OrderModal extends Component
     public $selectedServeur = null;
     public $isManager = false;
     
+    public $restaurantTables;
+    public $tableSelected;
+    
 
 
     public function mount(CartService $cartService){
@@ -68,6 +71,8 @@ class OrderModal extends Component
         // Je change de logique, il n'y a pas que les serveurs, tous les employés peuvent passer une cmd
  
         $this->serveurs = Employee::get();
+
+        $this->restaurantTables = RestaurantTable::get();
 
     }
 
@@ -116,6 +121,10 @@ class OrderModal extends Component
     }
     public function closeModal(){
         $this->isOpen = false;
+    }
+
+    public function selectTable($table){
+        $this->tableSelected = $table;
     }
     
     public function setSelectedCategory($id){
@@ -269,15 +278,16 @@ class OrderModal extends Component
 
             $serveur_id = null;
             if(auth()->check() && auth()->user()->hasAnyRole(['Admin', 'Manager'])){
-                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null);
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null, $table = $this->tableSelected);
             }else{
                 $serveur_id = $this->serveur->id;
-                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id);
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement,$note = $this->note, $adresse_id = $this->newAdresse->id, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id, $table = $this->tableSelected);
             }
 
         
             $this->commandeCreee = true;
             OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
+            $this->dispatch('notifUpdated');
             
             $this->clearCart($cartService, $checkoutService);
     
@@ -286,10 +296,10 @@ class OrderModal extends Component
             
             $serveur_id = null;
             if(auth()->check() && auth()->user()->hasAnyRole(['Admin', 'Manager'])){
-                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null);
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = null, $table = $this->tableSelected);
             }else{
                 $serveur_id = $this->serveur->id;
-                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id);
+                $this->order = $orderService->createOrder($print = false, $mode_payment = $this->modePayement, $note = $this->note, $adresse_id = null, $lieu = $this->lieu, $name = $this->serveur->name, $phone = $this->serveur->phone, $email = $this->serveur->email, $serveur_id = $serveur_id, $table = $this->tableSelected);
             }
 
             $this->commandeCreee = true;

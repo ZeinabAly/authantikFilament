@@ -205,6 +205,17 @@
                     </div>
                     <!-- FIN ADRESSE DE LIVRAISON -->
                 </div>
+
+                <!-- CHOISIR UNE TABLE -->
+                <div class="restaurantTableContent">
+                    <h2 class="font-bold text-lg mb-2 mt-5 text-gray-800">4. Veuillez indiquer votre position </h2>
+                    <select wire:click="selectTable(event.target.value)">
+                        <option value="">Choisir une table</option>
+                        @foreach($restaurantTables as $table)
+                        <option value="{{$table->name}}">{{$table->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
     
                 @if($commandeCreee == false)
                     <button type="submit" class="btnSubmit">Commander</button>

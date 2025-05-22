@@ -30,7 +30,7 @@
                         
                         <tbody class="tbody">
                             @foreach(Cart::instance('cart')->content() as $item)
-                                <tr>
+                                <tr class="">
                                     <td class="name_image">
                                         <img src="{{asset('storage/'. $item->model->image)}}" alt="">
                                         <div class="flex flex-col gap-2">
@@ -50,10 +50,23 @@
                                         </div>
                                     </td>
                                     <td class="table_col">{{str_replace(',', '.', number_format($item->total, 0))}} GNF</td>
-                                    <td class="table_col col_action">
-                                        <button wire:confirm="Êtes vous sure?" wire:click="removeProduct('{{$item->rowId}}')">
-                                            <x-icon name="delete" fill="#b10303" class="delete"/>
-                                        </button>
+                                    <td class="table_col" x-data = "{confirmDelete: false}">
+                                        <button @click="confirmDelete = true" class=""><x-icon name="delete" class="text-[#b10303]" /></button>
+
+                                        <div x-show="confirmDelete" x-cloak class="confirmationBox" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"  x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
+                                            <div class="confirmationContent">
+                                                <h3 class="text-lg font-bold mb-4">Supprimer le produit</h3>
+                                                <p class="mb-4">Êtes-vous sûr de vouloir retirer ce produit de la commande ?</p>
+                                                <div class="flex justify-end gap-2">
+                                                    <button @click="confirmDelete = false" class="btnAnnulerCmd">
+                                                        Annuler
+                                                    </button>
+                                                    <button wire:click="removeProduct('{{$item->rowId}}')" @click="confirmDelete = false" class="btnConfirmerCmd" style="background: #8b0f0f">
+                                                        Supprimer
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>  
                                     </td>
                                 </tr>
                             @endforeach
@@ -73,14 +86,9 @@
                         <button >Valider</button>
                     </div>
                 </form>
-
-                <p class="tax details">
-                    <span class="titre">Taxe : </span>
-                    <span>{{Cart::instance('cart')->tax()}}</span>
-                </p>
                 <div class="subtotal details">
                     <span class="titre">Sous-Total : </span>
-                    <span>{{Cart::instance('cart')->subtotal()}} GNF</span>
+                    <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->subtotal()), 0, '.', '.')}} GNF</span>
                 </div>
                 <div class="rabais details">
                     <span class="titre">Rabais : </span>
@@ -88,7 +96,7 @@
                 </div>
                 <div class="total details">
                     <span class="titre">Total : </span>
-                    <span>{{Cart::instance('cart')->total()}} GNF</span>
+                    <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->total()), 0, '.', '.')}} GNF</span>
                 </div>
                 <a href="{{route('cart.checkout')}}" class="btnPasserCaisse">Passer à la caisse</a>
             </div>

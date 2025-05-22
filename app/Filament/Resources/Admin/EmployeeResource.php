@@ -207,7 +207,9 @@ class EmployeeResource extends Resource
                     ->label('Salaire')
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->numeric(decimalPlaces: 0)
+                    ->money('GNF'),
                 Tables\Columns\TextColumn::make('embauche_at') 
                     ->label('Date d\'embauche')
                     ->dateTime('d/m/Y')
@@ -249,7 +251,10 @@ class EmployeeResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -265,6 +270,7 @@ class EmployeeResource extends Resource
         return [
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
+            'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
             'profile' => Pages\EmployeeProfile::route('/{record}/profile'),
         ];

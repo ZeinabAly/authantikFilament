@@ -28,7 +28,7 @@
                     </div>
                     @else
                     <div class="header-tools__item hover-container">
-                        <a href="{{ auth()->user()->hasRole('Admin') ? route('filament.admin.pages.dashboard'):route('filament.client.pages.dashboard') }}" class="header-tools__item">
+                        <a href="{{ auth()->user()->hasAnyRole(['Admin', 'Manager', 'Caissier']) ? route('filament.admin.pages.dashboard'):route('filament.client.pages.dashboard') }}" class="header-tools__item">
                             <x-icon name="user-plein" :fill="$fillColor" size="20" class="headerIcon userLogin" />
                         </a>
                     </div>

@@ -150,7 +150,10 @@ class SliderResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -165,6 +168,7 @@ class SliderResource extends Resource
         return [
             'index' => Pages\ListSliders::route('/'),
             'create' => Pages\CreateSlider::route('/create'),
+            'view' => Pages\ViewSlider::route('/{record}'),
             'edit' => Pages\EditSlider::route('/{record}/edit'),
         ];
     }

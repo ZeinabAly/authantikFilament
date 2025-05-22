@@ -34,7 +34,7 @@ class EditOrder extends Component
     public $point_de_reference = "";
     public $userHasAdresse = false;
     public $userAdresse = "";
-    public $autreAdresse; //Livrer a une autre adresse
+    public $autreAdresse = false; //Livrer a une autre adresse
     public $NewAdresse = ""; //Nouvelle adresse créée
 
     public $isDefaultAdresse = 0;
@@ -47,24 +47,25 @@ class EditOrder extends Component
         $this->name = $this->order->name ?? "";
         $this->phone = $this->order->phone ?? "";
         $this->email = $this->order->email ?? "";
-        $this->lieu = $this->getLieuValue($this->order->lieu);
+        $this->lieu = $this->order->lieu;
+        // $this->lieu = $this->getLieuValue($this->order->lieu);
         $this->modePayement = $this->order->transaction->mode_payement ?? "";
         $this->calculTotal();
     }
 
     // Convertir le lieu stocké en DB en valeur pour le composant
-    protected function getLieuValue($lieu) {
-        switch ($lieu) {
-            case 'Sur place':
-                return 'surPlace';
-            case 'A Emporter':
-                return 'aEmporter';
-            case 'A livrer':
-                return 'aLivrer';
-            default:
-                return '';
-        }
-    }
+    // protected function getLieuValue($lieu) {
+    //     switch ($lieu) {
+    //         case 'Sur place':
+    //             return 'surPlace';
+    //         case 'A Emporter':
+    //             return 'aEmporter';
+    //         case 'A livrer':
+    //             return 'aLivrer';
+    //         default:
+    //             return '';
+    //     }
+    // }
 
     public function closeModal()
     {
@@ -183,6 +184,7 @@ class EditOrder extends Component
     }
 
     public function choisirLieu($lieu){
+
         $this->lieu = $lieu;
         
         // Si lieu est "aLivrer", vérifier si l'utilisateur a déjà une adresse par défaut
@@ -244,7 +246,7 @@ class EditOrder extends Component
         return null;
     }
 
-    public function modePayement($modePayement){
+    public function mode_payement($modePayement){
         $this->modePayement = $modePayement;
     }
 

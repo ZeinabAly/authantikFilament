@@ -5,10 +5,12 @@ namespace App\Livewire\Admin;
 use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Tables\Table;
+use Livewire\Attributes\On;
+use Filament\Notifications\Notification;
 use App\Models\{Product, SousCategory, Order};
 use Filament\Tables\Concerns\InteractsWithTable;
 
-
+#[On('platDuJourAdded')]
 class DashBoardManager extends Component
 {
     public $products = [];
@@ -21,8 +23,6 @@ class DashBoardManager extends Component
     public $platsDuJour = [];
     public $statusSelected = "En cours";
     public $totalsData = "";
-
-    
 
 
     public function mount(){
@@ -99,6 +99,36 @@ class DashBoardManager extends Component
     #[On('commandeModifiée')]
     public function afficherStatus(){
         return session()->flash('success', 'Votre commande a été modifiée !');
+    }
+
+    
+    public function retirerDesPlats($id){
+        
+        $product = Product::findOrFail($id);
+        $product->platDuJour = 0;
+        $product->save();
+
+        $this->dispatch('platDuJourAdded');
+
+        return Notification::make('plats')
+                            ->title('Le produit a été retiré des plats du jour !')
+                            ->success()
+                            ->send();
+       
+    }
+    public function ajouterAuxPlats($id){
+        
+        $product = Product::findOrFail($id);
+        $product->platDuJour = 1;
+        $product->save();
+
+        $this->dispatch('platDuJourAdded');
+
+        return Notification::make('plats')
+                            ->title('Le produit a été ajouté aux plats du jour !')
+                            ->success()
+                            ->send();
+       
     }
 
     public function render()

@@ -19,6 +19,11 @@ class RestaurantTableResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    
     public static function form(Form $form): Form
     {
         return $form
@@ -135,7 +140,10 @@ class RestaurantTableResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -150,6 +158,7 @@ class RestaurantTableResource extends Resource
         return [
             'index' => Pages\ListRestaurantTables::route('/'),
             'create' => Pages\CreateRestaurantTable::route('/create'),
+            'view' => Pages\ViewRestaurantTable::route('/{record}'),
             'edit' => Pages\EditRestaurantTable::route('/{record}/edit'),
         ];
     }

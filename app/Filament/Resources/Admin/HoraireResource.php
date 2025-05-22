@@ -92,7 +92,10 @@ class HoraireResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -107,6 +110,7 @@ class HoraireResource extends Resource
         return [
             'index' => Pages\ListHoraires::route('/'),
             'create' => Pages\CreateHoraire::route('/create'),
+            'view' => Pages\ViewHoraire::route('/{record}'),
             'edit' => Pages\EditHoraire::route('/{record}/edit'),
         ];
     }

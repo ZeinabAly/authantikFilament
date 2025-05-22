@@ -139,6 +139,7 @@
     border-radius: 0.375rem;
     overflow-x: hidden;
     text-align: center;
+    position: relative;
 }
 
 
@@ -493,4 +494,52 @@
     .dash-stats .cartesStatistiques .carteContent {
         font-size: 0.875rem;
     }
+}
+
+.badge{
+    margin-top: 4px;
+    background: #025239;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+}
+
+.badge-success{
+    background: #025239;;
+}
+
+.badge-warning{
+    background: #ce9c2d;;
+}
+
+.badge-danger{
+    background: #77050d;;
+}
+
+.btnAjouterPlats{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: #ce9c2d;
+    color: white;
+    padding: 2px 0;
+    border-radius: 3px;
+    margin-top: 4px;
+}
+
+.btnRetirerPlats{
+    background: #d5d1d1;
+    box-shadow: 1px 1px 2px #00000099, -1px -1px 2px #00000099;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.hidden{
+    display: none;
 }

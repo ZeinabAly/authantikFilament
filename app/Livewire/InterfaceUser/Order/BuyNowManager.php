@@ -5,7 +5,7 @@ namespace App\Livewire\InterfaceUser\Order;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\OrderNotificationJob;
-use App\Models\{Product, Address, User, Order, OrderItem, Transaction};
+use App\Models\{Product, Address, User, Order, OrderItem, Transaction, RestaurantTable};
 
 class BuyNowManager extends Component
 {
@@ -38,6 +38,10 @@ class BuyNowManager extends Component
     public $isDefaultAdresse = 0;
     public $commandeCreee = false;
 
+    public $restaurantTables;
+    public $tableSelected;
+
+
     public function mount($productId)
     {
         $this->product = Product::findOrFail($productId);
@@ -52,6 +56,7 @@ class BuyNowManager extends Component
             $this->userHasAdresse = true;
         }
     
+        $this->restaurantTables = RestaurantTable::get();
     }
 
     protected function rules()
@@ -167,6 +172,11 @@ class BuyNowManager extends Component
         }
     }
 
+    
+    public function selectTable($table){
+        $this->tableSelected = $table;
+    }
+
     public function createNowOrder(){
         $adresse_id = "";
         $user_id = "";
@@ -222,6 +232,7 @@ class BuyNowManager extends Component
             'total' => $this->prixTotal,
             'status' => "En cours",
             'note' => $note ?? "",
+            'table' => $this->tableSelected,
         ];
 
         if($this->lieu == 'aLivrer'){

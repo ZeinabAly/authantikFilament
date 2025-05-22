@@ -109,7 +109,10 @@ class DepenseResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -124,6 +127,7 @@ class DepenseResource extends Resource
         return [
             'index' => Pages\ListDepenses::route('/'),
             'create' => Pages\CreateDepense::route('/create'),
+            'view' => Pages\ViewDepense::route('/{record}'),
             'edit' => Pages\EditDepense::route('/{record}/edit'),
         ];
     }

@@ -5,7 +5,7 @@ namespace App\Livewire\InterfaceUser\PanierWishlist;
 use Livewire\Component;
 use App\Services\CartService;
 use App\Services\OrderService;
-use App\Models\{Address, User};
+use App\Models\{Address, User, RestaurantTable};
 use App\Services\CheckoutService;
 use Livewire\Attributes\Validate;
 
@@ -24,8 +24,9 @@ class CheckoutManager extends Component
     #[Validate('email')] 
     public $email = "";
 
-    public $modePayement = "";
+    public $modePayement = "liquide";
     public $lieu = "surPlace";
+    public $note;
     
     // Les variables du form d'adresse
     public $ville = "";
@@ -38,11 +39,15 @@ class CheckoutManager extends Component
     public $commandeCreee = false;
     public $order;
 
+    
+    public $restaurantTables;
+    public $tableSelected;
 
 
-    // public function mount(){
-    //     $this->items = Cart::instance('cart')->content();
-    // }
+    public function mount(){
+        // $this->items = Cart::instance('cart')->content();
+        $this->restaurantTables = RestaurantTable::get();
+    }
 
     protected function rules()
     {
@@ -78,14 +83,22 @@ class CheckoutManager extends Component
         $this->lieu = $lieu;
     }
 
+    public function getModePayemeent($mode){
+        $this->modePayement = $mode;
+    }
+    
+    public function selectTable($table){
+        $this->tableSelected = $table;
+    }
+
     // Créer la commande
     public function createOrder(OrderService $orderService, CartService $cartService, CheckoutService $checkoutService){
 
         $this->validate();
 
         $user_id = auth()->user()->id ?? User::where('name', 'Guest')->first()->id;
- 
-        $adresse = "";
+
+        $adresse = null;
         if($this->lieu == 'aLivrer'){
             $adresse = Address::create([
                 'user_id' => $user_id,
@@ -97,10 +110,13 @@ class CheckoutManager extends Component
                 'quartier' => $this->quartier,
                 'isDefault' => $this->isDefaultAdresse,
             ]);
+            $this->order = $orderService->createOrder($print = false, $mode_payement = $this->modePayement, $note = $this->note ,$adresse_id = $adresse->id,  $lieu = $this->lieu,$name = $this->name, $phone = $this->phone, $email = $this->email, $serveur_id = null,  $table = $this->tableSelected);
+        }else{
+            $this->order = $orderService->createOrder($print = false, $mode_payement = $this->modePayement, $note = $this->note , $adresse_id = null,  $lieu = $this->lieu,$name = $this->name, $phone = $this->phone, $email = $this->email, $serveur_id = null,  $table = $this->tableSelected);
         }
 
-        $this->order = $orderService->createOrder($mode_payement = $this->modePayement, $adresse = $this->adresse,  $lieu = $this->lieu);
         $this->commandeCreee = true;
+
 
         OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
 

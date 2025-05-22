@@ -130,7 +130,10 @@ class AdresseResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->recordUrl(
+                fn ($record) => static::getUrl('view', ['record' => $record])
+            );
     }
 
     public static function getRelations(): array
@@ -145,6 +148,7 @@ class AdresseResource extends Resource
         return [
             'index' => Pages\ListAdresses::route('/'),
             'create' => Pages\CreateAdresse::route('/create'),
+            'view' => Pages\ViewAdresse::route('/{record}'),
             'edit' => Pages\EditAdresse::route('/{record}/edit'),
         ];
     }

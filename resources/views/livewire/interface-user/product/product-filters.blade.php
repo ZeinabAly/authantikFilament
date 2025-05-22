@@ -139,7 +139,8 @@
 
         <!-- Pagination -->
         <div class="">
-            {{ $products->links('pagination::maPagination') }}
+            {{ $products->links() }}
+            {{-- $products->links('pagination::maPagination') --}}
         </div>
     </div>
 

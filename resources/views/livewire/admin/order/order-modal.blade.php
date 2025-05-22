@@ -7,24 +7,6 @@
     <div class="modalContent" x-data="{ openModalCmd: false }" x-cloak @open-order-modal.window="openModalCmd = true">
   
         <div class="orderModal" x-show="openModalCmd" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"  x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
-            <!-- Les messages d'erreur  -->
-            <div>
-                <!-- Messages d'erreur -->
-                    @if (session()->has('error'))
-                    <div class="filament-notification">
-                        <x-icon name="warning" fill="#f20"/>
-                        {{ session('error') }}
-                    </div>
-                    @endif
-                    
-                    <!-- Messages de succès -->
-                    @if (session()->has('success'))
-                    <div class="py-3 px-3 min-w-[300px] bg-white text-green-600 shadow-md font-semibold text-sm fixed z-[200] top-0 right-0 flex items-center gap-2">
-                        <x-icon name="success" fill="#05821c"/>
-                        {{ session('success') }}
-                    </div>
-                @endif
-            </div>
     
             <div class="py-3 flex items-center justify-between">
                 <h3 class="text-2xl font-bold">Votre commande</h3>
@@ -51,7 +33,9 @@
                     <!-- Fin zone recheche -->
                      <!-- Zone categorie -->
                     <div class="">
-                        <h2 class="titre2">Les categories</h2>
+                        <div class="titre2Content">
+                            <h2 class="titre2">Les categories</h2>
+                        </div>
                         <div class="adminCategoriesContent">
                         @foreach($sousCategories as $sCategory)
                             <button type="button" wire:click="setSelectedCategory({{$sCategory->id}})" class="btnModalCategory md:bg-[--white]">
@@ -68,7 +52,9 @@
      
                     
                         <!-- AFFICHAGE DES PRODUITS -->
-                        <h2 class="titre2">Les plats</h2>
+                        <div class="titre2Content">
+                            <h2 class="titre2">Les plats</h2>
+                        </div>
                         <div class="displayModalProducts">
                             @foreach($products as $product)
                                 <!-- Si le produit est deja dans le panier alors il suffit de cliquer sur plus ou moins -->
@@ -226,7 +212,7 @@
     
                             <!-- MODE DE PAYEMENT -->
                             <div class="">
-                                <h4 class="text-md font-semibold">. Mode de payement</h4>
+                                <h4 class="text-md font-semibold">Mode de payement</h4>
 
                                 <div class="payementModesContent">
 
@@ -246,7 +232,7 @@
                             <!-- MODE DE LIVRAISON -->
                             <div class=" ">
                         
-                                <h2 class="text-md font-semibold">. Mode de livraison</h2>
+                                <h2 class="text-md font-semibold">Mode de livraison</h2>
                                 <div class="modesDeLivraisonContent ">
                                     <input type="radio" checked name="modeLivraison" id="surPlace" class="hidden">
                                     <label for="surPlace" wire:click="choisirLieu('surPlace')">Sur place</label>
@@ -346,7 +332,20 @@
                                 <!-- FIN ADRESSE DE LIVRAISON -->
                             </div>
                             <!-- FIN MODE DE LIVRAISON -->
+
+                            <!-- CHOISIR UNE TABLE -->
+                            <div class="restaurantTableConten">
+                                <h2 class="text-md font-semibold">Numero de table</h2>
+                                <select wire:click="selectTable(event.target.value)">
+                                    <option value="">Choisir une table</option>
+                                    @foreach($restaurantTables as $table)
+                                    <option value="{{$table->name}}">{{$table->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
+
 
         
                         <div class="py-5 px-3">

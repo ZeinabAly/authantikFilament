@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Filament\Notifications\Notification;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
@@ -26,7 +28,7 @@ class OrderService
     /**
      * Créer une commande à partir des produits du panier.
      */
-    public function createOrder(bool $print = false, string $mode_payment = "liquide", $note = '', $adresse_id = null, $lieu = "surPlace", $name = "", $phone = "", $email = "", $serveur_id = null)
+    public function createOrder(bool $print = false, string $mode_payment = "liquide", $note = '', $adresse_id = null, $lieu = "surPlace", $name = "", $phone = "", $email = "", $serveur_id = null, $table = "")
     {
 
         // Vérifier si le panier contient des produits
@@ -37,14 +39,31 @@ class OrderService
                 ->danger()
                 ->body('Une erreur est survenue. Veuillez réessayer ! ')
                 ->send();
-            // session()->flash('error', 'Le panier est vide ! ');
+            session()->flash('error', 'Le panier est vide ! ');
             return null; 
         }
 
-        $user = Auth::user();
-        $user_id = $user->id;
-        $name = $name ?? $user->name;
-        $phone = $phone ?? $user->phone;
+        if(auth()->check()){
+            $user = Auth::user();
+            $user_id = $user->id;
+            $name = $name ?? $user->name;
+            $phone = $phone ?? $user->phone; 
+        }else{
+            $user = User::where('name', 'Guest')->first();
+            if($user){
+                $user_id = $user->id;
+            }else{
+                $user = User::create([
+                    'name' => 'Guest',
+                    'email' => 'guest@gmail.com',
+                    'phone' => '628976865',
+                    'password' => Hash::make('guest'),
+                ]);
+            }
+            $user_id = $user->id;
+            $name = $name ?? $user->name;
+            $phone = $phone ?? $user->phone; 
+        }
 
         // $addressAuthentik = Address::where('name', 'Authantik')->firstorFail();
 
@@ -73,6 +92,7 @@ class OrderService
             'status' => "En cours",
             'note' => $note,
             'employee_id' => $serveur_id,
+            'table' => $table,
         ]);
 
         // Ajouter les items de la commande       
@@ -85,30 +105,20 @@ class OrderService
             ]);
         }
 
-        if($mode_payment == "liquide"){
+        if($mode_payment){
             Transaction::create([
                 'user_id' => $user_id,
                 'order_id' => $order->id,
                 'mode_payment' => $mode_payment,
                 'status' => "En attente",
             ]);
-        }elseif($mode_payment == "OM"){
+        }else{
             Transaction::create([
                 'user_id' => $user_id,
                 'order_id' => $order->id,
-                'mode_payment' => $mode_payment,
-                'status' => "En attente",
-            ]); 
-        }elseif($mode_payment == "MM"){
-            
-            Transaction::create([
-                'user_id' => $user_id,
-                'order_id' => $order->id,
-                'mode_payment' => $mode_payment,
+                'mode_payment' => "liquide",
                 'status' => "En attente",
             ]);
-
-            
         }
 
         // Gérer l'impression de la facture
@@ -119,7 +129,7 @@ class OrderService
         // Réinitialiser le panier
         $this->cartService->resetCart();
 
-        // session()->flash('success', 'Commande passée avec succès ! ');
+        session()->flash('success', 'Commande passée avec succès ! ');
         Notification::make()
             ->title('Commande réussie !')
             ->success()
