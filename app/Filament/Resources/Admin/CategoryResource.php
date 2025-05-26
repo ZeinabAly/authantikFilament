@@ -25,6 +25,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
+    protected static ?int $navigationSort = 7;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

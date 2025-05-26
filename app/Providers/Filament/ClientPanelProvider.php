@@ -6,9 +6,12 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Facades\Filament;
 use Filament\Support\Colors\Color;
+use Filament\Notifications\Notification;
 use Filament\Http\Middleware\Authenticate;
 use App\Filament\Widgets\Client\StatsClient;
+use App\Http\Middleware\EnsureUseHasRoleUser;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -21,6 +24,29 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class ClientPanelProvider extends PanelProvider
 {
+    // public function boot()
+    // {
+    //     Filament::serving(function () {
+    //         if (auth()->check() && !auth()->user()->is_active) {
+    //             auth()->logout();
+    //             redirect()->route('filament.clien.auth.login');
+    //             return Notification::make()
+    //                 ->title('Votre compte a été desactivé ! ')
+    //                 ->success()
+    //                 ->send();
+    //         }
+
+    //         if (auth()->check() && auth()->user()->hasRole('Admin')) {
+    //             redirect()->route('filament.client.auth.login');
+    //             auth()->logout();
+    //             return Notification::make()
+    //                 ->title('Votre compte a été desactivé ! ')
+    //                 ->success()
+    //                 ->send();
+    //         }
+    //     });
+    // } 
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -57,6 +83,7 @@ class ClientPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                // EnsureUseHasRoleUser::class,
             ])
             ->databaseNotifications()
             ->authMiddleware([

@@ -10,4 +10,5 @@ class Notifications extends Page
 
     protected static string $view = 'filament.pages.admin.notifications';
 
+    protected static ?int $navigationSort = 2;
 }

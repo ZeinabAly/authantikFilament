@@ -34,16 +34,16 @@ class AdminPanelProvider extends PanelProvider
     public function boot()
     {
 
-        Filament::serving(function () {
-            if (auth()->check() && !auth()->user()->is_active) {
-                auth()->logout();
-                redirect()->route('filament.admin.auth.login');
-                return Notification::make()
-                    ->title('Votre compte a été desactivé ! ')
-                    ->success()
-                    ->send();
-            }
-        });
+        // Filament::serving(function () {
+        //     if (auth()->check() && !auth()->user()->is_active) {
+        //         auth()->logout();
+        //         redirect()->route('filament.admin.auth.login');
+        //         return Notification::make()
+        //             ->title('Votre compte a été desactivé ! ')
+        //             ->success()
+        //             ->send();
+        //     }
+        // });
 
         Filament::serving(function () {
             if(auth()->check()){
@@ -73,9 +73,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->middleware([
-                EnsureUserIsActive::class
-            ])
             ->login()
             // ->registration()
             ->colors([
@@ -93,6 +90,7 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
+                //EnsureUserIsActive::class, //Pour verifier que compte est actif
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,

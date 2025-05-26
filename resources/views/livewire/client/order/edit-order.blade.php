@@ -72,7 +72,7 @@
                     <label for="name" class="font-semibold text-xs">Nom</label>
                     <div class="icon-input">
                         <x-icon name="user-vide" fill="#939393" />
-                        <input type="text" id="name" value="{{$order->name}}" wire:model="name">
+                        <input type="text" id="name" wire:model="name">
                     </div>
                     @error('name')
                         <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
@@ -83,7 +83,7 @@
                     <label for="phone" class="font-semibold text-xs">Phone</label>
                     <div class="icon-input">
                         <x-icon name="phone" fill="#939393" />
-                        <input type="number" wire:model="phone" id="phone" placeholder="Téléphone" value="{{$order->phone}}">
+                        <input type="number" wire:model="phone" id="phone" placeholder="Téléphone" >
                     </div>
                     @error('phone')
                         <span class="alert alert-danger text-center text-[--color2-yellow]">{{$message}}</span>
@@ -137,7 +137,7 @@
 
             <!-- ADRESSE DE LIVRAISON -->
             <div class="adresseLivraison">
-                @if($lieu === "aLivrer")
+                @if($lieu === "aLivrer" || $lieu === "A livrer")
                     @if($userHasAdresse || !$autreAdresse)
                         <h4 class="adresseTitre">Vous avez déjà une adresse</h4>
                         <p class="detailAdresse"><span class="font-bold">Commune</span>: {{$userAdresse->commune}}</p>
@@ -222,18 +222,19 @@
                                 </div>
                                 
                             </div>
-
-                            {{--<div class="flex flex-col justify-start">
-                                <label for="">Laissez une note</label>
-                                <textarea wire:model.debounce.300ms="note" placeholder="Laissez une note" class="w-[80%] h-[100px] p-3"></textarea>
-                            </div>--}}
-                            
                         </div>
                     @endif
                 @endif
             </div>
             <!-- FIN ADRESSE DE LIVRAISON -->
 
+            <!-- NOTE -->
+            {{--<div class="">
+                <div class="note">
+                    <label for="">Laissez une note</label>
+                    <textarea wire:model.debounce.300ms="note" placeholder="Laissez une note" class="w-[80%] h-[100px] p-3"></textarea>
+                </div>
+            </div>--}}
         </div>
 
         <!-- Les produits choisis -->

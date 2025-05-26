@@ -19,6 +19,8 @@ class AdresseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
+    protected static ?int $navigationSort = 11;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

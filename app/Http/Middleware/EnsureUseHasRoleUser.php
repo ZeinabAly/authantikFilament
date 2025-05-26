@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Filament\Notifications\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsActive
+class EnsureUseHasRoleUser
 {
     /**
      * Handle an incoming request.
@@ -16,12 +15,10 @@ class EnsureUserIsActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(auth()->check() && !auth()->user()->is_active === true){
-        //     auth()->user()->logout();
-        //     redirect()->route('login');
+        // if(auth()->check() && !auth()->user()->roles->contains('name', 'User')){
+        //     auth()->logout();
+        //     return redirect()->route('filament.client.auth.login');
         // }
-
         return $next($request);
-        
     }
 }

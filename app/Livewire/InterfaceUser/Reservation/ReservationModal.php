@@ -31,12 +31,12 @@ class ReservationModal extends Component
     {
         if (!Auth::check()) {
             
-            return Notification::make()
-                ->title('Connexion exigée ! ')
-                ->danger()
-                ->body('Vous devez être connecté pour faire une réservation ! ')
-                ->persistent() //Force manuellement un z-index plus élevé pour les notifications
-                ->send();
+            // return Notification::make()
+            //     ->title('Connexion exigée ! ')
+            //     ->danger()
+            //     ->body('Vous devez être connecté pour faire une réservation ! ')
+            //     ->persistent() //Force manuellement un z-index plus élevé pour les notifications
+            //     ->send();
         }
 
         $this->validate();

@@ -160,18 +160,19 @@
   min-width: 200px;
   background-color: #e7e7e7;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px #00000038;
+  /* box-shadow: 0 4px 6px #00000038; */
   padding: 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 7px;
   transition: box-shadow 0.2s;
+  border: 1px dotted #9c9898;
 }
 
 .dark .stat-card {
   background: #18181b;
-  box-shadow: 2px 2px 5px #00000099;
+  border: 1px dotted #4e4b4b;
 }
 
 .stat-card:hover {
@@ -243,8 +244,73 @@
   background-color: #facc15;
 }
 
-/* Section des présences */
+/* Section des présences - calendrier*/
+
+.attendance-calendrier{
+  display: flex;
+  gap: 2%;
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 890px) {
+    
+  .attendance-calendrier {
+    flex-direction: column;
+  }
+
+}
+
 .attendance-section {
+  width: 63%;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 4px 6px #00000038;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 890px) {
+    
+  .attendance-section {
+    width: 100%;
+  }
+
+}
+
+.jourSuppContent{
+  background: #efefef;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1.4px dotted #ccc;
+}
+
+.dark .jourSuppContent{
+  background: #18181b;
+  box-shadow: 2px 2px 5px #00000099;
+  border: 1.4px dotted #625e5e;
+}
+
+.jourSuppContent .suppTitle{
+  font-weight: bold;
+  margin-block: 5px;
+}
+
+.dark .jourSuppContent .suppTitle{
+  /*  */
+}
+
+.jourSuppContent .suppItem{
+  display: flex;
+  gap: 3px;
+  font-size: 13.4px;
+}
+
+.jourSuppContent .month{
+  font-weight: bold;
+}
+
+.calendrier{
+  width: 35%;
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -253,7 +319,60 @@
   margin-top: 20px;
 }
 
-/* Section des présences */
+.dark .calendrier{
+  background: #2d2c2c;
+  box-shadow: 2px 2px 5px #00000099;
+}
+
+
+@media screen and (max-width: 890px) {
+    
+  .calendrier {
+    width: 100%;
+  }
+
+}
+
+.titreCalendrier{
+  margin: 10px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: rgb(31, 41, 55);
+}
+
+.dark .titreCalendrier{
+  color: rgb(253, 253, 253);
+}
+
+.calendrierContent{
+  margin-top: 2px;
+  display: flex;
+  gap: 2px;
+  padding: 10px 10px;
+  border-bottom: 1px dotted;
+  background: #efefef;
+  align-items: center;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.dark .calendrierContent{
+  background: #18181b;
+  border-bottom: 1px dotted #bdb5b5;
+}
+
+.calendrierContent .jour{
+  background: #dcdcdc;
+  padding: 5px 8px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.dark .calendrierContent .jour{
+  background: #2f2e2e;
+}
+
+/* Section des pointages */
 .dark .attendance-section {
   background: #2d2c2c;
   box-shadow: 2px 2px 5px #00000099;
@@ -316,14 +435,23 @@
 
 .chart-bar {
   width: 8.33%;
-  background-color: #16a34a;
+  background-color: #1A1F2C;
   border-radius: 0.375rem 0.375rem 0 0;
   margin: 0 0.25rem;
   transition: all 0.3s;
 }
 
+
 .chart-bar:hover {
-  background-color: #15803d;
+  background-color: #131413;
+}
+
+.dark .chart-bar {
+  background: #bdb9b9;
+}
+
+.dark .chart-bar:hover {
+  background-color: #a7a7a7;
 }
 
 .chart-labels {

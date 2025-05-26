@@ -20,6 +20,8 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
+    protected static ?int $navigationSort = 4;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

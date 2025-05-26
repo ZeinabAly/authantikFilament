@@ -25,6 +25,5 @@ class EditOrder extends Page
     public function mount(Order $record)
     {
         $this->order = $record;
-
     }
 }

@@ -38,6 +38,7 @@ class EmployeeProfile extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
+    public $jourSuppExiste = false;
 
     #[On('refresh')]
     public function mount($record){
@@ -272,13 +273,13 @@ class EmployeeProfile extends Component
         // Calculer les statistiques de présence
         $this->attendanceStats = [
             'services' => Pointage::where('employee_id', $this->employeeId)
-                ->whereMonth('clock_in', $now->month)
-                ->whereYear('clock_in', $now->year)
+                ->whereMonth('date', $now->month)
+                ->whereYear('date', $now->year)
                 ->count(),
 
             'servicesLastMonth' => Pointage::where('employee_id', $this->employeeId)
-                ->whereMonth('clock_in', $startOfMonth ->subMonth()->month)
-                ->whereYear('clock_in', $startOfMonth ->subMonth()->year)
+                ->whereMonth('date', $startOfMonth ->subMonth()->month)
+                ->whereYear('date', $startOfMonth ->subMonth()->year)
                 ->count(),
                 
             'absences' => $this->employee->absences()
@@ -298,37 +299,41 @@ class EmployeeProfile extends Component
         $year = Carbon::now()->year;
         $this->chartData = [];
         
+
         for ($month = 1; $month <= 12; $month++) {
             $daysInMonth = Carbon::create($year, $month)->daysInMonth;
 
+            $jourSupplementaire = 0;
             //Les jours où il est censé travailler
             $workDays = $this->employee->calendrier_employees()
-                ->whereMonth('created_at', $month)
-                ->whereYear('created_at', $year)
-                ->count(); 
-             
+            ->count();
+
             //Ses presences
-            
             $attendanceDays = Pointage::where('employee_id', $this->employeeId)
-                ->whereMonth('clock_in', $month)
-                ->whereYear('clock_in', $year)
+                ->whereMonth('date', $month)
+                ->whereYear('date', $year)
                 ->count(); 
               
             // Calculer le pourcentage de présence (si des jours de travail sont prévus) et des heures supplementaires 
             if($workDays > 0 && $workDays >= $attendanceDays){
-                $percentage = ($attendanceDays / $workDays) * 100;
-            }elseif($workDays > 0 && $workDays <= $attendanceDays){
-                $percentage = ($workDays / $attendanceDays) * 100;
+                $percentage = ($attendanceDays / $workDays) * 100; //Nbre de presence sur le nbre de presence qu'il doit faire 
+            }elseif($workDays > 0 && $workDays < $attendanceDays){
+                $percentage = 100;
+                
+                if($attendanceDays > 0) {
+                    $jourSupplementaire = $attendanceDays - $workDays;
+                }
             }else{
                 $percentage = 0;
             }
             
             
             $this->chartData[] = [
-                'month' => Carbon::create($year, $month, 1)->format('M'),
-                'percentage' => round($percentage, 1)
+                'month' => ucfirst(Carbon::create($year, $month, 1)->translatedFormat('F')),
+                'percentage' => round($percentage, 1),
+                'jourSupplementaire' => $jourSupplementaire,
             ];
-
+           
         }
 
 

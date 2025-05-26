@@ -805,11 +805,21 @@
     width: 100%;
     border-radius: 5px;
     outline: none;
-    box-shadow: 2px 2px 2px #00000022;
+    /* box-shadow: 2px 2px 2px #00000022; */
+    background: #fff;
+    border: 2px solid #bbb6b6;
   }
+
+  .dark .modalContent .restaurantTableConten select{
+    border: 2px solid #3e3e3e;
+    background: #18181b
+  }
+
+
   .modalContent .restaurantTableConten select:focus{
     outline: none;
-    border: 1px solid rgb(104, 102, 102);
+    border: 2px solid rgb(104, 102, 102);
+    box-shadow: 0 0 0;
   }
 
   .btnClickCommande{

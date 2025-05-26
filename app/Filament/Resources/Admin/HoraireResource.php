@@ -19,6 +19,8 @@ class HoraireResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clock';
 
+    protected static ?int $navigationSort = 12;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

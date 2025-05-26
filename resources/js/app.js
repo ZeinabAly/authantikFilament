@@ -1,7 +1,5 @@
 import './bootstrap';
 import './header.js';
-import './admin/sidebar.js';
-import './admin/modal.js';
 import './interfaceUser/index.js';
 import './interfaceUser/about.js';
 
@@ -11,41 +9,6 @@ import './interfaceUser/about.js';
 
 // Alpine.start();
 
-// window.addEventListener('DOMContentLoaded', function(){
-    
-//     deletebtn.forEach(btn => {
-//         btn.addEventListener('click', (e) => {
-            
-//             e.preventDefault();
-//             const form = e.target.closest("form");
-//             console.log('yes');
-            
-        
-//         swal({
-//             title: "Etes vous sûr?",
-//             text: "Voulez-vous vraiment supprimer ? ",
-//             // icon: "warning",
-//             buttons: {
-//                 cancel: "Non",
-//                 confirm: "Oui",
-//             },
-//             dangerMode: true,
-//             })
-//             .then((willDelete) => {
-//             if (willDelete) {
-//                 swal("Poof! Suppression effectuée !", {
-//                 icon: "success",
-//                 });
-//                 form.submit();
-//             } else {
-//                 swal("Suppression annulée !");
-//             }
-//         });
-//         })
-//     });
-
-
-// })
 
 // SWIPER POUR LA PAGE INDEX ET VIEW PRODUCT
 document.addEventListener('DOMContentLoaded', function() {

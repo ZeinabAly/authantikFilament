@@ -1,5 +1,5 @@
 
-<div>
+<div class="viewOrderContent">
 
     <!-- DETAILS DE LA COMMANDE -->
     <div class="table-wrapper">

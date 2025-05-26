@@ -2,7 +2,7 @@
     <!-- PRODUCT SLIDER PAGE INDEX -->
     <section  class="sectionProducts">
         <div class="swiper products-slide ">
-            <div class="swiper-wrapper flex ">
+            <div class="swiper-wrapper ">
                 @foreach($slideProducts as $slideProduct)
                 <livewire:interface-user.product.product-card :product=$slideProduct />
                 @endforeach

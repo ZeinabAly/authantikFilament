@@ -13,6 +13,8 @@ class Statistiques extends Page
 
     protected static string $view = 'filament.pages.admin.statistiques';
 
+    protected static ?int $navigationSort = 3;
+    
     protected function getHeaderWidgets(): array
     {
         return [

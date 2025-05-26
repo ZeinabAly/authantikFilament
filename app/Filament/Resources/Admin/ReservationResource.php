@@ -19,6 +19,8 @@ class ReservationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
+    protected static ?int $navigationSort = 6;
+
     public static function getNavigationBadge(): ?string
     {
         if(auth()->check()){

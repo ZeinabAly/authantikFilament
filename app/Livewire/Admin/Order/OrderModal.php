@@ -305,7 +305,9 @@ class OrderModal extends Component
             $this->commandeCreee = true;
             $this->clearCart($cartService, $checkoutService);
     
+            $this->dispatch('notifUpdated');
             OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
+        
         }
 
     }

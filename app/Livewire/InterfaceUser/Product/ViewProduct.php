@@ -18,10 +18,17 @@ class ViewProduct extends Component
     public $total = 0;
     public $favoriteRowId;
     public $cartRowId;
+    public $imageView;
 
     public function mount(Product $product){
         $this->product = $product;
         $this->relatedProducts = Product::where('sousCategory_id', '<>', $product->sousCategory)->get();
+        $this->imageView = $product->image;
+    }
+
+
+    public function displayImage($image){
+        $this->imageView = $image;
     }
 
     public function addToCart(CartService $cartService, $productId, CheckoutService $checkoutService){

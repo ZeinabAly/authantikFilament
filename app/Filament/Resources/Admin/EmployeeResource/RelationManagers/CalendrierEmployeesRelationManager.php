@@ -22,6 +22,7 @@ class CalendrierEmployeesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('jour')
                     ->label('Jour')
+                    ->unique()
                     ->options([
                         'lundi' => 'Lundi',
                         'mardi' => 'Mardi',

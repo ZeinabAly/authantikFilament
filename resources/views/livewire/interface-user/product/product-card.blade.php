@@ -16,7 +16,10 @@
         </a>
     </div>
 
-    <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}">
+    <div class="productImgContent">
+        <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}">
+    </div>
+    
     <div class="content relative mt-[10px]">
         <div class="">
             <p class="text-center font-semibold md:text-lg ">{{$product->name}}</p>

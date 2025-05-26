@@ -8,18 +8,17 @@
 
 .editOrderModal {
     width: 100%;
-    height: 100%;
     padding: 15px;
     background: rgb(233, 233, 233);
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    /* z-index: 2; */
 }
-
+/* 
 .clientEditModal input{
     color: #484646 !important;
-}
+} */
 
 .dark .editOrderModal {
     background: #000;
@@ -88,17 +87,29 @@
     border: none;
 }
 
+.editOrderModal .note input{
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ececec9c;
+    background: #fff;
+}
+
+.dark .editOrderModal .note input{
+    box-shadow: 2px 2px 2px #212020a3;
+    background: #0d0d0d;
+    border: none;
+}
+
 .editOrderModal .contactInfos .icon-input input {
     outline: 0;
     border: none;
     box-shadow: 0 0 0;
     width: 100%;
     background: transparent;
-    color: #303030;
+    color: #484646 !important;
 }
 
 .dark .editOrderModal .contactInfos .icon-input input {
-    color: #c9c8c8;
+    color: #d1d1d1 !important;
 }
 
 .editOrderModal .btnRetirer, .editOrderModal .btnAjouter{

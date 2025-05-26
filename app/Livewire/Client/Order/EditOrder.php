@@ -8,6 +8,7 @@ use App\Services\CartService;
 use Filament\Notifications\Notification;
 use App\Models\{Product, Order, OrderItem, Address};
 
+#[On('orderUpdated')]
 class EditOrder extends Component
 {
     public $openEditModal = false;
@@ -39,11 +40,10 @@ class EditOrder extends Component
 
     public $isDefaultAdresse = 0;
 
-    #[On('openEditModal')]
-    #[On('orderUpdated')]
-    public function getOrder($orderId){
-        $this->order = Order::findOrFail($orderId);
-        $this->openEditModal = true;
+    // #[On('openEditModal')]
+    
+    public function mount(Order $order){
+        $this->order = $order;
         $this->name = $this->order->name ?? "";
         $this->phone = $this->order->phone ?? "";
         $this->email = $this->order->email ?? "";
@@ -51,6 +51,14 @@ class EditOrder extends Component
         // $this->lieu = $this->getLieuValue($this->order->lieu);
         $this->modePayement = $this->order->transaction->mode_payement ?? "";
         $this->calculTotal();
+
+        // ADRESSE DE LIVRAISON PAR DEFAUT 
+        $this->userAdresse = Address::where('user_id', auth()->user()->id)
+                ->where('isDefault', 1)->first();
+            
+        if($this->userAdresse) {
+            $this->userHasAdresse = true;
+        }
     }
 
 
@@ -348,7 +356,7 @@ class EditOrder extends Component
         $data = [
             'name' => $this->name,
             'phone' => $this->phone,
-            'email' => $this->email ?? "",
+            'email' => $this->email,
             'subtotal' => $this->orderTotal,
             'total' => $this->orderTotal,
             'note' => $this->note,
@@ -374,7 +382,7 @@ class EditOrder extends Component
 
         $this->order->update($data);
         $this->calculTotal();
-        $this->order->refresh();
+        // $this->order->refresh();
         
         $this->dispatch('commandeModifiée');
         
@@ -383,7 +391,7 @@ class EditOrder extends Component
             ->success()
             ->send();
             
-        $this->closeModal();
+        // $this->closeModal();
     }
 
     public function render() {

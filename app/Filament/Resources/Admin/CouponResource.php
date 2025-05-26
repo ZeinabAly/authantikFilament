@@ -19,6 +19,8 @@ class CouponResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-gift';
 
+    protected static ?int $navigationSort = 10;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

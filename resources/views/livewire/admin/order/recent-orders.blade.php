@@ -2,5 +2,6 @@
 
     {{ $this->table }}
 
-    <livewire:admin.order.edit-order/>
+    <!-- CELA PROVOQUE UNE ERREUR D'INSERTION -->
+    {{-- <livewire:admin.order.edit-order/> --}}
 </div>

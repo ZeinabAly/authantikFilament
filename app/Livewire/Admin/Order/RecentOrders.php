@@ -17,6 +17,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Livewire\Attributes\On;
 
 #[On('commandeModifiée')]
+#[On('notifUpdated')]
 class RecentOrders extends Component implements HasForms,HasTable
 {
 
@@ -34,9 +35,10 @@ class RecentOrders extends Component implements HasForms,HasTable
         return $table
             ->query(
                 Order::whereDate('created_at', $today)
-                    ->when(auth()->check() && !auth()->user()->hasAnyRole(['Admin', 'Manager', 'Caissier']), function ($query) {
+                    ->when(auth()->check() && !auth()->user()->hasAnyRole(['Admin', 'Manager']), function ($query) {
                         $query->where('user_id', auth()->id());
                     })
+                    ->where('status', 'En cours')
                     ->latest()
             )
             ->heading('Commandes récentes')
@@ -106,10 +108,7 @@ class RecentOrders extends Component implements HasForms,HasTable
                         ->label('Modifier')
                         ->icon('heroicon-o-pencil') // Utiliser l'icône de crayon // Afficher comme un bouton plutôt qu'un lien
                         ->color('') // Couleur du bouton
-                        ->action(function (Order $record) {
-                            $this->editOrder($record->id);
-
-                    }),
+                        ->url(fn (Order $record) => route('filament.admin.resources.admin.orders.edit', ['record' => $record->nocmd])),
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])

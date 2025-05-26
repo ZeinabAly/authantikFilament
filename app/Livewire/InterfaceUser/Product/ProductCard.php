@@ -65,6 +65,8 @@ class ProductCard extends Component
 
     public function render()
     {
-        return view('livewire.interface-user.product.product-card');
+        return view('livewire.interface-user.product.product-card', [
+            'product' => $this->product
+        ]);
     }
 }
