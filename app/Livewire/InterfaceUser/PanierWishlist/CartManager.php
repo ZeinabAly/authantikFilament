@@ -88,14 +88,14 @@ class CartManager extends Component
     public function applyCoupon(CheckoutService $checkoutService){
 
         $checkoutService->apply_coupon_code($this->couponCode);
-        $checkoutService->calculateCheckout();
-
+        
     }
 
  
     public function getModePayemeent($mode){
         $this->modePayement = $mode;
     }
+
 
     public function render()
     {

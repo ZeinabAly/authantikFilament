@@ -22,6 +22,10 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationLabel = 'Utilisateurs';
+
+    protected static ?string $title = 'Utilisateurs';
+
     protected static ?int $navigationSort = 15;
 
     public static function getNavigationBadge(): ?string
@@ -82,10 +86,10 @@ class UserResource extends Resource
     {
         return $table
             ->query(
-                auth()->user()->hasRole('Admin')
+                auth()->user()->hasAnyRole(['SuperAdmin','Admin'])
                 ? User::where('is_active', true)->latest()
                 : User::whereDoesntHave('roles', function ($query) {
-                    $query->where('name', 'Admin');
+                    $query->where('name', 'Admin')->orWhere('name', 'SuperAdmin');
                 })->latest()
             )
             ->columns([
@@ -132,13 +136,13 @@ class UserResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasRole('Admin') || auth()->user()->id === $record->id),
+                        ->visible(fn ($record) => auth()->user()->hasRole('SuperAdmin') || auth()->user()->id === $record->id),
                     Tables\Actions\ViewAction::make(),
                     // Tables\Actions\DeleteAction::make()
                     //     ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin'])),
                         // ->visible(fn ($record) => auth()->user()->hasRole('Admin') || auth()->user()->id === $record->id),y
                     Tables\Actions\Action::make('delete')
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager']))
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['SuperAdmin']))
                         ->label('Supprimer')
                         ->icon('heroicon-o-trash') 
                         ->requiresConfirmation()

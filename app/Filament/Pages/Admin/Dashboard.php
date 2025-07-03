@@ -11,5 +11,7 @@ class Dashboard extends Page
 
     protected static string $view = 'filament.pages.admin.dashboard';
 
+    protected static ?string $navigationLabel = "Tableau de bord";
+
     protected static ?int $navigationSort = 1;
 }

@@ -9,10 +9,7 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('rapport:journalier')->dailyAt('17:25');
-        $schedule->call(function() {
-            info('Called every minute');
-        })->everyMinute()->name('log-message');
+        $schedule->command('rapport:journalier')->dailyAt('23:59');
     }
 
     protected function commands(): void

@@ -33,10 +33,6 @@ class GenererRapportJournalier extends Command
         $today = now()->toDateString();
 
         if(RapportJournalier::where('date', $today)->exists()){
-            // Notification::make()
-            //     ->title('Le rapport pour aujourd\'hui existe déjà')
-            //     ->danger()
-            //     ->send(); 
             $this->info('Le rapport pour aujourd’hui existe déjà.');
             return ;
         }

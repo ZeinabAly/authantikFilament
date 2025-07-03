@@ -15,9 +15,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DepenseResource extends Resource
 {
+    protected static bool $shouldSkipAuthorization = false;
+
     protected static ?string $model = Depense::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationLabel = 'Dépenses';
 
     protected static ?int $navigationSort = 9;
 

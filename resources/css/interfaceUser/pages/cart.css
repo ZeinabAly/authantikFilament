@@ -1,6 +1,7 @@
 .pageCartProducts{
     @apply w-full;
-    background: #f5f5f5;
+    /* background: #f5f5f5; */
+    background: #e6e6e6;
     font-family: Calibri, 'Trebuchet MS', sans-serif;
 }
 .page-title{
@@ -44,7 +45,7 @@
 /* LA SECTION DES PRODUITS */
 
 .pageCartProducts .sectionProducts{
-    @apply py-0 mx-auto flex flex-col md:flex-row items-start gap-5 md:gap-10 ;
+    @apply py-0 mx-auto flex flex-col md:flex-row items-start gap-5 md:gap-10 bg-transparent;
     max-width: 1200px;
     /* box-shadow: 2px 0 10px #cccccc90; */
 }
@@ -63,7 +64,7 @@
 }
 
 .pageCartProducts .btnViderPanier{
-    @apply py-2 px-3 my-5 mx-8 bg-[--color2-yellow] text-sm text-white rounded-sm font-bold
+    @apply py-2 px-3 my-5 mx-8 bg-[--color2-yellow] text-lg text-white rounded-sm font-bold
     /* background: #f8f8f8; */
 }
 
@@ -72,12 +73,12 @@
 }
 
 .pageCartProducts table.table-cart-items th{
-    @apply py-5 px-[30px] border-none font-bold text-sm;
+    @apply py-5 px-[30px] border-none font-bold text-lg;
     background: #f3f3f3;
 }
 
 .pageCartProducts table.table-cart-items tr{
-    @apply py-3 border-b text-[0.74rem] sm:text-[0.84rem] font-semibold;
+    @apply py-3 border-b text-[0.74rem] sm:text-[0.9rem] font-semibold;
 }
 
 .pageCartProducts table.table-cart-items .tbody .name_image{
@@ -106,7 +107,7 @@
 
 
 .pageCartProducts .sectionProducts .payement_details{
-    @apply w-[100%] md:w-[40%] border rounded-md shadow-md my-5;
+    @apply w-[100%] md:w-[40%] border rounded-md shadow-md my-10;
     background: #ffffff;
 }
 
@@ -115,25 +116,54 @@
 }
 
 .pageCartProducts .payement_details .title{
-    @apply my-3 text-2xl text-left   font-bold px-5;
+    @apply my-3 text-2xl text-left  font-bold px-5;
 }
 
 .pageCartProducts .formContent input{
-    @apply min-w-[230px] py-2 px-3 rounded-tl-md rounded-bl-md text-sm  bg-[--white] border border-gray-500 outline-none;
+    @apply min-w-[230px] md:w-full py-3 px-3 rounded-tl-md rounded-bl-md text-sm  bg-[--white] border border-gray-500 outline-none;
 }
 
 .pageCartProducts .formContent button{
-    @apply py-2 px-3 rounded-tr-md rounded-br-md text-sm  bg-[--color1-green] text-[--white] border border-gray-500 outline-none;
+    @apply py-3 px-3 rounded-tr-md rounded-br-md text-sm  bg-[--color1-green] text-[--white] border border-gray-500 outline-none;
 }
 
 .pageCartProducts .payement_details .details{
-    @apply py-2 px-5 text-[0.9rem] flexBetween;
+    @apply my-3 py-2 px-5 text-[1.2rem] flexBetween;
 }
 
 .pageCartProducts .payement_details .total{
-    @apply bg-[#e7e6e6] text-[1rem] font-bold;
+    @apply bg-[#e7e6e6] text-[1.2rem] font-bold;
 }
 
 .pageCartProducts .payement_details .btnPasserCaisse{
-    @apply bg-[--color1-green] text-[1rem] text-gray-100 px-3 py-2 mb-3 mt-5 flexCenter max-w-[200px] mx-auto rounded-sm border border-[--color1-green] hover:text-[--color1-green] hover:bg-white;
+    @apply bg-[--color1-green] text-[1.2rem] text-gray-100 px-3 py-2 mb-3 mt-5 flexCenter max-w-[200px] mx-auto rounded-sm border border-[--color1-green] hover:text-[--color1-green] hover:bg-white font-bold;
+}
+
+/* BOUTON DESACTIVE */
+button:disabled {
+    cursor: not-allowed; /* ✅ indique visuellement que le bouton est inactif */
+    background-color: #ccc; /* couleur plus terne */
+    color: #666;
+    opacity: 0.6; /* optionnel */
+}
+.text-success{
+    @apply font-semibold text-green-600 text-[14px];
+}
+.text-danger{
+    @apply font-semibold text-red-600 text-[14px];
+}
+
+.btnSubmitCmd{
+    @apply bg-[--color1-green] px-5 py-2 text-white font-bold rounded-sm;
+    box-shadow: 2px 2px 2px #4543434f;
+}
+
+.btnAnnuler{
+    @apply bg-[#5b0303] px-5 py-2 text-white font-bold rounded-sm cursor-pointer;
+    box-shadow: 2px 2px 2px #4543434f;
+}
+
+.btnRevenir{
+    @apply flexLeft gap-2 font-semibold cursor-pointer;
+    color: #727171;
 }

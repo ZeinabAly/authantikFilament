@@ -29,13 +29,13 @@ class ContactNotificationJob implements ShouldQueue
         // Notifier le client
         if (!$this->user) {
             $this->user->notify(new ContactUsNotification($this->contactInfos));
-        }else if(auth()->check()){
-            auth()->user()->notify(new ContactUsNotification($this->contactInfos));
         }
+
+        // auth()->user()->notify(new ContactUsNotification($this->contactInfos));
 
         // Notifier les admins
         $admins = User::whereHas('roles', function ($query) {
-            $query->whereIn('name', ['superAdmin', 'admin', 'manager']);
+            $query->whereIn('name', ['Admin', 'Manager']);
         })->get();
 
         foreach ($admins as $admin) {

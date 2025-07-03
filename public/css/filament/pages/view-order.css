@@ -15,6 +15,10 @@
     left: 0;
 }
 
+.dark .viewOrderContent{
+    background: #000;
+}
+
 .table-wrapper{
     margin-block: 2.5rem;
 }

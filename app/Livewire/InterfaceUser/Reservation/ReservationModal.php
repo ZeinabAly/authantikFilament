@@ -27,16 +27,23 @@ class ReservationModal extends Component
         ];
     }
 
+    protected function messages() 
+    {
+        return [
+            'name.required' => 'Ce champ est obligatoire',
+            'name.string' => 'Le nom doit être une chaine de caractère',
+            'date.required' => 'Ce champ est obligatoire',
+            'heure.required' => 'Ce champ est obligatoire',
+            'nbrPers.required' => 'Ce champ est obligatoire',
+            'phone.required' => 'Ce champ est obligatoire',
+            'email.email' => 'L\'email doit être de type email',
+        ];
+    }
+
     public function save()
     {
         if (!Auth::check()) {
-            
-            // return Notification::make()
-            //     ->title('Connexion exigée ! ')
-            //     ->danger()
-            //     ->body('Vous devez être connecté pour faire une réservation ! ')
-            //     ->persistent() //Force manuellement un z-index plus élevé pour les notifications
-            //     ->send();
+            return session()->flash('loginExige', 'Vous devez être connecté pour éffectuer une reservation');
         }
 
         $this->validate();

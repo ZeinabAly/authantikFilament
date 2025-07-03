@@ -14,7 +14,7 @@
   }
 
   .btnVider{
-    background: #ba891e;
+    background: #7b1818;
     padding: 2px 10px;
     border-radius: 2px;
     font-size: 13px;
@@ -78,9 +78,7 @@
     display: none;
   }
   
-  /******************* LES CATEGORIES ****************/
 
-  
 /******************* LES CATEGORIES ******************/
 
 .titre2Content{
@@ -126,12 +124,29 @@
           padding: 0.75rem 0.5rem;
           border-radius: 6px;
       }
-
+        
       .dark .adminCategoriesContent .btnModalCategory {
-          background: #2d2d2d;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
-          color: white;
+        background: #2d2d2d;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+        color: white;
       }
+
+      .adminCategoriesContent .selectedCategory {
+          background: #ce9c2d;
+      }
+
+      .dark .adminCategoriesContent .selectedCategory {
+        background: #ce9c2d;
+      }
+
+      .adminCategoriesContent .selectedCategory .adminCatName {
+          color: #fff;
+      }
+
+      .dark .adminCategoriesContent .selectedCategory .adminCatName {
+          color: #fff;
+      }
+
       .adminCategoriesContent .adminCatName {
           color: #4B5563;
           background: transparent !important;
@@ -154,6 +169,18 @@
   border-radius: 9999px;
   transition: all 0.3s ease;
 }
+
+
+.adminCategoriesContent .selectedCategory .adminCatName {
+  background: #ce9c2d;
+  color: #fff;
+}
+
+.dark .adminCategoriesContent .selectedCategory .adminCatName {
+  background: #ce9c2d;
+  color: #fff;
+}
+
 
 .dark .adminCategoriesContent .adminCatName {
   color: #c6c7ca;
@@ -199,13 +226,20 @@
   .dark .adminCategoriesContent .adminCatProductCount {
       color: #c5c1c1;
   }
+
+  .adminCategoriesContent .selectedCategory .adminCatProductCount {
+   color: #fff;
+  }
+  .dark .adminCategoriesContent .selectedCategory .adminCatProductCount {
+      color: #fff;
+  }
 }
 
 
 /****************** FIN CATEGORIES ******************/
 
 
-  /******************* FIN CATEGORIES ****************/
+
  
   
   .bgGreen {
@@ -276,12 +310,17 @@
   width: 100%;
   padding: 8px 32px 8px 40px; /* Ajuste l'espace pour l'icône à gauche */
   font-size: 16px;
-  border: none;
+  border: 0;
   outline: none;
+  box-shadow: none;
   border-radius: 8px;
   background-color: transparent;
   transition: all 0.3s ease;
-  color: #333;
+  color: #000;
+}
+.dark .inputSearch {
+  color: #fff;
+  box-shadow: none;
 }
 
 /************ FIN ZONE DE RECHERCHE **************/
@@ -638,6 +677,7 @@
     position: absolute;
     top: 0.5rem;
     right: 0.75rem;
+    color: #7b1818;
   }
   
   .orderModal .invoiceContent .invoiceProduct img {

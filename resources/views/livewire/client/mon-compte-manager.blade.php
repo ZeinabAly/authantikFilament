@@ -1,5 +1,9 @@
 <!-- mon-compte-manager -->
 <div>
+    <link rel="stylesheet" href="{{ asset('css/filament/pages/client/userProfile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/filament/pages/profile.css') }}">
+    <script defer src="{{ asset('js/filament/filament/uploadFile.js') }}"></script> 
+    
     <main class="monCompte">
 
         <div class="section-img-infos">

@@ -2,180 +2,176 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Facture #{{ $order->nocmd }}</title>
+    <title>Facture #{{ $order->id }}</title>
     <style>
-        .facture_container { 
-            font-family: DejaVu Sans, sans-serif; 
-            margin: 0;
-            padding: 20px;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid #ccc;
-        }
-        .facture_container .header {
-            padding-bottom: 20px;
-            border-bottom: 2px solid #025239;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        /* .facture_container .header-left {
-            flex: 1;
-        } */
-        .facture_container .header-right {
-            text-align: right;
-        }
-        .facture_container .logo img {
-            max-height: 80px;
-            margin-bottom: 10px;
-        }
-        .facture_container .invoice-title {
-            font-size: 28px;
-            color: #025239;
-            margin: 0;
-        }
-        .facture_container .invoice-details {
-            color: #666;
-            font-size: 14px;
-        }
-        .facture_container .section {
-            margin: 30px 0;
-        }
-        .facture_container .section-title {
-            color: #025239;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-        }
-        .facture_container .client-info, .payment-info {
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .facture_container .table {
+       
+        .main{
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
         }
-        .facture_container .table th {
-            background-color: #025239;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-        .facture_container .table td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .facture_container .table tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .facture_container .subtotal-row td {
-            border-top: 1px solid #ddd;
-        }
-        .facture_container .total-row td {
-            font-weight: bold;
-            font-size: 16px;
-            border-top: 2px solid #025239;
-            background-color: #f9f9f9;
-        }
-        .facture_container .text-right {
-            text-align: right;
-        }
-        .facture_container .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-        }
-        .facture_container .payment-terms {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-left: 4px solid #025239;
-            font-size: 14px;
-        }
+        .recu_content {
+                font-family: 'DejaVu Sans', sans-serif;
+                margin: 0;
+                padding: 10px;
+                font-size: 10pt;
+                width: 100%;  /*Largeur standard pour ticket thermique 80mm*/
+                border: 1px solid #ccc;
+            }
+            .recu_content .text-center {
+                text-align: center;
+            }
+            .recu_content .text-right {
+                text-align: right;
+            }
+            .recu_content .bold {
+                font-weight: bold;
+            }
+            .recu_content .header {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .recu_content .logo {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .recu_content .logo img {
+                max-width: 25mm;
+                height: auto;
+                object-fit: cover;
+            }
+            .recu_content .divider {
+                border-bottom: 1px dashed #000;
+                margin: 8px 0;
+            }
+            .recu_content .lieu {
+                border-top: 1px dashed #000;
+                padding: 2px 3px;
+            }
+            .recu_content .order-info {
+                font-size: 10pt;
+                margin-bottom: 10px;
+            }
+            .recu_content .order-info .title {
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+            }
+            .recu_content .items {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 9pt;
+                text-align: center;
+            }
+            .recu_content .items td {
+                padding: 3px 0;
+            }
+            .recu_content .item-name {
+                width: 70%;
+                text-align: left;
+            }
+            .recu_content .item-price {
+                width: 25%;
+                text-align: right;
+            }
+            .recu_content .totals {
+                margin-top: 5px;
+                font-size: 10pt;
+            }
+            .recu_content .total-row {
+                width: 100%;
+                margin: 2px 0;
+                display: flex;
+                justify-content: space-between;
+            }
+            .recu_content .grand-total {
+                font-size: 12pt;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+            .recu_content .footer {
+                margin-top: 15px;
+                text-align: center;
+                font-size: 9pt;
+            }
     </style>
 </head>
 <body>
-    <div class="facture_container">
-        <div class="header">
-            <div class="header-left">
+    <div class="main">
+        <div class="recu_content">
+            <div class="header">
                 <div class="logo">
-                    <img src="{{ public_path('logoAuth.png') }}">
+                    @if($logo_path)
+                    <img src="{{ $logo_path }}" alt="Logo" style="width: 100px;">
+                    @else
+                    <img src="{{ public_path('logoAuth.png') }}"  alt="Logo" style="width: 100px;">
+                    @endif
                 </div>
+
                 <div class="company-info">
-                <div class="bold">AUTHANTIK</div>
-                <div>DIXINN TERASSE</div>
-                <div>Conakry</div>
-                <div>Tél: 620.18.58.93</div>
-                <div class="">Email: authantik@gmail.com</div>
+                    <div class="bold">{{$settings->name ?? "AUTHANTIK"}}</div>
+                    <div>Conakry, Guinée</div>
+                    <div>{{$settings->address ?? "DIXINN Terasse"}}</div>
+                    <div>Tél: {{$settings->phone ?? "620.18.58.93"}} </div>
+                    <div class="">Email: {{$settings->email ?? "authantik@gmail.com"}} </div>
                 </div>
             </div>
-            <div class="header-right">
-                <h1 class="invoice-title">FACTURE</h1>
-                <div class="invoice-details">
-                    <p><strong>Facture N°:</strong> {{ $order->id }}<br>
-                    <strong>Date:</strong> {{ $order->created_at->format('d/m/Y') }}<br>
-                    <strong>Référence:</strong> {{ $order->NoCMDParAn }}<br>
-                    <strong>Échéance:</strong> {{ $order->created_at->addDays(30)->format('d/m/Y') }}</p>
+            
+            <div class="divider"></div>
+            
+            <div class="order-info">
+                <div class="title">Commande {{ $order->id }}</div>
+                <div>{{ $order->employee_id ? 'Employé(e) : '. $order->employee->name : '' }}</div>
+                <div class="lieu">
+                    <p>{{ $order->lieu }}</p>
+                    @if($order->address)
+                    <p>Adresse: {{ $order->address->quartier }}</p>
+                    @endif
                 </div>
             </div>
-        </div>
-
-        <div class="section">
-            <div class="client-info">
-                <h3 class="section-title">INFORMATIONS CLIENT</h3>
-                <p><strong>{{ $order->name }}</strong><br>
-                {{ $order->address->name }}<br>
-                Tél: {{ $order->phone }}</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h3 class="section-title">DÉTAIL DE LA COMMANDE</h3>
-            <table class="table">
+            
+            <div class="divider"></div>
+            
+            <table class="items">
                 <thead>
                     <tr>
-                        <th width="40%">Description</th>
-                        <th width="15%">Quantité</th>
-                        <th width="20%">Prix unitaire</th>
-                        <th width="25%">Total</th>
+                        <!-- <th class="item-qty">Qté</th> -->
+                        <th class="item-name">Article</th>
+                        <th class="item-price">Prix</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($items as $item)
                     <tr>
-                        <td>{{ $item->product->name }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td class="text-right">{{ number_format($item->price) }} F</td>
-                        <td class="text-right">{{ number_format($item->quantity * $item->price) }} F</td>
+                        <!-- <td class="item-qty">{{ $item->quantity }}</td> -->
+                        <td class="item-name">
+                            <p>{{ $item->product->name }}</p>
+                            <p>{{ $item->quantity }} * {{ str_replace(',','.',number_format($item->price, 0, '.')) }}</p>
+                            @if($item->note)
+                            <p>{{ $item->note }}</p>
+                            @endif
+                        </td>
+                        <td class="item-price">{{ str_replace(',','.',number_format($item->quantity * $item->price, 0, '.')) }} F</td>
+                    </tr>
+                    <tr>
+                        <td class="divider" colspan="2"></td>
                     </tr>
                     @endforeach
-                </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td colspan="3" class="text-right">TOTAL</td>
-                        <td class="text-right">{{ number_format($order->total) }} F</td>
+                    <tr>
+                        <td class="item-name">TOTAL</td>
+                        <td class="bold item-price">{{ str_replace(',', '.',$order->total) }} F</td>
                     </tr>
-                </tfoot>
+                </tbody>
             </table>
-        </div>
-
-        <div class="payment-terms">
-            <h4>Conditions de paiement</h4>
-            <p>Paiement exigible dans les 30 jours suivant la date de facturation. Veuillez effectuer votre paiement sur l'un de nos contacts :</p>
-            <p><strong>Orange Money:</strong> 620185893<br>
-            <strong>MOBILE MONEY:</strong> 664568765<br></p>
-        </div>
-
-        <div class="footer">
-            <p>AUTHANTIK - Dixinn Terasse - 620185893<br>
-            Merci pour votre confiance!</p>
+            
+            
+            <div class="divider"></div>
+            
+            <div class="footer">
+                <div class="text-center">** Merci pour la confiance **</div>
+                <div class="text-center">{{ date('d/m/Y H:i:s') }}</div>
+            </div>
+    
         </div>
     </div>
 </body>

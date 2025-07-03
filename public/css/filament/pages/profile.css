@@ -532,13 +532,12 @@
 }
 
 .clock-out {
-  background-color: #ef4444;
+  background-color: #dc2626;
   opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .clock-out:hover {
-  background-color: #dc2626;
+  background-color: #ef4444;
 }
 
 .last-action {

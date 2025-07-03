@@ -13,6 +13,7 @@ use Filament\Support\Colors\Color;
 use Filament\Navigation\UserMenuItem;
 use Illuminate\Support\Facades\Route;
 use Filament\Notifications\Notification;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Support\Facades\FilamentIcon;
 use App\Http\Middleware\EnsureUserIsActive;
@@ -33,17 +34,6 @@ class AdminPanelProvider extends PanelProvider
 
     public function boot()
     {
-
-        // Filament::serving(function () {
-        //     if (auth()->check() && !auth()->user()->is_active) {
-        //         auth()->logout();
-        //         redirect()->route('filament.admin.auth.login');
-        //         return Notification::make()
-        //             ->title('Votre compte a été desactivé ! ')
-        //             ->success()
-        //             ->send();
-        //     }
-        // });
 
         Filament::serving(function () {
             if(auth()->check()){
@@ -90,7 +80,6 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
-                //EnsureUserIsActive::class, //Pour verifier que compte est actif
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -101,14 +90,15 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+            ])
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugins([
-                FilamentShieldPlugin::make(),
-            ])
+           
             ->brandName('AUTHANTIK')
-            // ->brandLogo(asset('logoAuth.png'))
+            // ->brandLogo(asset('storage/'.$settings->logo_path))
             // ->brandLogoHeight('4rem')
             ->favicon(asset('favicon.png'))
             
@@ -127,7 +117,6 @@ class AdminPanelProvider extends PanelProvider
                 'panels::content.start',
                 fn (): string => view('filament.resources.admin.order-resource.pages.create-order-modal')->render()
             )
-            ->databaseNotifications();
-            
+            ;    
     }
 }

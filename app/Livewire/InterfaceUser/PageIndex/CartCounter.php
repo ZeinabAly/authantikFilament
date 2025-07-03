@@ -6,16 +6,31 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
+#[On('userLogged', 'orderPassed')]
 class CartCounter extends Component
 {
     public $cartCount = 0;
     public $wishlistCount = 0;
+    public $userNotifs = 0;
+    
     
     public function mount()
     {
         $this->cartCount = Cart::instance('cart')->content()->count();
+        if(auth()->check()){
+            $this->userNotifs = auth()->user()->unreadNotifications->count();
+        }
+
     }
+
+
     
+    #[On('userLogged', 'orderPassed')]
+    public function refreshUserNotifs()
+    {
+        $this->userNotifs = auth()->user()->notifications()->count();
+    }
+
     #[On('cartUpdated')]
     public function refreshCartCount()
     {

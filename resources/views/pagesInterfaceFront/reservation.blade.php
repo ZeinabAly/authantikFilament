@@ -30,59 +30,14 @@
 
     <!-- SECTION1 -->
     <section class="section-form">
-    <div class="section-container">
-        <!-- Reservation -->
-        <div class="form-cover">
-            <div class="w-full absolute top-0 z-[100000] left-0">
-                @if(Session::has('success'))
-                    <p class="alert alert-success">{{Session::get('success')}}</p>
-                @endif
-                @if(Session::has('loginExige'))
-                    <p class="alert alert-error">{{ session('loginExige') }}</p>
-                @endif
-                @if(Session::has('error'))
-                    <p class="alert alert-error bg-white text-red-500 py-5 px-4 text-lg">{{Session::get('error')}}</p>
-                @endif
-                
+        <div class="section-container">
+            <!-- Reservation -->
+            <div class="form-cover">
+                <!-- LE FORMULAIRE DE RESERVATION -->
+                <livewire:interface-user.reservation.reservation-form />
             </div>
-
-            <h2 class="reservation-accro">Réservation</h2>
-            <h2 class="reservation-title">Preparez votre fête a l'avance</h2>
-            <p class="reservation-texte">Appelez-nous au <span class="text-[--color2-yellow] font-bold">+224 629836668</span> ou remplissez ce formulaire</p>
-            <form method="POST" class="w-[100%] relative" action="{{route('reservation.store')}}">
-                @csrf
-                <div class="reservation-inputs">
-                    
-                    <select name="nbrPers" value="{{old('nbrPers')}}" class="selectNbr champInput" style="grid-area: nbre">
-                        <option value="">Nombre</option>
-                        @for($i= 1; $i <= 10; $i++)
-                        <option value="{{$i}}">{{$i}}</option>
-                        @endfor
-                    </select>
-                    <input type="date" name="date" value="{{old('date')}}" style="grid-area: date" class="champInput">
-                    @error('date')<span class="text-red-500">{{$message}}</span>@enderror
-
-                    <input type="time" name="heure" value="{{old('heure')}}" class="champInput" style="grid-area: heure">
-                    @error('heure')<span class="text-red-500">{{$message}}</span>@enderror
-
-                    <input type="text" name="name" placeholder="Nom" value="{{old('name')}}" class="champInput" style="grid-area: nom">
-                    @error('name')<span class="text-red-500">{{$message}}</span>@enderror
-
-                    <input type="number" name="phone" placeholder="Télephone" value="{{old('phone')}}" class="champInput" style="grid-area: phone">
-                    @error('phone')<span class="text-red-500">{{$message}}</span>@enderror
-
-                    <input type="email" name="email" placeholder="Email" value="{{old('email')}}" style="grid-area: email" class="champInput">
-                    @error('email')<span class="alert alert-danger text-center">{{$message}}</span>@enderror
-                    
-                    <textarea name="details" value="{{old('details')}}" style="grid-area: textearea" id="details" value="{{ old('details') }}" placeholder="Donnez quelques détails" class="champInput"></textarea>
-                    @error('details')<span class="text-red-500">{{$message}}</span>@enderror
-                </div>
-    
-                <button type="submit" class="btnPageRersever">Réserver</button>
-            </form>
         </div>
-    </div>
-</section>
+    </section>
     <!-- FIN SECTION1 -->
     
     <!-- SECTION2: Contact -->

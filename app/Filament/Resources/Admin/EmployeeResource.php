@@ -22,6 +22,8 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    protected static ?string $navigationLabel = 'Employés';
+
     protected static ?int $navigationSort = 8;
 
     public static function getNavigationBadge(): ?string
@@ -137,6 +139,21 @@ class EmployeeResource extends Resource
                         ->required(),
                     Forms\Components\DatePicker::make('finContrat_at')
                         ->label('Fin du contrat'),
+                    Forms\Components\Select::make('competences')
+                        ->label('Compétences')
+                        ->options(
+                            [
+                                'rapidité' => 'Rapidité d\'exécution',
+                                'ponctualite' => 'Ponctualité',
+                                'assiduite' => 'Assiduité',
+                                'polyvalence' => 'Polyvalence',
+                                'organisation' => 'Organisation',
+                                'communication' => 'Communication',
+                            ]
+                        )
+                        ->multiple(),
+                    Forms\Components\Textarea::make('description')
+                        ->label('Description'),
                 ])->columns(2),
 
             Forms\Components\Section::make('Réseaux sociaux')
@@ -156,7 +173,7 @@ class EmployeeResource extends Resource
                         ->prefixIcon('heroicon-o-x-mark'),
                 ])->columns(2),  
                 
-            ]);
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -169,11 +186,6 @@ class EmployeeResource extends Resource
                     ->square(),
                 Tables\Columns\TextColumn::make('user.name') 
                     ->label('Nom d\'utilisateur')
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('name') 
-                    ->label('Nom')
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
@@ -205,6 +217,29 @@ class EmployeeResource extends Resource
                         ];
                         return $options[$state] ?? $state;
                     }),
+                Tables\Columns\TextColumn::make('competences') 
+                    ->label('Compétences')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable()
+                    ->formatStateUsing(function ($state) {
+                        $options = [
+                            'rapidité' => 'Rapidité d\'exécution',
+                            'ponctualite' => 'Ponctualité',
+                            'assiduite' => 'Assiduité',
+                            'polyvalence' => 'Polyvalence',
+                            'organisation' => 'Organisation',
+                            'communication' => 'Communication',
+                        ];
+                        
+                        return $options[$state] ?? $state;
+                    }),
+                
+                Tables\Columns\TextColumn::make('description') 
+                    ->label('Description')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('salaire') 
                     ->label('Salaire')
                     ->searchable()

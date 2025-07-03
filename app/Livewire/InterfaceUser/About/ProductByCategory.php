@@ -11,7 +11,8 @@ use App\Services\CheckoutService;
 
 class ProductByCategory extends Component
 {
-    public $sousCategorySelected = '';
+    // public $sousCategorySelected = '';
+    public $selectedCategory = '';
     public $products = [];
     public $sousCategories = [];
 
@@ -19,14 +20,20 @@ class ProductByCategory extends Component
         $this->products = Product::limit(4)->get();
         $this->sousCategories = SousCategory::all();
     }
-    public function sousCatUpdate($id){
-
-        $this->sousCategorySelected = $id;
-        $this->products = Product::where('sousCategory_id', $id)->take(4)->get();
-        if($id == ""){
-            $this->products = Product::take(4)->get();
-        }
+    // AJOUTER LA CATEGORIE SELECTIONEE AU TABLEAU
+    public function selectCategory($id)
+    {
+        $this->selectedCategory = $id; 
     }
+
+    // public function sousCatUpdate($id){
+
+    //     $this->sousCategorySelected = $id;
+    //     $this->products = Product::where('sousCategory_id', $id)->take(4)->get();
+    //     if($id == ""){
+    //         $this->products = Product::take(4)->get();
+    //     }
+    // }
 
     public function addToCart(CartService $cartService, $productId, CheckoutService $checkoutService){
         $product = Product::find($productId);
@@ -55,9 +62,14 @@ class ProductByCategory extends Component
 
     public function render()
     {
+        $this->products = Product::where('sousCategory_id', $this->selectedCategory)->limit(4)->get();
+
+        if($this->selectedCategory == ""){
+            $this->products = Product::take(4)->get();
+        }
 
         return view('livewire.interface-user.about.product-by-category', [
-            'product' => $this->products
+            'products' => $this->products
         ]);
     }
 }

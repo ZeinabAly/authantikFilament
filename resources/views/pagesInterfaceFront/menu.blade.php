@@ -34,6 +34,9 @@
 
   
 
+  <!-- MODAL DE CONNEXTION ET INSCRIPTION -->
+  <livewire:interface-user.auth.login-modal />
+  <livewire:interface-user.auth.register-modal />
 
 </div>
 

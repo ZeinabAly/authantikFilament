@@ -7,7 +7,7 @@
     <section class="banniere">
       <div class="cover">
         <h2 class="page-title">CONTACT</h2>
-        <p class="pageFilAriane">Accueil / Contact</p>
+        <p class="pageFilAriane"><a href="{{route('home.index')}}">Accueil</a> / Contact</p>
       </div>
     </section>
 
@@ -49,34 +49,9 @@
                     </div>
                 </div>
 
-                <form name="contact-us-form" action="{{route('home.contact.store')}}" class="contactForm" method="POST">
-                    @csrf
-                    <div class="formCover">
-                        <p class="section-subtitle">Besoin de nos services ?</p>
-                        <h3 class="section-title">Laissez-nous un message</h3>
-                        <div class="nom_phone">
-                            <div class="inputContent">
-                                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Nom" required>
-                                @error('name') <span class="text-danger">{{$message}}</span>@enderror
-                            </div>
-                            <div class="inputContent">
-                                <input type="text" class="form-control" name="phone" value="{{old('phone')}}" placeholder="Téléphone" required>
-                                @error('phone') <span class="text-danger">{{$message}}</span>@enderror
-                            </div>
-                        </div>
-                        <div class="inputContent">
-                            <input type="email" class="form-control" name="email" placeholder="Email" value="{{old('email')}}" required>
-                            @error('email') <span class="text-danger">{{$message}}</span>@enderror
-                        </div>
-                        <div class="inputContent">
-                        <textarea class="form-control form-control_gray" name="message" placeholder="J'aurais besoin de votre aide pour..." cols="30"
-                            rows="8" required>{{old('message')}}</textarea>
-                            @error('comment') <span class="text-danger">{{$message}}</span>@enderror
-                        </div>
-                        <button type="submit" class="">Envoyer</button>
-    
-                    </div>
-                </form>
+                <!-- LE FORMULAIRE DE CONTACT -->
+                <livewire:interface-user.contact.contact-form />
+
             </div>
         </div>
       </div>
@@ -90,8 +65,7 @@
             <h2 class="section-title text-3xl roboto font-bold">Laissez vous <span class="allura text-[--color2-yellow]">emporter</span></h2>
     
             <div class="texte">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa adipisci atque numquam, aperiam natus quibusdam dicta tenetur saepe voluptatibus consectetur illo placeat. In dolorum ipsam nobis incidunt voluptas. Molestiae, ex.
-            </div>
+            Découvrez une explosion de saveurs dans chaque bouchée. Des plats soigneusement préparés, des ingrédients frais et une passion pour la cuisine qui se ressent dès la première dégustation. Que ce soit pour une pause gourmande ou un repas complet, nous vous promettons une expérience inoubliable            </div>
             <div class="mt-5">
                 <a href="{{route('home.menu')}}"><button>Voir le menu</button></a>
             </div>
@@ -107,7 +81,13 @@
 
 
     <!-- CARTE -->
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d296.4842516883969!2d-13.675467820645977!3d9.548102416585204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf1cd74b7bae531f%3A0xd95a7ff6549d2438!2sDixinn%20Terasse!5e1!3m2!1sfr!2s!4v1738586907369!5m2!1sfr!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="" id="map">
+        @if(!empty($settings->maps_link))
+            <iframe src="{{$settings->maps_link}}" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        @else
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d296.4842516883969!2d-13.675467820645977!3d9.548102416585204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf1cd74b7bae531f%3A0xd95a7ff6549d2438!2sDixinn%20Terasse!5e1!3m2!1sfr!2s!4v1738586907369!5m2!1sfr!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        @endif
+    </div>
     <!-- FIN CARTE -->
 
 </div>

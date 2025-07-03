@@ -108,10 +108,19 @@ class EditOrder extends Component
             $total += $orderItem->quantity * $orderItem->price;
         }
 
-        $this->order->total = $total;
-        $this->order->subtotal = $total;
-        $this->order->save();
-        $this->orderTotal = $this->order->total;
+        if($this->order->discount !== ''){
+            $total -= $this->order->discount;
+            
+            $this->order->total = $total;
+            $this->order->subtotal = $total;
+            $this->order->save();
+            return $this->orderTotal = $total;
+        }else{
+            $this->order->total = $total;
+            $this->order->subtotal = $total;
+            $this->order->save();
+            return $this->orderTotal = $total;
+        }
     }
 
     public function addOtherItemsToOrder($productId){
@@ -120,19 +129,25 @@ class EditOrder extends Component
             $item->update([
                 'quantity' => $item->quantity + 1
             ]);
+
+            $this->calculTotal();
+
             $this->dispatch('orderUpdated', $this->order->id);
         }
         else{
             $product = Product::findOrFail($productId);
-            $this->order->orderItems()->create([
+            $item = $this->order->orderItems()->create([
                 'product_id' => $product->id,
                 'price' => $product->sale_price ?? $product->regular_price,
                 'quantity' => 1,
             ]);
     
+            
             $this->calculTotal();
 
+
             $this->dispatch('orderUpdated', $this->order->id);
+
 
             Notification::make()
                 ->title('Produit ajouté !')
@@ -326,6 +341,7 @@ class EditOrder extends Component
                 ->send();
                 
             $this->dispatch('commandeLivrée');
+            return redirect()->route('filament.admin.pages.dashboard');
         } else {
             Notification::make()
                 ->title('Impossible de confirmer la livraison')
@@ -337,61 +353,61 @@ class EditOrder extends Component
         $this->confirmingLivraison = false;
     }
 
-    // public function updateOrder() {
-    //     $this->validate();
+    public function updateOrder() {
+        $this->validate();
 
-    //     // GESTION DE L'ADRESSE SELON LE LIEU DE LIVRAISON
-    //     $adresse_id = null;
+        // GESTION DE L'ADRESSE SELON LE LIEU DE LIVRAISON
+        $adresse_id = null;
         
-    //     if($this->lieu == "surPlace" || $this->lieu == "aEmporter") {
-    //         $addressAuthentik = Address::where('name', 'Authantik')->first();
-    //         if ($addressAuthentik) {
-    //             $adresse_id = $addressAuthentik->id;
-    //         }
-    //     } else if($this->lieu == "aLivrer") {
-    //         $adresse_id = $this->creerAdresse();
-    //     }
+        if($this->lieu == "surPlace" || $this->lieu == "aEmporter") {
+            $addressAuthentik = Address::where('name', 'Authantik')->first();
+            if ($addressAuthentik) {
+                $adresse_id = $addressAuthentik->id;
+            }
+        } else if($this->lieu == "aLivrer") {
+            $adresse_id = $this->creerAdresse();
+        }
 
-    //     $data = [
-    //         'name' => $this->name,
-    //         'phone' => $this->phone,
-    //         'email' => $this->email,
-    //         'subtotal' => $this->orderTotal,
-    //         'total' => $this->orderTotal,
-    //         'note' => $this->note,
-    //     ];
+        $data = [
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'subtotal' => $this->orderTotal,
+            'total' => $this->orderTotal,
+            'note' => $this->note,
+        ];
        
-    //     if ($adresse_id) {
-    //         $data['address_id'] = $adresse_id;
-    //     }
+        if ($adresse_id) {
+            $data['address_id'] = $adresse_id;
+        }
         
-    //     if($this->lieu == 'aLivrer') {
-    //         $data['lieu'] = "A livrer";
-    //     } elseif($this->lieu == 'aEmporter') {
-    //         $data['lieu'] = "A emporter";
-    //     } else {
-    //         $data['lieu'] = "Sur place";
-    //     }
+        if($this->lieu == 'aLivrer') {
+            $data['lieu'] = "A livrer";
+        } elseif($this->lieu == 'aEmporter') {
+            $data['lieu'] = "A emporter";
+        } else {
+            $data['lieu'] = "Sur place";
+        }
 
-    //     // Mettre à jour le mode de paiement si nécessaire
-    //     if ($this->modePayement && $this->order->transaction) {
-    //         $this->order->transaction->mode_payement = $this->modePayement;
-    //         $this->order->transaction->save();
-    //     }
+        // Mettre à jour le mode de paiement si nécessaire
+        if ($this->modePayement && $this->order->transaction) {
+            $this->order->transaction->mode_payement = $this->modePayement;
+            $this->order->transaction->save();
+        }
 
-    //     $this->order->update($data);
-    //     $this->calculTotal();
-    //     // $this->order->refresh();
+        $this->order->update($data);
+        $this->calculTotal();
+        // $this->order->refresh();
         
-    //     $this->dispatch('commandeModifiée');
+        $this->dispatch('commandeModifiée');
         
-    //     Notification::make()
-    //         ->title('Commande modifiée avec succès')
-    //         ->success()
-    //         ->send();
+        Notification::make()
+            ->title('Commande modifiée avec succès')
+            ->success()
+            ->send();
             
-    //     // $this->closeModal();
-    // }
+        // $this->closeModal();
+    }
 
     public function render() {
         $products = Product::where('name', 'like', '%' . $this->search . '%')

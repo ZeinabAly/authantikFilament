@@ -1,5 +1,5 @@
 .pageWishlist{
-    @apply w-[100%] mt-5 mb-10;
+    @apply w-[100%] pt-5 pb-10 bg-[#e6e6e6];
 }
 
 .pageWishlist .main{
@@ -51,7 +51,7 @@
 }
 
 .pageWishlist .items{
-    @apply w-full bg-gray-100 shadow-md shadow-[#e3e1e1] ;
+    @apply w-full bg-gray-100 shadow-md shadow-[#e3e1e1];
     background: #f8f8f8;
 }
 
@@ -70,8 +70,8 @@
 }
 
 .pageWishlist table.table-cart-items th{
-    @apply py-5 px-[30px] border-none font-bold text-sm;
-    background: #e3e1e1;
+    @apply py-5 px-[30px] border-none font-extrabold text-lg;
+    /* background: #e3e1e1; */
 }
 
 .pageWishlist table.table-cart-items tr{

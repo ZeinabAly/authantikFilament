@@ -30,34 +30,35 @@ class ReservationNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
-    {
-        if($notifiable->hasRole('superAdmin') || $notifiable->hasRole('admin') || $notifiable->hasRole('manager')){
-            return (new MailMessage)
-                ->subject('Nouvelle réservation ! ')
-                ->greeting("Bonjour {$notifiable->name} !")
-                ->line('Une nouvelle réservation a été faite par '. $this->reservation->name )
-                ->line('📅 Pour le '. $this->reservation->date )
-                ->line('⏰ A '. $this->reservation->heure )
-                ->line('👥  Nombre de personnes : '. $this->reservation->nbrPers )
-                // ->action('Voir la réservation', url("admin/reservations/{$this->reservation['id']}"))
-                ->action('Voir la réservation', url("/"))
-                ->line('Merci de gérer cette réservation rapidement.');
-        }
-        return (new MailMessage)
-            ->subject('Confirmation de votre réservation')
-            ->greeting('Bonjour ' . $notifiable->name . '!')
-            ->line("Votre réservation pour le {$this->reservation->date} à {$this->reservation->heure} au nom de {$this->reservation->name} a été reçue avec succès !")
-            ->line("Nombre de personnes : {$this->reservation->nbrPers}")
-            ->action('Voir ma réservation', url("/reservation/{$this->reservation->id}"))
-            ->line('Merci de nous faire confiance ! ');
-    }
+    // public function toMail(object $notifiable): MailMessage
+    // {
+    //     if($notifiable->hasAnyRole(['Admin', 'Manager'])){
+    //         return (new MailMessage)
+    //             ->subject('Nouvelle réservation ! ')
+    //             ->greeting("Bonjour {$notifiable->name} !")
+    //             ->line('Une nouvelle réservation a été faite par '. $this->reservation->name )
+    //             ->line('📅 Pour le '. $this->reservation->date )
+    //             ->line('⏰ A '. $this->reservation->heure )
+    //             ->line('👥  Nombre de personnes : '. $this->reservation->nbrPers )
+    //             // ->action('Voir la réservation', url("admin/reservations/{$this->reservation['id']}"))
+    //             ->action('Voir la réservation', url("/"))
+    //             ->line('Merci de gérer cette réservation rapidement.');
+    //     }else{
+    //         return (new MailMessage)
+    //             ->subject('Confirmation de votre réservation')
+    //             ->greeting('Bonjour ' . $notifiable->name . '!')
+    //             ->line("Votre réservation pour le {$this->reservation->date} à {$this->reservation->heure} au nom de {$this->reservation->name} a été reçue avec succès !")
+    //             ->line("Nombre de personnes : {$this->reservation->nbrPers}")
+    //             ->action('Voir ma réservation', url("/reservation/{$this->reservation->id}"))
+    //             ->line('Merci de nous faire confiance ! ');
+    //     }
+    // }
 
     /**
      * Get the array representation of the notification.
@@ -72,9 +73,7 @@ class ReservationNotification extends Notification
             'date' => $this->reservation->date,
             'heure' => $this->reservation->heure,
             'nbrPers' => $this->reservation->nbrPers,
-            'message' => ($notifiable->hasRole('superAdmin') || $notifiable->hasRole('admin')) ?
-                "Nouvelle réservation de {$this->reservation->name}." :
-                "Votre réservation a été enregistrée avec succès."
+            'title' => "Nouvelle réservation"
         ];
     }
 

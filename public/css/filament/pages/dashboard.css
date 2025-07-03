@@ -270,8 +270,26 @@
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
+
 /******************* LES CATEGORIES ******************/
-.adminCategoriesContent {
+
+.titre2Content{
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px dotted #7a7a7a73;
+  }
+  
+  .titre2{
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+  
+  .titre2Content span{
+    font-size: 0.8rem;
+    color: #3c3a3a;
+  }
+  
+  .adminCategoriesContent {
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
@@ -279,18 +297,18 @@
     align-items: center;
     justify-content: start;
     gap: 0.5rem;
-}
-
-
-.adminCategoriesContent .btnModalCategory {
+  }
+  
+  
+  .adminCategoriesContent .btnModalCategory {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     text-align: left;
     gap: 0.5rem;
     
-}
-
+  }
+  
     @media (min-width: 768px) {
         .adminCategoriesContent .btnModalCategory {
             background: #fff;
@@ -298,12 +316,29 @@
             padding: 0.75rem 0.5rem;
             border-radius: 6px;
         }
-
+          
         .dark .adminCategoriesContent .btnModalCategory {
-            background: #2d2d2d;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
-            color: white;
+          background: #2d2d2d;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+          color: white;
         }
+  
+        .adminCategoriesContent .selectedCategory {
+            background: #ce9c2d;
+        }
+  
+        .dark .adminCategoriesContent .selectedCategory {
+          background: #ce9c2d;
+        }
+  
+        .adminCategoriesContent .selectedCategory .adminCatName {
+            color: #fff;
+        }
+  
+        .dark .adminCategoriesContent .selectedCategory .adminCatName {
+            color: #fff;
+        }
+  
         .adminCategoriesContent .adminCatName {
             color: #4B5563;
             background: transparent !important;
@@ -313,9 +348,9 @@
             font-size: 13px;
         }
     }
-
-
-.adminCategoriesContent .adminCatName {
+  
+  
+  .adminCategoriesContent .adminCatName {
     font-weight: 600;
     font-size: 0.75rem;
     color: #1A1F2C;
@@ -325,41 +360,53 @@
     padding: 0.5rem 0.75rem;
     border-radius: 9999px;
     transition: all 0.3s ease;
-}
-
-.dark .adminCategoriesContent .adminCatName {
+  }
+  
+  
+  .adminCategoriesContent .selectedCategory .adminCatName {
+    background: #ce9c2d;
+    color: #fff;
+  }
+  
+  .dark .adminCategoriesContent .selectedCategory .adminCatName {
+    background: #ce9c2d;
+    color: #fff;
+  }
+  
+  
+  .dark .adminCategoriesContent .adminCatName {
     color: #c6c7ca;
     background: #282727;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.235);
-}
-
+  }
   
-.adminCategoriesContent .btnModalCategory .adminCatImage {
+  
+  .adminCategoriesContent .btnModalCategory .adminCatImage {
     width: 2.5rem;
     height: 2.5rem;
     object-fit: cover;
     border-radius: 50%;
-}
-
-
-.adminCategoriesContent .btnModalCategory .adminCatImageContent {
+  }
+  
+  
+  .adminCategoriesContent .btnModalCategory .adminCatImageContent {
     display: none;
-}
-
-@media (min-width: 768px) {
+  }
+  
+  @media (min-width: 768px) {
     .adminCategoriesContent .btnModalCategory .adminCatImageContent {
       display: flex;
     }
-}
+  }
   
-.adminCategoriesContent .adminCatProductCount {
+  .adminCategoriesContent .adminCatProductCount {
     display: none;
   }
   
   .adminCategoriesContent .adminCatProductCount span {
     margin-inline: 2px;
   }
-
+  
   @media (min-width: 768px) {
     .adminCategoriesContent .adminCatProductCount {
       display: flex;
@@ -371,11 +418,19 @@
     .dark .adminCategoriesContent .adminCatProductCount {
         color: #c5c1c1;
     }
-}
   
-
+    .adminCategoriesContent .selectedCategory .adminCatProductCount {
+     color: #fff;
+    }
+    .dark .adminCategoriesContent .selectedCategory .adminCatProductCount {
+        color: #fff;
+    }
+  }
+  
+  
 /****************** FIN CATEGORIES ******************/
-
+  
+  
 
 /* SECTION rgb(218, 220, 222)ES DU JOUR */
 .dashAccueil .invoiceContent {
@@ -530,7 +585,7 @@
     margin-top: 4px;
 }
 
-.btnRetirerPlats{
+.retirerDesPlats{
     background: #d5d1d1;
     box-shadow: 1px 1px 2px #00000099, -1px -1px 2px #00000099;
     position: absolute;
@@ -538,6 +593,19 @@
     right: 3px;
     border-radius: 50%;
     padding: 2px;
+}
+
+.btnRetirerPlats{
+    background: #a00909;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: white;
+    padding: 2px 0;
+    border-radius: 3px;
+    margin-top: 4px;
 }
 
 .hidden{

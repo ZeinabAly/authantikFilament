@@ -56,6 +56,14 @@ class BuyNowManager extends Component
             $this->userHasAdresse = true;
         }
     
+        if(auth()->check()){
+            $this->name = auth()->user()->name;
+            $this->email = auth()->user()->email;
+            $this->phone = auth()->user()->phone;
+        }else{
+            return redirect()->route('home.index');
+        }
+
         $this->restaurantTables = RestaurantTable::get();
     }
 
@@ -156,7 +164,7 @@ class BuyNowManager extends Component
         $this->autreAdresse = $boolean;
     }
 
-    public function getModePayement($modePayement){
+    public function getModePayemeent($modePayement){
         $this->modePayement = $modePayement;
     }
 
@@ -178,6 +186,7 @@ class BuyNowManager extends Component
     }
 
     public function createNowOrder(){
+
         $adresse_id = "";
         $user_id = "";
 
@@ -231,7 +240,7 @@ class BuyNowManager extends Component
             'tax' => 0,
             'total' => $this->prixTotal,
             'status' => "En cours",
-            'note' => $note ?? "",
+            'note' => $this->note,
             'table' => $this->tableSelected,
         ];
 
@@ -244,6 +253,7 @@ class BuyNowManager extends Component
         }else{
             $data['lieu'] = "Sur place";
         }
+
 
         $this->order = Order::create($data);
 
@@ -294,6 +304,17 @@ class BuyNowManager extends Component
         $this->commandeCreee = true;
         OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
 
+        $this->dispatch('orderPassed');
+    }
+
+    
+    public function annulerCmd(){
+        session()->flash('error', 'Commande annulée');
+        return redirect()->route('home.index');
+    }
+
+    public function retourCart(){
+        return redirect()->route('home.menu');
     }
 
     public function render()

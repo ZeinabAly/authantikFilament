@@ -1,5 +1,5 @@
 
-<div class="bg-[#fff] swiper-slide product-slide relative w-[220px] rounded-md shadow-md shadow-black/10">
+<div class="bg-[#fff] product-slide relative w-[220px] rounded-md shadow-md shadow-black/10">
     <div class="wishlist absolute top-2 left-2 z-10 ">
         <button wire:click="addToWishlist({{$product->id}})" class="coeur-vide">
             @if(Cart::instance('wishlist')->content()->where('id', $product->id)->count() > 0)

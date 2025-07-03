@@ -21,6 +21,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
 
+    protected static ?string $navigationLabel = 'Produits';
+
     protected static ?int $navigationSort = 5;
 
     public static function getNavigationBadge(): ?string

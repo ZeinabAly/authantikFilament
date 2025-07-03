@@ -131,7 +131,7 @@ class OrderService
 
         session()->flash('success', 'Commande passée avec succès ! ');
         Notification::make()
-            ->title('Commande réussie !')
+            ->title('Commande passée !')
             ->success()
             ->body('Votre commande a bien été enregistrée')
             ->send();

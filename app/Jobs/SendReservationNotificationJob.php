@@ -31,13 +31,13 @@ class SendReservationNotificationJob implements ShouldQueue
             // Notifier le client
             if ($this->user) {
                 $this->user->notify(new ReservationNotification($this->reservation));
-            } else if(auth()->check()){
-                auth()->user()->notify(new ReservationNotification($this->reservation));
-            }
+            } 
+            
+            // auth()->user()->notify(new ReservationNotification($this->reservation));
  
 
             $admins = User::whereHas('roles', function ($query) {
-                $query->whereIn('name', ['superAdmin', 'admin', 'manager']);
+                $query->whereIn('name', ['Admin', 'Manager']);
             })->get();
 
             foreach ($admins as $admin) {

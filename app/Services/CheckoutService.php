@@ -5,7 +5,6 @@ use Carbon\Carbon;
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Filament\Notifications\Notification;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
 class CheckoutService
@@ -31,12 +30,7 @@ class CheckoutService
         }
 
         if(!$coupon){
-            return Notification::make()
-                ->title('Code invalide')
-                ->danger()
-                ->body('Votre coupon n\'est pas reconnu par le système. Veuillez réessayer.')
-                ->send();
-            // return session()->flash('error', 'Code invalide !');
+            return session()->flash('error', 'Votre coupon n\'est pas reconnu par le système. Veuillez réessayer !');
         }else{
             Session::put('coupon', [
                 'code' => $coupon->code,
@@ -45,13 +39,9 @@ class CheckoutService
                 'cart_value' => $coupon->cart_value,
             ]);
 
-            return Notification::make()
-                ->title('Code appliqué avec succcès  !')
-                ->success()
-                ->body('Votre code a été appliqué avec succès.')
-                ->send();
-            // return session()->flash('success', 'Code appliqué avec succcès !');
+            
             $this->calculateDiscount();
+            return session()->flash('success', 'Code appliqué avec succcès !');
         }
     }
 
@@ -85,6 +75,8 @@ class CheckoutService
             Session::forget('checkout');
             return;
         }
+
+        $this->calculateDiscount();
 
         if(Session::has('coupon')){
             Session::put('checkout', [

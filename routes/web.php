@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Order;
-use App\Services\FacturePDFService;
+use App\Models\{Order, RapportJournalier};
+use App\Services\{FacturePDFService, RapportGenerateService};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontOffice\CartController;
@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 // Telechargement de la facture
 Route::get('/facture/{order}/telecharger', function(Order $order, FacturePDFService $service) {
     // Sauvegarder d'abord le fichier sur le serveur
-    $service->saveInvoiceToFile($order);
+    // $service->saveInvoiceToFile($order);
     
     // Puis générer un nouveau PDF pour le téléchargement
     $pdf = $service->generateInvoice($order);
@@ -34,7 +34,7 @@ Route::get('/facture/{order}/telecharger', function(Order $order, FacturePDFServ
 
 Route::get('/recu/{order}/telecharger', function(Order $order, FacturePDFService $service) {
     // Sauvegarder d'abord le fichier sur le serveur
-    $service->saveInvoiceToFile($order);
+    // $service->saveInvoiceToFile($order);
     
     // Puis générer un nouveau PDF pour le téléchargement
     $pdf = $service->generateInvoice($order);
@@ -42,22 +42,29 @@ Route::get('/recu/{order}/telecharger', function(Order $order, FacturePDFService
 })->name('recu.telecharger');
 
 
+Route::get('/rapport/{rapport}/telecharger', function(RapportJournalier $rapport, RapportGenerateService $service) {
+    // Puis générer un nouveau PDF pour le téléchargement
+    return $service->rapportJournalier($rapport);
+})->name('rapport.telecharger');
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // LES ROUTES DU FRONT OFFICE
 
 Route::get('/menu', [HomeController::class, 'menu'])->name('home.menu');
 Route::get('/about', [HomeController::class, 'about'])->name('home.about');
-Route::get('/reservation', [ReservationController::class, 'reservation'])->name('home.reservation');
+Route::get('/reservation', [HomeController::class, 'reservation'])->name('home.reservation');
 
 // Reservation
-Route::resource('/reservation', ReservationController::class)->except('index');
-Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations');
+// Route::resource('/reservation', ReservationController::class)->except('index');
+// Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::post('/contact/store', [HomeController::class, 'contact_store'])->name('home.contact.store');
 Route::get('/product/{product}', [HomeController::class, 'viewProduct'])->name('product.view');
@@ -68,7 +75,22 @@ Route::get('/order-confirmation/{order}', [CartController::class, 'orderConfirma
 Route::get('/wishlist', [CartController::class, 'wishlist'])->name('cart.wishlist');
 
 // ACHETER UN PRODUIT MAINTENANT
-Route::get('/buy-now/{product}', [HomeController::class, 'buyNow'])->name('buy.now');
+Route::get('/acheter/{product}', [HomeController::class, 'buyNow'])->name('buy.now');
 
+// IL FAUT ETRE CONNECTE A L'APPLI POUR ALLER SUR LE DASHBOARD
+Route::get('/admin', function () {
+    if (!auth()->check()) {
+        return redirect()->route('login')
+            ->with('message', 'Connectez-vous d\'abord');
+    }else{
+        if(auth()->user()->hasAnyRole(['super_admin' ,'Admin', 'Manager', 'Caissier'])){
+            return redirect('/admin/login');
+        // if(auth()->user()->hasAnyRole(['SuperAdmin' ,'Admin', 'Manager', 'Caissier'])){
+            auth()->logout();
+        }else{
+            return redirect('/client/login');
+        }
+    }
+});
 
 require __DIR__.'/auth.php';

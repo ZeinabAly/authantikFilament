@@ -1,93 +1,164 @@
 @extends('layouts.app')
 @section('content')
 
+
+    <!-- MESSAGES D'ERREUR -->
+    @if (session()->has('error'))
+        <!-- Messages d'erreur -->
+        <div class="relative" x-data="{showError: {{ session()->has('error') ? 'true' : 'false' }}}" x-cloak>
+            <div x-show="showError" class="py-5 px-3 min-w-[300px] bg-white text-red-500 shadow-md font-semibold text-sm fixed z-[10000] top-3 right-3 flex items-center gap-2 rounded-md border-2 border-red-600">
+                <x-icon name="warning" fill="#f20"/>
+                {{ session('error') }}
+                <button @click="showError = false" class="absolute top-2 right-2">
+                    <x-icon name="btn-fermer" fill="#0d0d0d"/>
+                </button>
+            </div>
+        </div>
+    @endif
+
+    <!-- Messages de succès -->
+
+    @if (session()->has('success'))
+    <div class="relative" x-data="{showSuccess: true}" x-cloak>
+        <div x-show="showSuccess" class="py-5 px-3 min-w-[300px] bg-white text-green-700 shadow-md font-semibold text-sm fixed z-[10000] top-3 right-3 flex items-center gap-2 rounded-md border-2 border-green-600">
+            <x-icon name="success" fill="#05821c"/>
+            {{ session('success') }}
+            <button @click="showSuccess = false" class="absolute top-2 right-2">
+                <x-icon name="btn-fermer" fill="#0d0d0d"/>
+            </button>
+        </div>
+    </div>
+    @endif
+
 <!-- BANNIERE PAGE ACCUEIL -->
 
 <!-- HEADER-SLIDER -->
 <section class="hero text-center" aria-label="home" id="home">
 
+    <!-- LE NOMBRE DE SLIDER DANS LA BASE DE DONNEES DOIT ETRE SUPERIEUR A 2 SINON LE SYSTEME 
+    LES IGNORE ET PREND LES SLIDERS PAR DEFAUT -->
+    
     <ul class="hero-slider" data-hero-slider>
 
-        <li class="slider-item active" data-hero-slider-item>
+        @if($sliders->count() >= 2 )
+            @foreach($sliders as $key => $slider)
+            <li class="slider-item active" data-hero-slider-item>
 
-            <div class="slider-bg">
-                <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image foutou banane" class="img-cover">
-            </div>
-
-            <div class="cover">
-                <p class="label-2 section-subtitle slider-reveal">Saveurs authentitiques</p>
-        
-                <h1 class="display-1 hero-title slider-reveal">
-                Bienvenue chez <br>
-                Authantik
-                </h1>
-        
-                <p class="body-2 hero-text slider-reveal">
-                Un voyage culinaire exceptionnel vous attend
-                </p>
-        
-                <a href="{{ route('home.menu') }}" class="btn btn-primary slider-reveal">
-                <span class="text text-1">Voir Notre Menu</span>
-        
-                </a>
-
-            </div>
-
-        </li>
-
-        <li class="slider-item" data-hero-slider-item>
-
-            <div class="slider-bg">
-                <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
-            <div class="cover">
-                <p class="label-2 section-subtitle slider-reveal">Experience délicieuse</p>
-        
-                <h1 class="display-1 hero-title slider-reveal">
-                Découvrez nos plats <br>
-                savoureux
-                </h1>
-        
-                <p class="body-2 hero-text slider-reveal">
-                Des recettes parfaites pour eveiller vos pupilles
-                </p>
-        
-                <a href="{{route('home.menu')}}" class="btn btn-primary slider-reveal">
-                <span class="text text-1">Découvrez nos plats</span>
-        
-                <!-- <span class="text text-2" aria-hidden="true">View Our Menu</span> -->
-                </a>
-            </div>
-
-        </li>
-
-        <li class="slider-item" data-hero-slider-item>
-
-            <div class="slider-bg">
-                <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
-            <div class="cover">
-                <p class="label-2 section-subtitle slider-reveal">Un cadre chaleureux et acceuillant</p>
-        
-                <h1 class="display-1 hero-title slider-reveal">
-                Vivez une expérience <br>
-                Mémorable
-                </h1>
-        
-                <p class="body-2 hero-text slider-reveal">
-                Venez en famille et savourez la joie d'une cuisine délicieuse
-                </p>
-        
-                <div class="" x-data="{openReservation: false}" x-cloak>
-                    <button type="button" @click="$dispatch('open-reservation')" class="btn btn-primary slider-reveal">
-                        <span class="text text-1">Réserver une table</span>
-                    </button>
+                <div class="slider-bg">
+                    <img src="{{asset('storage/'.$slider->image)}}" alt="image banniere {{$key}}" class="img-cover">
                 </div>
-            </div>
 
-        </li>
+                <div class="cover">
+                    <p class="label-2 section-subtitle slider-reveal">{{$slider->sous_titre}}</p>
+            
+                    <h1 class="display-1 hero-title slider-reveal">
+                        {{$slider->titre}}
+                    </h1>
+            
+                    <p class="body-2 hero-text slider-reveal">
+                        {{$slider->texte}}
+                    </p>
+            
+                    @if($slider->linkButton == "home.reservation")
+                        <div class="" x-data="{openReservation: false}" x-cloak>
+                            <button type="button" @click="$dispatch('open-reservation')" class="btn btn-primary slider-reveal">
+                                <span class="text text-1">Réserver une table</span>
+                            </button>
+                        </div>
+                    @else
+                        <a href="{{ route($slider->linkButton) }}" class="btn btn-primary slider-reveal">
+                        <span class="text text-1">{{$slider->textButton}}</span>
+                    @endif
+            
+                    </a>
+
+                </div>
+
+            </li>
+            @endforeach
+        @else
+            <li class="slider-item active" data-hero-slider-item>
+
+                <div class="slider-bg">
+                    <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image foutou banane" class="img-cover">
+                </div>
+
+                <div class="cover">
+                    <p class="label-2 section-subtitle slider-reveal">Saveurs authentitiques</p>
+            
+                    <h1 class="display-1 hero-title slider-reveal">
+                    Bienvenue chez <br>
+                    Authantik
+                    </h1>
+            
+                    <p class="body-2 hero-text slider-reveal">
+                    Un voyage culinaire exceptionnel vous attend
+                    </p>
+            
+                    <a href="{{ route('home.menu') }}" class="btn btn-primary slider-reveal">
+                    <span class="text text-1">Voir Notre Menu</span>
+            
+                    </a>
+
+                </div>
+
+            </li>
+
+            <li class="slider-item" data-hero-slider-item>
+
+                <div class="slider-bg">
+                    <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" width="1880" height="950" alt="" class="img-cover">
+                </div>
+
+                <div class="cover">
+                    <p class="label-2 section-subtitle slider-reveal">Experience délicieuse</p>
+            
+                    <h1 class="display-1 hero-title slider-reveal">
+                    Découvrez nos plats <br>
+                    savoureux
+                    </h1>
+            
+                    <p class="body-2 hero-text slider-reveal">
+                    Des recettes parfaites pour eveiller vos pupilles
+                    </p>
+            
+                    <a href="{{route('home.menu')}}" class="btn btn-primary slider-reveal">
+                    <span class="text text-1">Découvrez nos plats</span>
+            
+                    <!-- <span class="text text-2" aria-hidden="true">View Our Menu</span> -->
+                    </a>
+                </div>
+
+            </li>
+
+            <li class="slider-item" data-hero-slider-item>
+
+                <div class="slider-bg">
+                    <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" width="1880" height="950" alt="" class="img-cover">
+                </div>
+
+                <div class="cover">
+                    <p class="label-2 section-subtitle slider-reveal">Un cadre chaleureux et acceuillant</p>
+            
+                    <h1 class="display-1 hero-title slider-reveal">
+                    Vivez une expérience <br>
+                    Mémorable
+                    </h1>
+            
+                    <p class="body-2 hero-text slider-reveal">
+                    Venez en famille et savourez la joie d'une cuisine délicieuse
+                    </p>
+            
+                    <div class="" x-data="{openReservation: false}" x-cloak>
+                        <button type="button" @click="$dispatch('open-reservation')" class="btn btn-primary slider-reveal">
+                            <span class="text text-1">Réserver une table</span>
+                        </button>
+                    </div>
+                </div>
+
+            </li>
+        @endif
+
 
     </ul>
 
@@ -103,9 +174,11 @@
 <!-- FIN BANNIERE PAGE ACCUEIL -->
 
 
-<!-- PRODUCTS SLIDE: SECTION1 -->
+<!-- PRODUCTS SLIDE: SECTION1 ET LES MODALES DE CONNEXIONS POUR LES NON CONNECTES -->
 
 <livewire:interface-user.page-index.product-manager />
+<livewire:interface-user.auth.login-modal />
+<livewire:interface-user.auth.register-modal />
 
 <!-- FIN SECTION 1 -->
 
@@ -183,8 +256,11 @@
     <div class="products-slide flexCenter gap-4 flex-wrap">
 
     @foreach($categories as $category)
-    <a href="{{route('home.menu', ['categories' => $category->name ])}}" class="bg-[#fff] product-slide relative max-w-[220px] min-h-[200px] rounded-md shadow-md shadow-black/10 revealTop">
-        <img src="{{asset('storage/'.$category->image)}}" alt="{{$category->name}}">
+    <a href="{{route('home.menu', ['categories' => $category->name ])}}" class="bg-[#fff] product-slide relative rounded-md shadow-md shadow-black/10 revealTop">
+        <div class="productImgContent">
+            <img src="{{asset('storage/'.$category->image)}}" alt="{{$category->name}}">
+        </div>
+        
         <div class="content relative mt-[10px] md:mt-[20px]">
             <div class="">
                 <p class="text-center font-semibold md:text-lg ">{{$category->name}}</p>
@@ -272,8 +348,27 @@
 
 <!-- FIN POURQUOI NOUS -->
 
+
+<!-- CAROUSEL DES MEMBRES DE L'EQUIPE -->
+@include('layouts.carouselEquipe')
+
+
+
+<!-- INTEGRER LES VIDEOS FACOBOOK  -->
+<section class="sectionVideosFacebook">
+    <h3 class="text-center text-4xl"><span class="text-black font-bold">Découvrez nos vidéos</span> <br /> <span class="allura font-semibold text-[--color2-yellow]">Facebook</span></h3>
+    <p class="mb-10 text-center md:max-w-[70%] max-w-[90%] mx-auto text-semibold">Plongez dans notre univers à travers une sélection de vidéos exclusives directement issues de notre page Facebook. Pour ne rien manquer de nos actualités, événements et coulisses, n’hésitez pas à visiter notre page Facebook et à nous suivre !</p>
+    <div class="videosGrid">
+        @foreach($settings->facebookVideos as $video)
+        <div class="video-wrapper">
+            {!! $video !!}
+        </div>  
+        @endforeach    
+    </div>
+
+</section>
+
 <!-- TESTIMONIAL -->
 @include('layouts.testimonial')
-
 
 @endsection

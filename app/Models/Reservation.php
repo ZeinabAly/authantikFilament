@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{User, Employee};
 use Carbon\Carbon;
+use App\Models\{User, Employee};
+use Illuminate\Database\Eloquent\Model;
+use App\Jobs\SendReservationNotificationJob;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
 {
@@ -38,9 +39,15 @@ class Reservation extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         // Exécuter cette mise à jour au démarrage du modèle
         static::updateExpiredReservationStatus();
+    }
+
+    protected static function booted(){
+        static::created(function($reservation){
+            SendReservationNotificationJob::dispatch($reservation)->delay(now()->addSeconds(1));
+        });
     }
 
     public static function updateExpiredReservationStatus()

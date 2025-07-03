@@ -32,33 +32,33 @@ class ContactUsNotification extends Notification
     */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
-    {
-        // Log::info('Avant notification', ['user' => $no-tifiable->id]);
+    // public function toMail(object $notifiable): MailMessage
+    // {
+    //     // Log::info('Avant notification', ['user' => $no-tifiable->id]);
 
-        if($notifiable->hasRole('superAdmin') || $notifiable->hasRole('admin') || $notifiable->hasRole('manager')){
-            return (new MailMessage)
-                        ->subject('Notification de contact')
-                        ->greeting("Bonjour {$notifiable->name} ! ")
-                        ->line("L\'utilisateur {$this->contactInfos->name} à besoin de votre aide")
-                        ->line("Pour : {$this->contactInfos->message} ")
-                        ->action('Voir le message', url('/'));
-        }
-        return (new MailMessage)
-                    ->subject('Notification de contact')
-                    ->greeting("Bonjour {$notifiable->name} ! ")
-                    ->line("votre requête a bien été reçu nous vous ferons un retour très bientôt")
-                    ->line('Merci d\'utiliser notre application !');
-        
+    //     if($notifiable->hasAnyRole(['Admin', 'Manager'])){
+    //         return (new MailMessage)
+    //                     ->subject('Notification de contact')
+    //                     ->greeting("Bonjour {$notifiable->name} ! ")
+    //                     ->line("L\'utilisateur {$this->contactInfos->name} à besoin de votre aide")
+    //                     ->line("Pour : {$this->contactInfos->message} ")
+    //                     ->action('Voir le message', url('/'));
+    //     }else{
+    //         return (new MailMessage)
+    //                     ->subject('Notification de contact')
+    //                     ->greeting("Bonjour {$notifiable->name} ! ")
+    //                     ->line("votre requête a bien été reçu nous vous ferons un retour très bientôt")
+    //                     ->line('Merci d\'utiliser notre application !');
+    //     }
 
-        // Log::info('Notification envoyée');
-    }
+    //     return Log::info('Notification envoyée');
+    // }
 
     /**
      * Get the array representation of the notification.
@@ -72,6 +72,7 @@ class ContactUsNotification extends Notification
             'name' => $this->contactInfos->name,
             'phone' => $this->contactInfos->phone,
             'message' => $this->contactInfos->message,
+            'title' => 'Nouveau message'
         ];
     }
 }

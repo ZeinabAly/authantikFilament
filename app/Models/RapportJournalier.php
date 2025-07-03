@@ -10,4 +10,9 @@ class RapportJournalier extends Model
     use softDeletes;
 
     protected $guarded = ['id'];
+
+    public function getRouteKeyName(): string
+    {
+        return 'date';
+    }
 }

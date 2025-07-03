@@ -49,7 +49,21 @@
 
 .pageReservation .section-form .champInput{
     border: 0;
+    @apply flex flex-col justify-start;
+}
+
+.champInput input, .champInput select, .champInput textarea{
+    width: 100%;
+    margin-bottom: 4px;
+    border: 0;
     border-bottom: 1px solid rgb(210, 210, 210);
+}
+
+.champInput input:focus, .champInput select:focus, .champInput textarea:focus{
+    border: 0;
+    width: 100%;
+    outline: none;
+    @apply ring-0;
 }
 
 .pageReservation .reservation-accro{
@@ -185,11 +199,15 @@
     color: #000;
 }
 
-.pageReservation a{
+.pageReservation .btnPageRersever a{
     @apply py-2 px-3;
     color: #fff;
 }
 
 .pageReservation a.login{
     @apply px-3 py-2 mt-2 mx-1 mb-7 border-2 border-red-500 rounded-sm text-red-500 text-[14px] !important;
+}
+
+.text-error{
+    @apply text-red-500 font-semibold text-xs text-left ml-[10px];
 }

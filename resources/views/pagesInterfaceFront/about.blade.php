@@ -23,7 +23,7 @@
                 <a href="{{ route('home.about') }}" class="font-bold ">Découvrez notre histoire</a>
             </button>
         </div>
-        <div class="h-full grid grid-cols-2 gap-2 gridImages">
+        <div class="h-full grid grid-cols-2 gap-2 gridImages revealRight">
             <img class="h-[180px] w-full object-cover rounded-md shadow-lg shadow-black/10" src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="image banniere menu" class="h-full w-full object-cover">
             <img class="h-[180px] w-full object-cover rounded-md shadow-lg shadow-black/10" src="{{asset('assets/images/pageIndex/Poulet-Yassa.jpg')}}" alt="image banniere menu" class="h-full w-full object-cover">
             <img class="h-[180px] w-full object-cover rounded-md shadow-lg shadow-black/10" src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image banniere menu" class="h-full w-full object-cover">
@@ -35,7 +35,7 @@
     <!-- SECTION2 -->
     <section class="section2About">
         <div class="section2Cover">
-            <div class="left">
+            <div class="left revealLeft">
                 <p class="section-subtitle text-white">Des plats qui respirent</p>
                 <h2 class="section-title text-[--color2-yellow]">Nos Valeurs</h2>
                 <p class="text-gray-300 text-justify">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, saepe obcaecati? Officia aliquid ea neque. Aspernatur, ratione exercitationem? Soluta laboriosam deleniti dolorem magni quaerat quas, eius asperiores illo non. Quae!</p>
@@ -43,12 +43,14 @@
                     <button class="btnAbout btnAbout1">
                         <a href="{{route('home.menu')}} ">Voir le menu</a>
                     </button>
-                    <button class="btnAbout btnAbout2">
-                        <a href="{{route('reservation.create')}} ">Réserver une table</a>
-                    </button>
+                    <div class="" x-data="{openReservation: false}" x-cloak>
+                        <button @click="$dispatch('open-reservation')" class="btnAbout btnAbout2">
+                            Réserver une table
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="right">
+            <div class="right revealRight">
                 <div class="border">
                     <img class="aboutImageBorder" src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image banniere menu" class="h-full w-full object-cover">
                 </div>
@@ -78,29 +80,30 @@
                     </button>
                 </div>
                 <div class="texte">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus accusantium facere quibusdam aut magnam quod distinctio repellat impedit eveniet aliquid maxime, a quaerat debitis, tenetur enim expedita optio sunt. Nemo.</p>
+                    <p>Chez <span class="font-bold text-[--color2-yellow]">AUTHANTIK</span>, chaque détail compte pour vous offrir une expérience culinaire inoubliable. De la qualité de nos plats à la rapidité du service, nous mettons tout en œuvre pour satisfaire nos clients.</p>
                 </div>
             </div>
             <div class="serviceGrid">
                 <div class="service service1">
                     <h3 class="serviceTitre">Restauration</h3>
-                    <p class="serviceTexte">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat nostrum voluptatem, laborum in repellendus commodi suscipit error</p>
+                    <p class="serviceTexte">Vivez une expérience culinaire unique dans un cadre chaleureux et convivial. Que vous veniez en solo, en couple ou en groupe, notre équipe vous accueille avec le sourire et vous propose des plats savoureux, préparés sur place avec des ingrédients frais et de qualité</p>
                     <div class="imgContent"><img src="{{asset('assets/images/about/service1.jpg')}}" alt="service1" class="serviceImage" /></div>
                 </div>
                 <div class="service service2">
                     <h3 class="serviceTitre">Livraison</h3>
-                    <p class="serviceTexte">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat nostrum voluptatem, laborum in repellendus commodi suscipit error</p>
-                    <div class="imgContent"><img src="{{asset('assets/images/about/service2.png')}}" alt="service2" class="serviceImage" /></div>
+                    <p class="serviceTexte">Envie de déguster nos plats sans vous déplacer ? Notre service de livraison rapide vous apporte le meilleur de notre cuisine directement chez vous ou au bureau. Commandez en ligne ou par téléphone, nous nous chargeons du reste</p>
+                    <div class="imgContent"><img src="{{asset('assets/images/about/service3.jpg')}}" alt="service3" class="serviceImage"/> </div>
                 </div>
                 <div class="service service3">
                     <h3 class="serviceTitre">Traiteur</h3>
-                    <p class="serviceTexte">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat nostrum voluptatem, laborum in repellendus commodi suscipit error</p>
-                    <div class="imgContent"><img src="{{asset('assets/images/about/service3.jpg')}}" alt="service3" class="serviceImage"/> </div>
+                    <p class="serviceTexte">Pour vos événements privés ou professionnels (anniversaires, mariages, séminaires...), notre service traiteur s’adapte à vos besoins. Nous créons des menus sur mesure, variés et généreux, qui raviront vos invités</p>
+                    <div class="imgContent"><img src="{{asset('assets/images/about/service2.png')}}" alt="service2" class="serviceImage" /></div>
                 </div>
             </div>
         </div>
     </section>
     <!-- FIN SECTION4: PARLER DE NOS SERVICES -->
+    
     
     <!-- SECTION5: RESERVATION ET HORAIRE -->
     <div class="section5About relative">
@@ -122,12 +125,22 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <a href="{{route('reservation.create')}}"><button class="btnAbout btnAbout1">Réserver en ligne</button></a>
+                    <div class="" x-data="{openReservation: false}" x-cloak>
+                        <button @click="$dispatch('open-reservation')" class="btnAbout btnAbout1">Réserver maintenant</button>
+                    </div>
                     <a href="tel:+224629889895"><button class="btnAbout btnAbout2">Nous appeler</button></a>
                 </div>
             </div>
         </div>
     </div>
     <!-- FIN SECTION5: RESERVATION ET HORAIRE -->
+
+    <!-- MEMBRES DE L'EQUIPE -->
+    <div class="mt-10">
+        @include('layouts.membreEquiePageAbout')
+    </div>
+
+
+
 </div>
 @endsection

@@ -85,9 +85,10 @@ class ClientPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 // EnsureUseHasRoleUser::class,
             ])
-            ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->brandName('AUTHANTIK')
+            ->favicon(asset('favicon.png'));
     }
 }

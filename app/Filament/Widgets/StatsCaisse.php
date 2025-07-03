@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 use Carbon\Carbon;
-use App\Models\{Order, Depense};
+use App\Models\{Order, Depense, RapportJournalier};
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -13,6 +13,12 @@ class StatsCaisse extends BaseWidget
     {
         $today = Carbon::today()->toDateString();
         $hier = Carbon::yesterday()->toDateString();
+        $rapport;
+        if(RapportJournalier::whereDate('created_at', $hier)->first()){
+            $rapport = RapportJournalier::whereDate('created_at', $hier)->first();
+        }else{
+            $rapport = RapportJournalier::latest()->first();
+        }
 
         // Hier
         $totalVentesHier = Order::whereDate('created_at', $hier)->where('status', 'Livrée')->sum('total');
@@ -37,6 +43,8 @@ class StatsCaisse extends BaseWidget
             Stat::make('Bénéfice de la journée', number_format($benefice, 0, ',', '.') . ' GNF')
                 ->description("Hier : " . number_format($beneficeHier, 0, ',', '.') . ' GNF')
                 ->color('primary')
+                ->description("Cliquer pour télecharger le rapport d'hier")
+                ->url(route('rapport.telecharger', ['rapport' => $rapport]))
                 ->icon('heroicon-o-shopping-cart'),
         ];
     }

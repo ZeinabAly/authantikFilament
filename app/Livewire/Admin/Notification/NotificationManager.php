@@ -25,6 +25,7 @@ class NotificationManager extends Component
                 // "connexion" => "App\Notifications\ConnexionNotification",
                 "reservation" => "App\Notifications\ReservationNotification",
                 "commande" => "App\Notifications\OrderNotification",
+                "contact" => "App\Notifications\ContactUsNotification",
             ];
         
             if (isset($types[$this->typeNotif])) {

@@ -31,23 +31,32 @@
                     </div>
             
                     <!-- Fin zone recheche -->
-                     <!-- Zone categorie -->
+                    <!-- Zone categorie -->
                     <div class="">
                         <div class="titre2Content">
                             <h2 class="titre2">Les categories</h2>
                         </div>
                         <div class="adminCategoriesContent">
-                        @foreach($sousCategories as $sCategory)
-                            <button type="button" wire:click="setSelectedCategory({{$sCategory->id}})" class="btnModalCategory md:bg-[--white]">
+                            <button type="button" wire:click="setSelectedCategory('')" class="btnModalCategory md:bg-[--white] {{$selectedCategory === '' ? 'selectedCategory' : ''}}">
                                 <div class="adminCatImageContent">
-                                    <img class="adminCatImage" src="{{asset('storage/'.$sCategory->image)}}" alt="{{$sCategory->name}}">
+                                    <img class="adminCatImage" src="{{asset('storage/'.$allCategories->image)}}" alt="tout">
                                 </div>
                                 <div class="adminCatTexteContent x-bind:ring-2 ring-[--color2-yellow]">
-                                    <h5 class="adminCatName">{{ $sCategory->name }}</h5>
-                                    <p class="adminCatProductCount"><span>Produits:</span> <span class="text-gray-500">{{ $sCategory->products->count() }}</span></p>
+                                    <h5 class="adminCatName">Tout</h5>
+                                    <p class="adminCatProductCount"><span>Produits:</span> <span class="{{$selectedCategory !== '' ? 'text-gray-500' : ''}}">{{ $nbreTotalPrdts }}</span></p>
                                 </div>
                             </button>
-                        @endforeach
+                            @foreach($sousCategories as $sCategory)
+                                <button type="button" wire:click="setSelectedCategory({{$sCategory->id}})" class="btnModalCategory md:bg-[--white] {{$selectedCategory === $sCategory->id ? 'selectedCategory' : ''}}">
+                                    <div class="adminCatImageContent">
+                                        <img class="adminCatImage" src="{{asset('storage/'.$sCategory->image)}}" alt="{{$sCategory->name}}">
+                                    </div>
+                                    <div class="adminCatTexteContent x-bind:ring-2 ring-[--color2-yellow]">
+                                        <h5 class="adminCatName">{{ $sCategory->name }}</h5>
+                                        <p class="adminCatProductCount"><span>Produits:</span> <span class="{{$sCategory->id !== $selectedCategory ? 'text-gray-500' : ''}}">{{ $sCategory->products->count() }}</span></p>
+                                    </div>
+                                </button>
+                            @endforeach
                         </div>
      
                     
@@ -134,7 +143,7 @@
                                 @foreach($cartContent as $item)
                                     <div class="invoiceProduct">
                                         <button wire:click="removeProduct('{{$item['rowId']}}')" class="delete">
-                                            <x-icon name="delete" fill="#7b1818" size="14" class="cursor-pointer"/>
+                                            <x-icon name="delete" size="14"/>
                                         </button>
                                         <div class="invoiceProductHeader">
                                             <div class="">
@@ -184,8 +193,8 @@
                                 </div>
                                 @if(Session::has('discounts'))
                                     <div class="flex items-center gap-2">
-                                        <p class="text-green-800 font-bold text-xs">Coupon appliqué</p>
-                                        <p class="font-bold text-xs">{{Session::get('coupon')['code']}}</p>
+                                        <p class="text-green-800 font-bold text-sm">Coupon appliqué</p>
+                                        <p class="font-bold text-sm">{{Session::get('coupon')['code']}}</p>
                                     </div>
                                 @endif
                             </form>
@@ -334,7 +343,7 @@
                             <!-- FIN MODE DE LIVRAISON -->
 
                             <!-- CHOISIR UNE TABLE -->
-                            <div class="restaurantTableConten">
+                            <div class="restaurantTableConten mt-3">
                                 <h2 class="text-md font-semibold">Numero de table</h2>
                                 <select wire:click="selectTable(event.target.value)">
                                     <option value="">Choisir une table</option>
@@ -344,6 +353,16 @@
                                 </select>
                             </div>
 
+                            <!-- LAISSER UNE NOTE -->
+                            <div class="mt-3">
+                                <h4 class="text-md font-semibold">Laisser une note</h4>
+
+                                <div class="">
+                                    <textarea wire:model="note" placeholder="Pas de piment" class="payementModesContent border-0"></textarea>
+                                </div>
+                            </div>
+                            <!-- FIN MODE PAYEMENT -->
+
                         </div>
 
 
@@ -351,8 +370,8 @@
                         <div class="py-5 px-3">
                             <p class="nbreProduits">Nbre Produits : <span class="">{{count($cartContent)}}</span></p>
                             @if(Session::has('discounts'))
-                                <p class="rabais">Rabais : <span>{{ number_format(Session::get('discounts')['discount'], 0, '.', '')}}</span></p>
-                                <h3 class="total">Total : <span>{{ number_format(Session::get('discounts')['total'], 0, '.', '')}}</span></h3>
+                                <p class="rabais">Rabais : <span>{{number_format((float) str_replace(',', '', Session::get('discounts')['discount']), 0, '.', '.')}} GNF</span></p>
+                                <h3 class="total">Total : <span>{{number_format((float) str_replace(',', '', Session::get('discounts')['total']), 0, '.', '.')}} GNF</span></h3>
                             @else
                                 <h3 class="text-lg text-gray-900 font-bold">Total: <span>{{number_format((float) str_replace(',', '', $total), 0, '.', '.')}} GNF</span></h3>
                             @endif
@@ -378,8 +397,8 @@
                             <span>Commande validée ! </span>
                         </div>
                         <div class="telechargementBtns">
-                            <a href="{{route('facture.telecharger', ['order' => $order])}}" class="btnCommander">Télecharger la facture</a> 
-                            <a href="{{route('recu.telecharger', ['order' => $order])}}" class="btnCommander">Télecharger le recu de cuisine</a>
+                            <a href="{{route('facture.telecharger', ['order' => $order])}}" class="btnCommander">Imprimer la facture</a> 
+                            <a href="{{route('recu.telecharger', ['order' => $order])}}" class="btnCommander">Imprimer le recu de cuisine</a>
                         </div>
                         @endif
                     @endif

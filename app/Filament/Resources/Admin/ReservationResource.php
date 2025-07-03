@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\Admin;
 
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use App\Models\Reservation;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
+use App\Jobs\SendReservationNotificationJob;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\Admin\ReservationResource\Pages;
 use App\Filament\Resources\Admin\ReservationResource\RelationManagers;
-use App\Models\Reservation;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReservationResource extends Resource
 {
@@ -19,15 +20,18 @@ class ReservationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
+    protected static ?string $navigationLabel = 'Réservations';
+
     protected static ?int $navigationSort = 6;
 
     public static function getNavigationBadge(): ?string
     {
         if(auth()->check()){
-            return static::getModel()::where('user_id', auth()->user()->id)->count();
+            return static::getModel()::count();
         }
         return '';
     }
+
 
     public static function form(Form $form): Form
     {

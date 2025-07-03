@@ -3,17 +3,21 @@
 namespace App\Livewire\InterfaceUser\PageIndex;
 
 use Livewire\Component;
-use App\Models\{Product, SousCategory};
-use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\On;
 use App\Services\CartService;
-use App\Services\CheckoutService;
 use App\Services\OrderService;
+use App\Services\CheckoutService;
+use App\Models\{Product, SousCategory};
 
+
+use Illuminate\Support\Facades\Session;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
+
 
 class ProductManager extends Component
 {
     public $slideProducts = [''];
+    public $userLogged = false;
 
 
     public function mount(){
@@ -25,8 +29,16 @@ class ProductManager extends Component
         $cartService->addProduct($product);
         $this->dispatch('cartUpdated');
     }
+
+    #[On('userLogged')]
+    public function checkUserLogged(){
+        $this->userLogged = true;
+    }
     
+  
     public function addToWishlist(CartService $cartService, $productId){
+        // dd($productId);
+        // $this->dispatch('wishlistUpdated');
         $product = Product::find($productId);
         $wishlistItem = Cart::instance('wishlist')->content()->firstWhere('id', $product->id);
         if($wishlistItem){

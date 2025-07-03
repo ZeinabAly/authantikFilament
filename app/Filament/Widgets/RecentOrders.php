@@ -16,6 +16,7 @@ class RecentOrders extends BaseWidget
     {
         return 'Les 5 dernières commandes';
     }
+    
     public function table(Table $table): Table
     {
         // $orders = [];
@@ -63,7 +64,7 @@ class RecentOrders extends BaseWidget
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Lieu')
+                    ->label('Status')
                     ->toggleable()
                     ->searchable()
                     ->sortable(),

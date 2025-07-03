@@ -72,7 +72,25 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <button class="btnViderPanier" wire:confirm="Êtes vous sure?" wire:click="clearCart">Vider le panier</button>
+                    <!-- BOUTON VIDER LE PANIER -->
+                    <div class="" x-data = "{confirmViderPanier: false}">
+                        <button @click="confirmViderPanier = true" class="btnViderPanier">Vider le panier</button>
+    
+                        <div x-show="confirmViderPanier" x-cloak class="confirmationBox" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"  x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
+                            <div class="confirmationContent">
+                                <h3 class="text-lg font-bold mb-4">Vider le panier</h3>
+                                <p class="mb-4">Êtes-vous sûr de vouloir vider le panier ?</p>
+                                <div class="flex justify-end gap-2">
+                                    <button @click="confirmViderPanier = false" class="btnAnnulerCmd">
+                                        Annuler
+                                    </button>
+                                    <button wire:click="clearCart" @click="confirmViderPanier = false" class="btnConfirmerCmd" style="background: #8b0f0f">
+                                        Vider
+                                    </button>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
                 </div>
             <!-- FIN ITEMS -->
                 
@@ -82,47 +100,48 @@
                 <!-- Coupon -->
                 <form wire:submit="applyCoupon" class="couponForm">
                     <div class="formContent">
-                        <input type="text" placeholder="Appliquer un coupon">
-                        <button >Valider</button>
+                        <input type="text" wire:model.live="couponCode" placeholder="Appliquer un coupon">
+                        <button {{$couponCode == "" ? "disabled" : ''}} >Valider</button>
                     </div>
+                    @if(Session::has('discounts') && Session::get('discounts')['discount'] > 0)
+                        <div class="text-success ml-6 mt-2">
+                            Valeur du Coupon appliqué : {{str_replace(',', '.', Session::get('discounts')['discount'])}} GNF
+                        </div>
+                    @endif
                 </form>
-                <div class="subtotal details">
-                    <span class="titre">Sous-Total : </span>
-                    <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->subtotal()), 0, '.', '.')}} GNF</span>
-                </div>
-                <div class="rabais details">
-                    <span class="titre">Rabais : </span>
-                    <span>0</span>
-                </div>
-                <div class="total details">
-                    <span class="titre">Total : </span>
-                    <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->total()), 0, '.', '.')}} GNF</span>
-                </div>
-                <a href="{{route('cart.checkout')}}" class="btnPasserCaisse">Passer à la caisse</a>
+
+                @if(Session::has('discounts'))
+                    <div class="subtotal details">
+                        <span class="titre">Sous-Total : </span>
+                        <span>{{str_replace(',', '.', Session::get('discounts')['subtotal'])}} GNF</span>
+                    </div>
+                    <div class="rabais details">
+                        <span class="titre">Rabais : </span>
+                        <span>{{str_replace(',', '.', Session::get('discounts')['discount'])}}</span>
+                    </div> 
+                    <div class="total details">
+                        <span class="titre">Total : </span>
+                        <span>{{str_replace(',', '.', Session::get('discounts')['total'])}} GNF</span>
+                    </div>
+                    <a href="{{route('cart.checkout')}}" class="btnPasserCaisse">Passer à la caisse</a>
+                @else
+
+                    <div class="subtotal details">
+                        <span class="titre">Sous-Total : </span>
+                        <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->subtotal()), 0, '.', '.')}} GNF</span>
+                    </div>
+                    <div class="rabais details">
+                        <span class="titre">Rabais : </span>
+                        <span>0</span>
+                    </div>
+                    <div class="total details">
+                        <span class="titre">Total : </span>
+                        <span>{{number_format((float) str_replace(',', '', Cart::instance('cart')->total()), 0, '.', '.')}} GNF</span>
+                    </div>
+                    <a href="{{route('cart.checkout')}}" class="btnPasserCaisse">Passer à la caisse</a>
+                @endif
             </div>
             <!-- FIN DETAILLS PAYEMENT -->
         </section>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    function confirmAction() {
-    Swal.fire({
-        title: 'Êtes-vous sûr?',
-        text: "Cette action est irréversible!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Oui, confirmer!',
-        cancelButtonText: 'Annuler'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Appeler la méthode Livewire après confirmation
-            $wire.clearCart();
-        }
-    });
-}
-</script>

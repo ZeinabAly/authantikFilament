@@ -14,8 +14,10 @@ use Filament\Tables\Concerns\InteractsWithTable;
 class DashBoardManager extends Component
 {
     public $products = [];
+    public $nbreTotalPrdts;
     public $sousCategories = [];
     public $selectedCategory = '';
+    public $allCategories = '';
     public $search = '';
     public $orders = [];
     public $dayOrders = [];
@@ -23,7 +25,6 @@ class DashBoardManager extends Component
     public $platsDuJour = [];
     public $statusSelected = "En cours";
     public $totalsData = "";
-
 
     public function mount(){
 
@@ -33,12 +34,15 @@ class DashBoardManager extends Component
         $this->orders();
         $this->totalsData = $this->orders();
 
+        $this->allCategories = SousCategory::inRandomOrder()->take(1)->first();
+
+        $this->nbreTotalPrdts = Product::count();
+        
     }
 
     public function setSelectedCategory($id){
         $this->selectedCategory = $id;
     }
-
 
     public function orders(){
 
@@ -80,7 +84,6 @@ class DashBoardManager extends Component
         ];
     }
 
-
     // AFFICHER LES COMMANES EN FONCTION DU STATUS
     public function getOrdersByStatus($status){
         $this->statusSelected = $status;
@@ -89,7 +92,6 @@ class DashBoardManager extends Component
                 ->where('status', $status)
                 ->orderBy('created_at', 'desc')->get();
     }
-
 
     // EDITER UNE COMMANDE
     public function editDayOrder($dayOrderId){
@@ -110,12 +112,20 @@ class DashBoardManager extends Component
 
         $this->dispatch('platDuJourAdded');
 
-        return Notification::make('plats')
-                            ->title('Le produit a été retiré des plats du jour !')
-                            ->success()
-                            ->send();
+        // return Notification::make('plats')
+        //                     ->title('Le produit a été retiré des plats du jour !')
+        //                     ->body("
+        //                         Client : Zeinab \n
+        //                         \nTable : 1
+        //                         \nProduits : Tiramisu
+        //                         \nTotal : 100.000GNF
+        //                     ")
+        //                     ->icon('heroicon-o-shopping-bag')
+        //                     ->success()
+        //                     ->sendToDatabase(auth()->user());
        
     }
+
     public function ajouterAuxPlats($id){
         
         $product = Product::findOrFail($id);
@@ -160,6 +170,5 @@ class DashBoardManager extends Component
             "platsDuJour" => $this->platsDuJour,
         ]);
     }
-
 
 }

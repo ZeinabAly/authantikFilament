@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
 
-                                <button class="btnRetirerPlats" wire:click="retirerDesPlats({{$platDuJour->id}})">
+                                <button class="retirerDesPlats" wire:click="retirerDesPlats({{$platDuJour->id}})">
                                     <x-icon name="btn-fermer" fill="#741704" size="14" class="cursor-pointer"/>
                                 </button>
                             </div>
@@ -70,15 +70,23 @@
                         </div>
                         <!-- Zone categorie -->
                         <div class="adminCategoriesContent">
-                            
+                            <button type="button" wire:click="setSelectedCategory('')" class="btnModalCategory md:bg-[--white] {{$selectedCategory === '' ? 'selectedCategory' : ''}}">
+                                <div class="adminCatImageContent">
+                                    <img class="adminCatImage" src="{{asset('storage/'.$allCategories->image)}}" alt="tout">
+                                </div>
+                                <div class="adminCatTexteContent x-bind:ring-2 ring-[--color2-yellow]">
+                                    <h5 class="adminCatName">Tout</h5>
+                                    <p class="adminCatProductCount"><span>Produits:</span> <span class="{{$selectedCategory !== '' ? 'text-gray-500' : ''}}">{{ $nbreTotalPrdts }}</span></p>
+                                </div>
+                            </button>
                             @foreach($sousCategories as $sCategory)
-                                <button type="button" @click="$wire.setSelectedCategory({{$sCategory->id}})" class="btnModalCategory">
+                                <button type="button" wire:click="setSelectedCategory({{$sCategory->id}})" class="btnModalCategory md:bg-[--white] {{$selectedCategory === $sCategory->id ? 'selectedCategory' : ''}}">
                                     <div class="adminCatImageContent">
                                         <img class="adminCatImage" src="{{asset('storage/'.$sCategory->image)}}" alt="{{$sCategory->name}}">
                                     </div>
                                     <div class="adminCatTexteContent x-bind:ring-2 ring-[--color2-yellow]">
                                         <h5 class="adminCatName">{{ $sCategory->name }}</h5>
-                                        <p class="adminCatProductCount"><span>Produits : </span> <span class="text-gray-500"> {{ $sCategory->products->count() }}</span></p>
+                                        <p class="adminCatProductCount"><span>Produits:</span> <span class="{{$sCategory->id !== $selectedCategory ? 'text-gray-500' : ''}}">{{ $sCategory->products->count() }}</span></p>
                                     </div>
                                 </button>
                             @endforeach
@@ -87,11 +95,11 @@
                         <!-- AFFICHAGE DES PRODUITS -->
                         <div class="titre2Content">
                             <h2 class="titre2">Les plats</h2>
-                            <span>Cliquer sur ajouter pour l'ajouter un plat aux plats du jour</span>
+                            <span>Cliquer sur ajouter pour ajouter le plat aux plats du jour</span>
                         </div>
                         <div class="platsContent">
-                            @foreach($products as $product)
-                                <div class="productDiv {{$platsDuJour->contains('id', $product->id) ? 'hidden' : ''}}">
+                            @forelse($products as $product)
+                                <div class="productDiv">
                                     <div class="">
                                         <img class="productDivImg" src="{{asset('storage/'.$product->image)}}" alt="{{$product->name}}">
                                     </div>
@@ -100,15 +108,24 @@
                                         <div class="productTextContent">
                                             <p class="prix">{{ number_format($product->sale_price ?? $product->regular_price, 0, '.', '')  }} GNF</p>
                                             <p class="category">{{ Str::limit($product->sousCategory->name, 10) }}</p>
+                                            @if($platsDuJour->contains('id', $product->id))
+                                            <button class="btnRetirerPlats" wire:click="retirerDesPlats({{$product->id}})">
+                                                <x-icon name="moins" size="12" fill="#fff" />
+                                                <span>Retirer</span>
+                                            </button>
+                                            @else
                                             <button class="btnAjouterPlats" wire:click="ajouterAuxPlats({{$product->id}})">
                                                 <x-icon name="plus" size="12" fill="#fff" />
                                                 <span>Ajouter</span>
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
 
                                 </div>
-                            @endforeach
+                            @empty
+                                <p>Aucun plat trouvé</p>
+                            @endforelse
 
                         </div>
                     </div>

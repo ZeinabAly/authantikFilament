@@ -49,8 +49,8 @@
                                     <td class="table_col col_action">
                                         <div class="">
                                             <button class="btnDeplacer" wire:click="moveWishListToProduct('{{$item->rowId}}')">Deplacer vers le panier</button>
-                                            <button wire:click="removeProductToWishList('{{$item->rowId}}')" class="delete">
-                                                <x-icon name="delete" fill="#b10303"/>
+                                            <button wire:click="removeProductToWishList('{{$item->rowId}}')" class="delete text-[#b10303]">
+                                                <x-icon name="delete"/>
                                             </button>
                                         </div>
                                     </td>

@@ -48,9 +48,10 @@
                 width: 100%;
                 border-collapse: collapse;
                 font-size: 9pt;
+                text-align: center;
             }
             .recu_content .items td {
-                padding: 3px 0;
+                padding: 1px 0;
             }
             .recu_content .item-qty {
                 width: 15%;
@@ -63,24 +64,9 @@
                 width: 25%;
                 text-align: right;
             }
-            .recu_content .totals {
-                margin-top: 5px;
-                font-size: 10pt;
-            }
-            .recu_content .total-row {
-                display: flex;
-                justify-content: space-between;
-                margin: 2px 0;
-            }
-            .recu_content .grand-total {
-                font-size: 12pt;
-                font-weight: bold;
-                margin-top: 5px;
-            }
-            .recu_content .footer {
-                margin-top: 15px;
-                text-align: center;
-                font-size: 9pt;
+            .recu_content .item-name .note {
+                font-size: 13px;
+                color: #7e7e7f;
             }
     </style>
 </head>
@@ -88,14 +74,15 @@
     <div class="recu_content">
         <div class="header">
             <div class="logo">
-                <img src="{{ public_path('logoAuth.png') }}">
+                @if($logo_path)
+                    <img src="{{ $logo_path }}" alt="Logo" style="width: 100px;">
+                @else
+                    <img src="{{ public_path('logoAuth.png') }}"  alt="Logo" style="width: 100px;">
+                @endif
             </div>
             <div class="company-info">
-                <div class="bold">AUTHANTIK</div>
-                <div>DIXINN TERASSE</div>
-                <div>Conakry</div>
-                <div>Tél: 620.18.58.93</div>
-                <div class="">Email: authantik@gmail.com</div>
+                <div class="bold">{{$settings->name ?? "AUTHANTIK"}}</div>
+                <div>Conakry, Guinée</div>
             </div>
         </div>
         
@@ -103,12 +90,6 @@
         
         <div class="order-info">
             <div class="text-center bold">BON DE COMMANDE #{{ $order->id }}</div>
-            <div>Date: {{ $order->created_at->format('d/m/Y H:i') }}</div>
-            <div>Client: {{ $order->name }}</div>
-            <div>Tél: {{ $order->phone }}</div>
-            @if($order->ddress)
-            <div>Adresse: {{ $order->ddress }}</div>
-            @endif
         </div>
         
         <div class="divider"></div>
@@ -118,36 +99,25 @@
                 <tr>
                     <th class="item-qty">Qté</th>
                     <th class="item-name">Article</th>
-                    <th class="item-price">Prix</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($items as $item)
                 <tr>
                     <td class="item-qty">{{ $item->quantity }}</td>
-                    <td class="item-name">{{ $item->product->name }}</td>
-                    <td class="item-price">{{ number_format($item->quantity * $item->price) }} F</td>
+                    <td class="item-name">
+                        <p>{{ $item->product->name }}</p>
+                    </td>
                 </tr>
                 @endforeach
+                @if($order->note)
+                <tr>
+                    <td class="bold">Note : </td>
+                    <td>{{$order->note}}</td>
+                </tr>
+                @endif
             </tbody>
         </table>
-        
-        <div class="divider"></div>
-        
-        <div class="totals">
-            <div class="total-row">
-                <span>TOTAL</span>
-                <span class="bold">{{ number_format($order->total) }} F</span>
-            </div>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="footer">
-            <div class="text-center">** COMMANDE CUISINE **</div>
-            <div class="text-center">{{ date('d/m/Y H:i:s') }}</div>
-            <div class="text-center">PRÉPARATION</div>
-        </div>
 
     </div>
 </body>

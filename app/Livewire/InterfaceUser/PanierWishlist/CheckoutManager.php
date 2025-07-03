@@ -47,6 +47,9 @@ class CheckoutManager extends Component
     public function mount(){
         // $this->items = Cart::instance('cart')->content();
         $this->restaurantTables = RestaurantTable::get();
+        $this->name = auth()->user()->name;
+        $this->email = auth()->user()->email;
+        $this->phone = auth()->user()->phone;
     }
 
     protected function rules()
@@ -120,11 +123,21 @@ class CheckoutManager extends Component
 
         OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
 
+        $this->dispatch('orderPassed');
+
     }
 
     public function validerCmd(){
         return redirect()->route('cart.order.confirmation', ['order' => $this->order->id]);
         $this->dispatch('commandeCreee');
+    }
+
+    public function annulerCmd(CartService $cartService){
+        $cartService->resetCart();
+    }
+
+    public function retourCart(){
+        return redirect()->route('cart.index');
     }
 
     public function telechargerFacture(OrderService $orderService){

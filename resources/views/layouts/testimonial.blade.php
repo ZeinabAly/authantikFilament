@@ -14,28 +14,29 @@
           @endfor
         </div>
 
-        <div class="text-gray-500"> “Lorem ipsum dolor sit amet, &nbsp;elit ut aliquam, purus sit amet luctus venenatis elit ut aliquam, purus sit amet luctus venenatis" </div>
+        <div class="text-gray-500"> <pre>“</pre> Une expérience culinaire inoubliable ! Les plats étaient savoureux, bien présentés, et le service impeccable. Je recommande vivement ce restaurant à tous les amateurs de bonne cuisine." </div>
         <div class="flex flex-row items-start">
           <img src="{{asset('assets/images/pageIndex/homme.jpg')}}" alt="photo homme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
           <div class="flex flex-col items-start">
-            <h6 class="text-base font-bold">Laila Bahar</h6>
-            <p class="text-sm text-gray-500">Designer</p>
+            <h6 class="text-base font-bold">Thierno Ila</h6>
+            <p class="text-sm text-gray-500">Communiquant</p>
           </div>
         </div>
       </div>
       <!-- Content 2 -->
       <div class="grid grid-cols-1 gap-6 rounded-md border border-solid border-gray-300 bg-white p-8 md:p-10">
         <div class="flex gap-1">
-          @for($i=0; $i<5; $i++)
+          @for($i=0; $i<4; $i++)
           <x-icon name="etoile-pleine" size="14" fill="#f5bb0d"/>
           @endfor
+          <x-icon name="etoile-vide" size="14" fill="#f5bb0d"/>
         </div>
-        <div class="text-gray-500"> “Lorem ipsum dolor sit amet, &nbsp;elit ut aliquam, purus sit amet luctus venenatis elit ut aliquam, purus sit amet luctus venenatis" </div>
+        <div class="text-gray-500"> <pre>“</pre> Le cadre est chaleureux et propre, le personnel accueillant. Un petit bémol : le temps d’attente était un peu long, mais ça valait largement le coup. </div>
         <div class="flex flex-row items-start">
           <img src="{{asset('assets/images/pageIndex/femme.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
           <div class="flex flex-col items-start">
-            <h6 class="text-base font-bold">Laila Bahar</h6>
-            <p class="text-sm text-gray-500">Designer</p>
+            <h6 class="text-base font-bold">Fatoumata Sylla</h6>
+            <p class="text-sm text-gray-500">Mannequin</p>
           </div>
         </div>
       </div>
@@ -47,11 +48,11 @@
           @endfor
         </div>
 
-        <div class="text-gray-500"> “Lorem ipsum dolor sit amet, &nbsp;elit ut aliquam, purus sit amet luctus venenatis elit ut aliquam, purus sit amet luctus venenatis" </div>
+        <div class="text-gray-500"> <pre>“</pre> Tout était parfait du début à la fin ! Le personnel est souriant et attentionné, le service rapide, et les plats… un vrai délice !  </div>
         <div class="flex flex-row items-start">
           <img src="{{asset('assets/images/pageIndex/homme2.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
           <div class="flex flex-col items-start">
-            <h6 class="text-base font-bold">Laila Bahar</h6>
+            <h6 class="text-base font-bold">Mohamed Bah</h6>
             <p class="text-sm text-gray-500">Designer</p>
           </div>
         </div>
@@ -63,3 +64,4 @@
     </div> -->
   </div>
 </section>
+

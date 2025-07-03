@@ -42,6 +42,7 @@ class RecentOrders extends Component implements HasForms,HasTable
                     ->latest()
             )
             ->heading('Commandes récentes')
+            ->description('Les commandes annulées ou validées ne sont pas modifiables')
             ->paginated(false)
             ->columns([
                 Tables\Columns\TextColumn::make('nocmd') 
@@ -68,7 +69,7 @@ class RecentOrders extends Component implements HasForms,HasTable
                     ->sortable(),
                 Tables\Columns\TextColumn::make('address.quartier')
                     ->toggleable()
-                    ->counts('orderItems'),
+                    ->default('-'),
                 Tables\Columns\TextColumn::make('lieu')
                     ->label('Lieu')
                     ->toggleable()
@@ -106,9 +107,15 @@ class RecentOrders extends Component implements HasForms,HasTable
                         ->openUrlInNewTab(false),
                     Tables\Actions\Action::make('edit')
                         ->label('Modifier')
-                        ->icon('heroicon-o-pencil') // Utiliser l'icône de crayon // Afficher comme un bouton plutôt qu'un lien
-                        ->color('') // Couleur du bouton
+                        ->visible(fn ($record) => is_null($record->cancelled_date) && is_null($record->delivred_date))
+                        ->icon('heroicon-o-pencil') 
+                        ->color('')
                         ->url(fn (Order $record) => route('filament.admin.resources.admin.orders.edit', ['record' => $record->nocmd])),
+                    Tables\Actions\Action::make('edit')
+                        ->label('Telecharger le reçu')
+                        ->icon('heroicon-o-arrow-down-tray') 
+                        ->color('')
+                        ->url(fn (Order $record) => route('facture.telecharger', ['order' => $record])),
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])

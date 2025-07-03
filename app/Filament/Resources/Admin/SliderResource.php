@@ -21,6 +21,8 @@ class SliderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
 
+    protected static ?string $navigationLabel = 'Sliders';
+
     protected static ?int $navigationSort = 14;
 
     public static function getNavigationBadge(): ?string
@@ -60,7 +62,7 @@ class SliderResource extends Resource
                         ->options([
                             'home.index' => 'Page Index',
                             'home.menu' => 'Page Menu',
-                            'home.reservation.create' => 'Page Réservation',
+                            'home.reservation' => 'Page Réservation',
                             'home.contact' => 'Page Contact',
                         ])
                         ->native(false),
@@ -139,13 +141,10 @@ class SliderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\EditAction::make(),
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
-                    Tables\Actions\RestoreAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
                 ])
             ])
             ->bulkActions([

@@ -3,16 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\{Employee, Reservation, Address};
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\{Permission, Role};
+use App\Models\{Employee, Reservation, Address, User};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, softDeletes;
 
     protected $fillable = [
         'name',
@@ -28,14 +30,35 @@ class User extends Authenticatable
      * @var list<string>
      */
 
-    protected static function booted()
-    {
-        static::created(function ($user) {
-            if (!$user->hasRole('user')) {
-                $user->assignRole('user');
-            }
-        });
-    }
+    // protected static function booted()
+    // {
+    //     // DONNER TOUTES LES PERMISSIONS AU PREMIER USER
+    //     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
+    //     $permissions = Permission::all();
+    //     // $role->syncPermissions($permissions);
+    //     foreach ($permissions as $permission) {
+    //         $role->givePermissionTo($permission);
+    //     }
+
+    //     $user = User::find(1);
+    //     $user->assignRole('SuperAdmin');
+
+    //     static::created(function ($user) {
+    //         if (!$user->hasRole('user')) {
+    //             $user->assignRole('user');
+    //         }
+    //     });
+
+    //     // FAIRE DE SORTE QUE CHAQUE USER AIE LE ROLE USER
+    //     $users = User::all();
+    //     $roleUser = Role::firstOrCreate(['name' => 'User', 'guard_name' => 'web']);
+
+    //     foreach ($users as $user) {
+    //         if($user && !$user->hasAnyRole(['SuperAdmin', 'Admin', 'Manager', 'Caissier', 'User'])){
+    //             $user->assignRole($roleUser);
+    //         }
+    //     }
+    // }
 
     protected $hidden = [
         'password',
@@ -65,25 +88,25 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class);
     }
 
-    // public function contacts(){
-    //     return $this->hasMany(Contact::class);
-    // }
+    public function contacts(){
+        return $this->hasMany(Contact::class);
+    }
 
     // METHODE HASROLE
-    public function hasRole($role){
-        return $this->roles->contains('name', $role);
-    }  
+    // public function hasRole($role){
+    //     return $this->roles->contains('name', $role);
+    // }  
 
-    // Pour plusieurs roles
-    public function hasAnyRole(array $roles)
-    {
-        foreach ($roles as $role) {
-            if ($this->hasRole($role)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // // Pour plusieurs roles
+    // public function hasAnyRole(array $roles)
+    // {
+    //     foreach ($roles as $role) {
+    //         if ($this->hasRole($role)) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public function adresses(){
         return $this->hasMany(Address::class);

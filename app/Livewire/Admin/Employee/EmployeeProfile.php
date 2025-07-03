@@ -77,7 +77,6 @@ class EmployeeProfile extends Component
             }
         }
 
-        // dd($this->shiftStarted);
         
         $this->updateTime();  //Heure actuelle
         $this->activitesUser(); //Les activités de l'utilisateur (réservation, commande, ...)
@@ -198,6 +197,11 @@ class EmployeeProfile extends Component
 
         if($this->employee->user->id == auth()->user()->id){
             if($existingClockIn){
+
+                $this->loadAttendanceStats();
+                $this->shiftStarted = true;
+                $this->lastAction = 'Entrée à ' . Carbon::now()->format('H:i') . ' aujourd\'hui';
+                
                 return Notification::make()
                         ->title('Vous avez déjà pointé l\'entrée pour aujourdh\'ui !')
                         ->danger()
@@ -210,8 +214,7 @@ class EmployeeProfile extends Component
                     'horaire_id' => Horaire::getCurrentShiftId() // Méthode hypothétique pour obtenir le shift actuel
                 ]);
                 
-                $this->shiftStarted = true;
-                $this->lastAction = 'Entrée à ' . Carbon::now()->format('H:i') . ' aujourd\'hui';
+                
                 $this->loadAttendanceStats();
                 
                 Notification::make()

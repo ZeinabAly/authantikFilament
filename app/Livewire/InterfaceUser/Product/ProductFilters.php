@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Session;
 use App\Services\CartService;
 use App\Services\CheckoutService;
 use App\Services\OrderService;
+use Livewire\Attributes\On;
 
+
+
+#[On('userLogged')]
 class ProductFilters extends Component
 {
     use WithPagination;
@@ -97,6 +101,40 @@ class ProductFilters extends Component
                 })
                 ->paginate(12);
         }
+    }
+
+    public function addToCart(CartService $cartService, $productId, CheckoutService $checkoutService){
+        $product = Product::find($productId);
+
+        $cartItem = Cart::instance('cart')->content()->firstWhere('id', $product->id);
+
+        if($cartItem){
+            Cart::instance('cart')->remove($cartItem->rowId);
+            $this->dispatch('cartUpdated');
+        }
+        else{
+            $cart = $cartService->addProduct($product);
+            $this->dispatch('cartUpdated');
+        }
+
+    }
+
+
+    public function addToWishlist($productId, CartService $cartService){
+        $product = Product::find($productId);
+    
+
+        $wishlistItem = Cart::instance('wishlist')->content()->firstWhere('id', $product->id);
+
+        if($wishlistItem){
+            Cart::instance('wishlist')->remove($wishlistItem->rowId);
+            $this->dispatch('wishlistUpdated');
+        }
+        else{
+            $cart = $cartService->addToWishlist($product);
+            $this->dispatch('wishlistUpdated');
+        }
+
     }
 
     public function applyOrder($query)

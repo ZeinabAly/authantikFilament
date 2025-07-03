@@ -16,7 +16,7 @@
         </ul>
         
         <!-- PRODUITS A LA UNE -->
-        <div class="fproducts">
+        <div class="fproducts" wire:ignore>
             <h4 class="section-title">Top produits</h4>
             @foreach($featuredProducts as $fproduct)
                 <div class="my-2">
@@ -71,7 +71,7 @@
 
                 <!-- FILTRES -->
                 <div class="filtres">
-                    <select name="order" id="" wire:model.change="order" class="border border-gray-300">
+                    <select name="order" id="" wire:model.change="order" class="text-xs sm:text-sm border border-gray-300">
                         <option value="">Filtrer par </option>
                         <option value="name_asc">Ordre croissant</option>
                         <option value="name_desc">Ordre décroissant</option>
@@ -95,7 +95,7 @@
             <!-- FIN -->
 
             <!-- CATEGORIES -->
-            <ul class="listeCategories">
+            <ul class="listeCategories mx-4">
                 <input type="radio" name="listCat" checked id="list-item-all" class="listCat hidden">
                 <li class="list-item list-item-all">
                     <label for="list-item-all" wire:click="selectCategory('')">Tout</label>
@@ -116,7 +116,7 @@
                 <div class="flexColumn gap-5">
                     
                     <p>{{$search ? 'Aucun produit trouvé pour '. $search : 'Aucun produit trouvé' }} </p>
-                    <h2 class="section-title mt-4 text-3xl md:text-4xl">Produits suggérés</h2>
+                    <h2 class="section-title mt-4 text-3xl md:text-4xl">Nous vous proposons</h2>
                     <div class="flexCenter flex-wrap gap-4">
                         @include('partials.menuProductSuggeres')
                     </div>
@@ -127,8 +127,9 @@
                     {{--<livewire:interface-user.product.product-card :product=$product />--}}
 
                     
-                        <div class="bg-[#fff] swiper-slide product-slide relative w-[220px] rounded-md shadow-md shadow-black/10">
+                        <div class="bg-[#fff] swiper-slide product-slide relative rounded-md shadow-md shadow-black/10">
                             <div class="wishlist absolute top-2 left-2 z-10 ">
+                                @auth()
                                 <button wire:click="addToWishlist({{$product->id}})" class="coeur-vide">
                                     @if(Cart::instance('wishlist')->content()->where('id', $product->id)->count() > 0)
                                         <x-icon name="heart-plein" fill="#ce9c2d"/>
@@ -136,6 +137,15 @@
                                         <x-icon name="heart-vide" fill="#585858" />
                                     @endif
                                 </button>
+                                @endauth
+
+                                @guest()
+                                    <div class="" x-data="{loginModal: false}" x-cloak>
+                                        <button @click="$dispatch('open-login-modal')">
+                                            <x-icon name="heart-vide" fill="#585858" />
+                                        </button>
+                                    </div>
+                                @endguest
 
                             </div>
                             <div class="">
@@ -165,26 +175,42 @@
                                     </span>
                                 </div>
                                 <div class="flex justify-center mt-2 gap-[6px]">
-                                    @if(Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
-                                    <button class="btnPanier text-center border-[1px] border-[--color2-yellow] hover:border-green-800 hover:bg-green-800 text-[--color2-yellow] px-2 rounded-full group text-xs block md:hidden"><a href="{{ route('cart.index') }}" class="group-hover:text-white">Voir</a></button>
-                                    <button class="btnPanier text-center border-[1px] border-[--color2-yellow] hover:border-green-800 hover:bg-green-800 text-[--color2-yellow] px-2 rounded-full group text-xs hidden md:block"><a href="{{ route('cart.index') }}" class="group-hover:text-white">Voir le panier</a></button>
-                                    @else
-                                    <button wire:click="addToCart({{$product->id}})" class="btnPanier text-center border-[1px] border-[--color2-yellow] text-green-800 px-2 py-[2px] rounded-full group text-xs hover:text-white">
-                                        <x-icon name="cart" fill="#ce9c2d" size="18" />
-                                    </button>
-                                    <!-- <button wire:click="addToCart({{$product->id}})" class="btnPanier text-center border-[1px] border-green-800 hover:bg-green-800 text-green-800 px-2 rounded-full group text-xs hover:text-white block md:hidden">Panier</button> -->
-                                    @endif
-                                    <a href="{{route('buy.now', ['product'=>$product])}}" class="group-hover:text-green-800 btnPanier text-center border-[1px] border-green-800 bg-green-800 py-[2px] md:py-1 px-2 text-white hover:text-green-800 rounded-full group hover:bg-white text-xs">Commander</a>
-                                </div>
-                                <!-- icones -->
-                                <div class="">
-                                    <!-- <div class="icones-products flex justify-between  items-center  py-1 px-4">
-                                        
-                                        <a href="{{route('product.view', ['product' => $product])}}" class="oeil bg-[#F0F0F0] md:py-2 md:px-2 px-1 py-1 rounded-full absolute md:top-[-25px] md:right-2 top-[-20px] -right-1">
-                                            <x-icon name="eye-vide" size="16" fill="#585858" />
-                                        </a>
-                                        
-                                    </div> -->
+                                    
+                                    <!-- BOUTON AJOUTER AU PANIER -->
+                                    @auth()
+                                        @if(Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
+                                        <button class="btnPanier text-center border-[1px] border-[--color2-yellow] hover:border-green-800 hover:bg-green-800 text-[--color2-yellow] px-2 rounded-full group text-xs block md:hidden"><a href="{{ route('cart.index') }}" class="group-hover:text-white">Voir</a></button>
+                                        <button class="btnPanier text-center border-[1px] border-[--color2-yellow] hover:border-green-800 hover:bg-green-800 text-[--color2-yellow] px-2 rounded-full group text-xs hidden md:block"><a href="{{ route('cart.index') }}" class="group-hover:text-white">Voir le panier</a></button>
+                                        @else
+                                        <button wire:click="addToCart({{$product->id}})" class="btnPanier text-center border-[1px] border-[--color2-yellow] text-green-800 px-2 py-[2px] rounded-full group text-xs hover:text-white">
+                                            <x-icon name="cart" fill="#ce9c2d" size="18" />
+                                        </button>
+                                        @endif
+                                    @endauth
+
+                                    @guest()
+                                    <div class="" x-data="{loginModal: false}" x-cloak>
+                                        <button @click="$dispatch('open-login-modal')" class="btnPanier text-center border-[1px] border-[--color2-yellow] text-green-800 px-2 py-[2px] rounded-full group text-xs hover:text-white">
+                                            <x-icon name="cart" fill="#ce9c2d" size="18" />
+                                        </button>
+                                    </div>
+                                    @endguest
+                                    <!-- FIN AJOUTER AU PANIER -->
+
+                                    <!-- BOUTON COMMANDER -->
+                                    <div class="">
+                                        @auth()
+                                        <a href="{{route('buy.now', ['product'=>$product])}}" class="group-hover:text-green-800 btnPanier text-center border-[1px] border-green-800 bg-green-800 py-[2px] md:py-1 px-2 text-white hover:text-green-800 rounded-full group hover:bg-white text-xs">Commander</a>
+                                        @endauth
+    
+                                        @guest 
+                                        <div class="" x-data="{loginModal: false}" x-cloak>
+                                            <button type="button" @click="$dispatch('open-login-modal')" class="btnPanier text-center border-[1px] border-green-800 bg-green-800 py-[2px] md:py-1 px-2 text-white hover:text-green-800 rounded-full group hover:bg-white text-xs">
+                                                Commander
+                                            </button>
+                                        </div>
+                                        @endguest
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -62,6 +62,10 @@
     @apply w-[100%] h-[100%] bg-[--gray-leger1] py-5 px-5;
 }
 
+.contactForm label{
+    @apply font-semibold ;
+}
+
 .contactForm .formCover .section-title{
     @apply text-3xl sofia font-bold -mt-2 !important;
 }
@@ -69,8 +73,16 @@
     @apply grid grid-cols-2 gap-4;
 }
 
+.contactForm .inputContent{
+    @apply mt-5;
+}
+
+.contactForm .text-danger{
+    @apply font-semibold text-xs text-red-500;
+}
+
 .contactForm .inputContent input, .contactForm .inputContent textarea{
-    @apply w-full bg-gray-300 py-2 px-2 my-4 border-b border-gray-400 text-gray-700 outline-none rounded-sm;
+    @apply w-full bg-gray-300 py-2 px-2 border-b border-gray-400 text-gray-700 outline-none rounded-sm;
     background: #eaeaea;
     box-shadow: 2px 2px 5px #c6c4c481 inset;
 }
@@ -81,7 +93,7 @@
 }
 
 .contactPage button{
-    @apply font-semibold py-2 px-5 bg-black text-white rounded-sm shadow-lg border border-black;
+    @apply font-semibold mt-5 py-2 px-5 bg-black text-white rounded-sm shadow-lg border border-black;
 }
 
 .contactPage button:hover{
@@ -102,6 +114,11 @@ iframe{
 .reservationCover{
     @apply h-[300px] md:h-[400px] mt-5 bg-black/90 flexColumn;
 }
-/* .texteContent{
-    @apply h-[200px] w-[300px] border bg-black/80 text-white;
-} */
+
+.alert.alert-success{
+    @apply font-semibold text-xl bg-green-500 text-gray-100 border-l-[7px] border-green-700 p-[10px];
+}
+
+.alert.alert-error{
+    @apply font-semibold text-xl bg-red-500 text-gray-100 border-l-[7px] border-red-700 p-[10px];
+}

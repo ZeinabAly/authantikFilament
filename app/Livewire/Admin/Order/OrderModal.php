@@ -14,8 +14,10 @@ use App\Models\{Product, SousCategory, Address, User, Order, Employee, Restauran
 class OrderModal extends Component
 {
     public $products = [];
+    public $nbreTotalPrdts;
     public $sousCategories = [];
     public $selectedCategory = '';
+    public $allCategories = '';
     public $search = '';
     public $isOpen = true;
     public $cartContent = [];
@@ -70,9 +72,13 @@ class OrderModal extends Component
 
         // Je change de logique, il n'y a pas que les serveurs, tous les employés peuvent passer une cmd
  
-        $this->serveurs = Employee::get();
+        $this->serveurs = Employee::where('fonction', 'serveur')->get();
 
         $this->restaurantTables = RestaurantTable::get();
+
+        $this->allCategories = SousCategory::inRandomOrder()->take(1)->first();
+
+        $this->nbreTotalPrdts = Product::count();
 
     }
 
@@ -286,7 +292,7 @@ class OrderModal extends Component
 
         
             $this->commandeCreee = true;
-            OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
+            OrderNotificationJob::dispatch($this->order)->delay(now()->addSeconds(1));
             $this->dispatch('notifUpdated');
             
             $this->clearCart($cartService, $checkoutService);
@@ -306,7 +312,7 @@ class OrderModal extends Component
             $this->clearCart($cartService, $checkoutService);
     
             $this->dispatch('notifUpdated');
-            OrderNotificationJob::dispatch($this->order, auth()->user())->delay(now()->addSeconds(1));
+            OrderNotificationJob::dispatch($this->order)->delay(now()->addSeconds(1));
         
         }
 

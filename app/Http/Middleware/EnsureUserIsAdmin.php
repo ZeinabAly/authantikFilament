@@ -16,11 +16,17 @@ class EnsureUserIsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         // if(auth()->check() && auth()->user()->hasRole('Admin')){
-            return $next($request);
+            // return $next($request);
         // }else{
         //     auth()->user()->logout();
         //     redirect()->route('login');
         // }
+
+        // if (!auth()->check()) {
+        //     return redirect()->route('login')->with('error', 'Vous devez être connecté pour accéder à l\'administration');
+        // }
+
+        return $next($request);
 
     }
 }

@@ -19,6 +19,8 @@ class AdresseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
+    protected static ?string $navigationLabel = 'Adresses';
+
     protected static ?int $navigationSort = 11;
 
     public static function getNavigationBadge(): ?string
@@ -120,12 +122,12 @@ class AdresseResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['super_admin', 'Admin', 'Manager'])),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['super_admin', 'Admin', 'Manager'])),
                         Tables\Actions\RestoreAction::make()
-                            ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                            ->visible(fn ($record) => auth()->user()->hasAnyRole(['super_admin', 'Admin', 'Manager'])),
                     ])
             ])
             ->bulkActions([

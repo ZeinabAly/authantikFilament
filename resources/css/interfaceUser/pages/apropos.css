@@ -60,13 +60,16 @@
     border: 3px solid white; 
     position: relative;
     box-shadow: 3px 3px 3px rgba(200, 174, 174, 0.121), -3px -3px 3px rgba(133, 118, 118, 0.587);
-    animation: smoothScalePlat 2s linear infinite alternate;
-    animation-delay: 3s
+    /* animation: smoothScalePlat 2s linear infinite alternate; */
+    animation-delay: 3s;
+    overflow: hidden
 }
 .section2About .section2Cover .right .aboutImageBorder{
     @apply h-full w-full rounded-full object-cover shadow-lg shadow-black/10;
     position: relative;
-    animation: smoothScalePlat 2s linear infinite;
+    /* animation: smoothScalePlat 2s ease-in-out infinite; */
+    /* animation: smoothScale 7s linear infinite; */
+    animation: smoothScalePlat 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     animation-delay: 2s
 }
 
@@ -103,8 +106,14 @@
 .listeCategories{
     @apply mb-10 flex flex-wrap items-center justify-center gap-5;
 }
+
 .listeCategories .list-item{
-    @apply text-center border border-[--color2-yellow] bg-white px-4 py-[6px] rounded-full sofia text-sm text-[--color2-yellow] hover:bg-[--color2-yellow] hover:text-white;
+    @apply min-w-[100px] text-center border border-[--color2-yellow] bg-white px-4 py-[8px] rounded-full sofia text-sm text-[--color2-yellow] hover:bg-[--color2-yellow] hover:text-white;
+    transition: .4s
+}
+
+.listeCategories .chk-cat{
+    @apply bg-[--color2-yellow] hover:text-[--color2-yellow] text-white hover:bg-white;
     transition: .4s
 }
 
@@ -115,7 +124,6 @@
 .categoryAbout:checked + li{
     @apply bg-[--color2-yellow] text-white;
 }
-
 
 
 /********** SECTION4 ******/
@@ -172,18 +180,14 @@
 
 /* SECTION5 */
 .section5About{
-    @apply h-[350px] overflow-hidden;
+    @apply h-[350px] md:h-[400px] overflow-hidden;
 }
 .section5About .imgSection5{
     @apply h-full w-[100%] object-cover relative;
-    animation: smoothScalePlat 2s infinite alternate;
+    animation: smoothScalePlat 7s infinite forwards;
 }
 .section5About .cover{
-    @apply h-[350px] w-[100%] bg-black/70 absolute top-0 flex flex-col items-center;
-}
-
-.section5About .cover{
-    @apply h-[350px] w-[100%] bg-black/70 absolute top-0 flex flex-col items-center;
+    @apply h-[100%] w-[100%] bg-black/70 absolute top-0 flex flex-col items-center;
 }
 
 .section5About .horaires{
@@ -216,6 +220,13 @@
 @keyframes smoothScalePlat {
     0% { transform: scale(1); }
     100% { transform: scale(1.025); }
+}
+
+@keyframes smoothScalePlat { 
+    0%, 100% { transform: scale(1); } 
+    25% { transform: scale(1.01); } 
+    50% { transform: scale(1.025); } 
+    75% { transform: scale(1.01); } 
 }
 
 @keyframes smoothScaleImage {

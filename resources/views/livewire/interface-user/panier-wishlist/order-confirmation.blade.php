@@ -13,7 +13,7 @@
                 Votre commande a été passée avec succès ! </h5>
             @endif
 
-            <a href="{{route('home.menu')}}" class="btnContinuerAchats">Continuer les achats</a>
+            <a href="{{route('home.menu')}}" class="btnContinuerAchats">Retour au menu</a>
             @if(isset($order))
             <a href="{{route('facture.telecharger', ['order' => $order])}}" class="btnTelechargerFacture">Télecharger la facture</a>
             @else

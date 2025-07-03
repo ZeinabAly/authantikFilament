@@ -25,6 +25,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
+    protected static ?string $navigationLabel = 'Catégories';
+
     protected static ?int $navigationSort = 7;
 
     public static function getNavigationBadge(): ?string
@@ -90,9 +92,9 @@ class CategoryResource extends Resource
                     ->limit(30),
             ])
             ->filters([
-                Filter::make('name')
+                Tables\Filters\Filter::make('name')
                     ->label('Nom'),
-                Filter::make('description')
+                Tables\Filters\Filter::make('description')
                     ->label('Description')
             ])
             ->actions([
