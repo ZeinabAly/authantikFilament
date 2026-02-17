@@ -1,11 +1,13 @@
 <div class="pageAboutEquipe">
     
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
 
         .aboutTeamMember {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -29,7 +31,7 @@
         .team-header::before {
             content: '';
             position: absolute;
-            top: -20px;
+            top: -2px;
             left: 50%;
             transform: translateX(-50%);
             width: 100px;
@@ -45,7 +47,7 @@
         }
 
         .team-title {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
             -webkit-background-clip: text;
@@ -56,9 +58,9 @@
         }
 
         .team-subtitle {
-            font-size: 1.3rem;
+            font-size: 1rem;
             color: rgba(255, 255, 255, 0.8);
-            font-weight: 300;
+            font-weight: 400;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
@@ -311,7 +313,7 @@
                 @foreach($employees as $employee)
                <div class="member-card">
                    <div class="member-avatar" data-initials="MR">
-                        <img src="{{asset('storage/'.$employee->image)}}" alt="" class="" />
+                        <img src="{{asset('storage/'.$employee->image)}}" alt="" class="" loading="lazy" />
                    </div>
                    <h3 class="member-name">{{$employee->name}}</h3>
                    <p class="member-role">{{$employee->fonction}}</p>

@@ -17,20 +17,7 @@
     
             <div class="orderModalContent">
                 <div class="orderMainContent">
-                    <!-- btnRechercher -->
-                    <div class="zoneSearchContent">
-                        <div class="">
-                            <div class="searchBox">
-                                <div class="divIconSearch">
-                                    <x-icon name="btn-search2"/>
-                                </div>
-                                <input type="text" wire:model.live.debounce.100ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
-                            </div>
-    
-                        </div>
-                    </div>
-            
-                    <!-- Fin zone recheche -->
+                    
                     <!-- Zone categorie -->
                     <div class="">
                         <div class="titre2Content">
@@ -64,6 +51,20 @@
                         <div class="titre2Content">
                             <h2 class="titre2">Les plats</h2>
                         </div>
+                        <!-- btnRechercher -->
+                        <div class="zoneSearchContent">
+                            <div class="">
+                                <div class="searchBox">
+                                    <div class="divIconSearch">
+                                        <x-icon name="btn-search2"/>
+                                    </div>
+                                    <input type="text" wire:model.live.debounce.100ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
+                                </div>
+        
+                            </div>
+                        </div>
+                
+                        <!-- Fin zone recheche -->
                         <div class="displayModalProducts">
                             @foreach($products as $product)
                                 <!-- Si le produit est deja dans le panier alors il suffit de cliquer sur plus ou moins -->

@@ -66,4 +66,10 @@ class Product extends Model
     {
         return 'slug';
     }
+
+    // Formatage des prix
+    public function getPrixFormatAttribute(): string
+    {
+        return number_format($this->final_price, 0, ',', '.') . ' GNF';
+    }
 }

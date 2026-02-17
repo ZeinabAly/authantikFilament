@@ -15,9 +15,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // $this->call : méthode de Laravel pour appeler un seeder depuis un autre seeder.
+        $this->call([
+            RolesAndUsersSeeder::class,   // Rôles + utilisateurs (admin, manager, clients)
+            SettingsSeeder::class,         // Paramètres du restaurant
+            CategorySeeder::class,         // Catégories du menu
+            SousCategorySeeder::class,     // Sous-catégories
+            ProductSeeder::class,          // Produits du menu
+            RestaurantTableSeeder::class,  // Tables du restaurant
+            EmployeeSeeder::class,         // Employés
+            CouponSeeder::class,           // Codes promo
+            ReservationSeeder::class,      // Réservations
+            OrderSeeder::class,            // Commandes + items + transactions
+            DepenseSeeder::class,          // Dépenses
         ]);
     }
 }

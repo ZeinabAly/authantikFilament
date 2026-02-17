@@ -93,7 +93,7 @@
 <body>
     <div class="header">
         <div class="logo">
-            <img src="{{ public_path('logoAuth.png') }}" alt="Logo Authantik">
+            <img src="{{ public_path('logoAuth.png') }}" alt="Logo Authantik" loading="lazy">
         </div>
         <div class="company-info">
             <div class="name">AUTHANTIK</div>

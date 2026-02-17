@@ -30,7 +30,7 @@
         </div>
 
         <div class="productImgContent">
-            <img src="{{asset('storage/'. $pSuggere->image)}}" alt="{{$pSuggere->name}}">
+            <img src="{{asset('storage/'. $pSuggere->image)}}" alt="{{$pSuggere->name}}" loading="lazy">
         </div>
 
         <div class="content relative mt-[10px]">

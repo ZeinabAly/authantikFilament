@@ -43,7 +43,8 @@
                 duration: 1000,   // Durée de l'animation (en ms)
                 delay: 200,       // Délai avant de commencer l'animation (en ms)
                 reset: true,      // Si 'true', l'animation se rejoue au scroll
-            
+            });
+
             // Application de l'animation sur différents éléments
             sr.reveal('.revealTop', { origin: 'top', delay: 300 });
             sr.reveal('.revealLeft', { origin: 'left', distance: '100px', delay: 500 });
@@ -53,25 +54,25 @@
     
             // topBottom
             const topBottom = ScrollReveal({
-            distance: '50px',   // Distance de l'animation
-            duration: 800,      // Durée de l'animation (en ms)
-            easing: 'ease-out', // Effet de l'animation
-            reset: true,        // Rejoue l'animation à chaque scroll
+                distance: '50px',   // Distance de l'animation
+                duration: 800,      // Durée de l'animation (en ms)
+                easing: 'ease-out', // Effet de l'animation
+                reset: true,        // Rejoue l'animation à chaque scroll
             });
     
             // Animation des éléments venant du haut
             topBottom.reveal('.from-top', {
-            origin: 'top',     // Vient du haut
-            interval: 200,     // Délai entre chaque élément
+                origin: 'top',     // Vient du haut
+                interval: 200,     // Délai entre chaque élément
             });
     
             // Animation des éléments venant du bas
             topBottom.reveal('.from-bottom', {
-            origin: 'bottom',  // Vient du bas
-            interval: 200,     // Délai entre chaque élément
+                origin: 'bottom',  // Vient du bas
+                interval: 200,     // Délai entre chaque élément
             });
-            });
-        })
+        });
+        
     </script>
 
 

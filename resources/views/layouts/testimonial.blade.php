@@ -16,7 +16,7 @@
 
         <div class="text-gray-500"> <pre>“</pre> Une expérience culinaire inoubliable ! Les plats étaient savoureux, bien présentés, et le service impeccable. Je recommande vivement ce restaurant à tous les amateurs de bonne cuisine." </div>
         <div class="flex flex-row items-start">
-          <img src="{{asset('assets/images/pageIndex/homme.jpg')}}" alt="photo homme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
+          <img src="{{asset('assets/images/pageIndex/homme.jpg')}}" alt="photo homme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" loading="lazy" />
           <div class="flex flex-col items-start">
             <h6 class="text-base font-bold">Thierno Ila</h6>
             <p class="text-sm text-gray-500">Communiquant</p>
@@ -33,7 +33,7 @@
         </div>
         <div class="text-gray-500"> <pre>“</pre> Le cadre est chaleureux et propre, le personnel accueillant. Un petit bémol : le temps d’attente était un peu long, mais ça valait largement le coup. </div>
         <div class="flex flex-row items-start">
-          <img src="{{asset('assets/images/pageIndex/femme.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
+          <img src="{{asset('assets/images/pageIndex/femme.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" loading="lazy" />
           <div class="flex flex-col items-start">
             <h6 class="text-base font-bold">Fatoumata Sylla</h6>
             <p class="text-sm text-gray-500">Mannequin</p>
@@ -50,7 +50,7 @@
 
         <div class="text-gray-500"> <pre>“</pre> Tout était parfait du début à la fin ! Le personnel est souriant et attentionné, le service rapide, et les plats… un vrai délice !  </div>
         <div class="flex flex-row items-start">
-          <img src="{{asset('assets/images/pageIndex/homme2.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" />
+          <img src="{{asset('assets/images/pageIndex/homme2.jpg')}}" alt="photo femme qui temoigne" class="mr-4 inline-block h-16 w-16 object-cover rounded-full" loading="lazy" />
           <div class="flex flex-col items-start">
             <h6 class="text-base font-bold">Mohamed Bah</h6>
             <p class="text-sm text-gray-500">Designer</p>

@@ -75,9 +75,9 @@
         <div class="header">
             <div class="logo">
                 @if($logo_path)
-                    <img src="{{ $logo_path }}" alt="Logo" style="width: 100px;">
+                    <img src="{{ $logo_path }}" alt="Logo" style="width: 100px;" loading="lazy">
                 @else
-                    <img src="{{ public_path('logoAuth.png') }}"  alt="Logo" style="width: 100px;">
+                    <img src="{{ public_path('logoAuth.png') }}"  alt="Logo" style="width: 100px;" loading="lazy">
                 @endif
             </div>
             <div class="company-info">

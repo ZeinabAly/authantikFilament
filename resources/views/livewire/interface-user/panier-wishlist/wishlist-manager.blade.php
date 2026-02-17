@@ -34,7 +34,7 @@
                             @foreach(Cart::instance('wishlist')->content() as $item)
                                 <tr>
                                     <td class="name_image">
-                                        <img src="{{asset('storage/'. $item->model->image)}}" alt="">
+                                        <img src="{{asset('storage/'. $item->model->image)}}" alt="{{ $item->name }}" loading="lazy">
                                         <div class="flex flex-col gap-2">
                                             <span>{{$item->name}}</span>
                                             <span class="money price">

@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="productImgContent">
-                        <img src="{{asset('storage/'. $product ->image)}}" alt="{{$product ->name}}">
+                        <img src="{{asset('storage/'. $product ->image)}}" alt="{{$product ->name}}" loading="lazy">
                     </div>
 
                     <div class="content relative mt-[10px]">

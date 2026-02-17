@@ -51,6 +51,7 @@ class SousCategoriesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->recordTitleAttribute('sousCategory.name')
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
@@ -66,9 +67,8 @@ class SousCategoriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('products_count')
                     ->label('Nbre produits')
                     ->default(0)
-                    ->getStateUsing(function ($record) {
-                        return $record->products()->count();
-                    }),
+                    ->counts('products')
+                     ->sortable(),
                 
             ])
             ->filters([
@@ -94,6 +94,7 @@ class SousCategoriesRelationManager extends RelationManager
             ]);
     }
 
+    // Eager loading du count de produits
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()

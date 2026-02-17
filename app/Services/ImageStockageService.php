@@ -52,8 +52,8 @@ class ImageStockageService {
 
 
         $destinationPath = public_path("uploads/{$tableName}");
-        $img = $manager->read($image->getRealPath());
-        $img->cover($dimensions[0], $dimensions[1])
+        $  = $manager->read($image->getRealPath());
+        $ ->cover($dimensions[0], $dimensions[1])
             ->toWebp()
             ->save($destinationPath.'/'.$imageName);
 
@@ -68,8 +68,8 @@ class ImageStockageService {
         $imageName = $this->handleImage($tableName, $image);
 
         $destinationPathThumbnail = public_path("uploads/{$tableName}/thumbnails");
-        $img = $manager->read($image->getRealPath());
-        $img->cover(600, 600)
+        $  = $manager->read($image->getRealPath());
+        $ ->cover(600, 600)
             ->toWebp()
             ->save($destinationPathThumbnail.'/'.$imageName);
     }
@@ -103,19 +103,19 @@ class ImageStockageService {
         // $basePath = public_path("uploads/{$tableName}");
         // $thumbnails = "{$basePath}/thumbnails";
     
-        // $img = Image::make($image->path());
+        // $  = Image::make($image->path());
 
         // // IMAGE PRINCIPALE
         // // $mainDimensions = $dimensions['main'] ?? [700, 700];
         // $mainDimensions = [600, 600];
-        // $img->fit($mainDimensions[0], $mainDimensions[1])
+        // $ ->fit($mainDimensions[0], $mainDimensions[1])
         //     ->save("{$basePath}/{$imageName}");
 
 
         // //MINIATURE
         // // $thumbnailDimensions = $dimensions['thumbnail'] ?? [104, 104];
         // $thumbnailDimensions = [104, 104];
-        // $img->fit($thumbnailDimensions[0], $thumbnailDimensions[1])
+        // $ ->fit($thumbnailDimensions[0], $thumbnailDimensions[1])
         //     ->save("{$thumbnailPath}/{$imageName}");
     // }
 }

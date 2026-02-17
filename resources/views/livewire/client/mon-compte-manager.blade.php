@@ -21,7 +21,7 @@
                             </div>
                             @else
                                 <div class="userImgContent" id="userImgContent">
-                                    <img src="{{asset('storage/'.auth()->user()->image)}}" alt="image utilisateur {{auth()->user()->name}}" class="w-[150px] h-[150px] border-2 border-[#1A1F2C] p-3 rounded-full object-top">
+                                    <img src="{{asset('storage/'.auth()->user()->image)}}" alt="image utilisateur {{auth()->user()->name}}" class="w-[150px] h-[150px] border-2 border-[#1A1F2C] p-3 rounded-full object-top" loading="lazy">
                                 </div>
                             @endif
                         </div>

@@ -5,7 +5,7 @@
     <div class="reservation-btn bg-transparent" id="reservation-btn">
         <button @click="openReservation = true" class="w-full">
             <div class="btn btn-primary px-[20px] !important">
-                <span class="text-sm ">Reserver maintenant</span>
+                <span class="text-sm ">Reserver une table</span>
             </div>
         </button>
     </div>

@@ -271,17 +271,17 @@ class EmployeeResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager']) || auth()->user()->id === $record->id),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin']) || auth()->user()->id === $record->id),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\Action::make('viewProfile')
                     ->label('Voir profil')
                     ->icon('heroicon-o-user')
                     ->url(fn (Employee $employee) => route('filament.admin.resources.admin.employees.profile', ['record' => $employee->user->id]))
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager']) || auth()->user()->id === $record->id),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin']) || auth()->user()->id === $record->id),
                     Tables\Actions\RestoreAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                 ]),
             ])
             ->bulkActions([

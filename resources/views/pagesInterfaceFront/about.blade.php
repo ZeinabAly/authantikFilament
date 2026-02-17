@@ -4,7 +4,7 @@
     <!-- Banniere -->
     <div class="bgMenuBanner relative w-[100%] h-[250px] md:h-[400px]">
       <div class="w-[100%] h-[100%] relative">
-          <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image banniere menu" class="h-full w-full object-cover">
+          <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image banniere menu" class="h-full w-full object-cover" loading="lazy">
       </div>
       
       <div class="w-[100%] h-[100%] pt-5 absolute top-0 bg-black/80 flex items-center justify-center text-center">
@@ -87,17 +87,17 @@
                 <div class="service service1">
                     <h3 class="serviceTitre">Restauration</h3>
                     <p class="serviceTexte">Vivez une expérience culinaire unique dans un cadre chaleureux et convivial. Que vous veniez en solo, en couple ou en groupe, notre équipe vous accueille avec le sourire et vous propose des plats savoureux, préparés sur place avec des ingrédients frais et de qualité</p>
-                    <div class="imgContent"><img src="{{asset('assets/images/about/service1.jpg')}}" alt="service1" class="serviceImage" /></div>
+                    <div class="imgContent"><img src="{{asset('assets/images/about/service1.jpg')}}" alt="service1" class="serviceImage" loading="lazy" /></div>
                 </div>
                 <div class="service service2">
                     <h3 class="serviceTitre">Livraison</h3>
                     <p class="serviceTexte">Envie de déguster nos plats sans vous déplacer ? Notre service de livraison rapide vous apporte le meilleur de notre cuisine directement chez vous ou au bureau. Commandez en ligne ou par téléphone, nous nous chargeons du reste</p>
-                    <div class="imgContent"><img src="{{asset('assets/images/about/service3.jpg')}}" alt="service3" class="serviceImage"/> </div>
+                    <div class="imgContent"><img src="{{asset('assets/images/about/service3.jpg')}}" alt="service3" class="serviceImage" loading="lazy" /> </div>
                 </div>
                 <div class="service service3">
                     <h3 class="serviceTitre">Traiteur</h3>
                     <p class="serviceTexte">Pour vos événements privés ou professionnels (anniversaires, mariages, séminaires...), notre service traiteur s’adapte à vos besoins. Nous créons des menus sur mesure, variés et généreux, qui raviront vos invités</p>
-                    <div class="imgContent"><img src="{{asset('assets/images/about/service2.png')}}" alt="service2" class="serviceImage" /></div>
+                    <div class="imgContent"><img src="{{asset('assets/images/about/service2.png')}}" alt="service2" class="serviceImage" loading="lazy" /></div>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
     
     <!-- SECTION5: RESERVATION ET HORAIRE -->
     <div class="section5About relative">
-        <img src="{{asset('assets/images/about/menu-unique-viande.webp')}}" alt="des assiettes de viande grillée" class="imgSection5"/>
+        <img src="{{asset('assets/images/about/menu-unique-viande.webp')}}" alt="des assiettes de viande grillée" class="imgSection5" loading="lazy"/>
         <div class="cover">
             <p class="section-subtitle">Ne vous faites pas attendre</p>
             <p class="section-title text-white">Horaires</p>

@@ -45,7 +45,7 @@
         </ul>
     </div>
 
-    <div style="background: yellow; padding: 10px; margin: 10px;">
+    <div class="hidden" style="background: yellow; padding: 10px; margin: 10px;">
         <p><strong>Share URL:</strong> {{ $shareUrl }}</p>
         <p><strong>Product Name:</strong> {{ $product->name }}</p>
         <p><strong>Product Image:</strong> {{ asset('storage/'.$product->image) }}</p>

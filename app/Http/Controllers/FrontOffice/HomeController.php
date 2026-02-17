@@ -19,7 +19,9 @@ class HomeController extends Controller
         }
         $categories = Category::get(); 
         $sousCategories = SousCategory::get(); 
-        $slideProducts = Product::take(8)->inRandomOrder()->get();
+        // Récupérer les featured et en prendre 8 au hasard en PHP
+        $slideProducts = Product::where('featured', true)->get()->shuffle()->take(8);
+
         $employees = Employee::get(); 
 
         $sliders = Slider::where('page', 'index')->where('position', 'Banniere')->get(); 

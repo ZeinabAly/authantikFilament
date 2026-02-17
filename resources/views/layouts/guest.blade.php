@@ -25,7 +25,7 @@
                     <div class="w-full p-8 flexColumn gap-7" >
                         <!-- <div class="">
                             <a href="/">
-                                <img src="{{asset('logoAuth.png')}}" alt="logo du site" class="w-[130px] object-cover">
+                                <img src="{{asset('logoAuth.png')}}" alt="logo du site" class="w-[130px] object-cover" loading="lazy">
                             </a>
                         </div> -->
                         

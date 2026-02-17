@@ -6,9 +6,9 @@
           <div class="mb-6 md:mb-0 ">
               <a href="{{route('home.index')}}" class="flex items-center">
                 @if (!empty($settings->logo_path) && Storage::disk('public')->exists($settings->logo_path))
-                    <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="Logo du site" class="h-20">
+                    <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="Logo du site" class="h-20" loading="lazy">
                 @else
-                    <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="h-20">
+                    <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="h-20" loading="lazy">
                 @endif
 
               </a>

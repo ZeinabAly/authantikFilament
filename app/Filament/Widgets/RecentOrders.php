@@ -2,16 +2,20 @@
 
 namespace App\Filament\Widgets;
 
-use Carbon\Carbon;
-use Filament\Tables;
 use App\Models\Order;
-use Filament\Tables\Table;
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Database\Eloquent\Builder;
 
 class RecentOrders extends BaseWidget
 {
+    // Rafraîchir toutes les 30 secondes pour les commandes en temps réel
+    protected static ?string $pollingInterval = '30s';
+
     public function getHeading(): string
     {
         return 'Les 5 dernières commandes';
@@ -19,7 +23,6 @@ class RecentOrders extends BaseWidget
     
     public function table(Table $table): Table
     {
-        // $orders = [];
         return $table
             ->query( 
                 Filament::getCurrentPanel()?->getId() == "admin" ? 
@@ -36,12 +39,10 @@ class RecentOrders extends BaseWidget
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('orderItems_count')
+                Tables\Columns\TextColumn::make('order_items_count')
                     ->label('Nbre produits')
                     ->toggleable()
-                    ->getStateUsing(function ($record) {
-                        return $record->orderItems()->count();
-                    })
+                    ->counts('orderItems')
                     ->default(0),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nom client')
@@ -57,7 +58,7 @@ class RecentOrders extends BaseWidget
                     ->toggleable()
                     ->searchable()
                     ->sortable()
-                    ->counts('orderItems'),
+                    ->default('N/A'),
                 Tables\Columns\TextColumn::make('lieu')
                     ->label('Lieu')
                     ->toggleable()
@@ -67,7 +68,14 @@ class RecentOrders extends BaseWidget
                     ->label('Status')
                     ->toggleable()
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'En cours' => 'warning',
+                        'Livrée' => 'success',
+                        'Annulée' => 'danger',
+                        default => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('total')
                     ->label('Total')
                     ->toggleable()
@@ -87,7 +95,7 @@ class RecentOrders extends BaseWidget
                     Tables\Actions\Action::make('edit')
                         ->label('Modifier')
                         ->icon('heroicon-o-pencil') // Utiliser l'icône de crayon // Afficher comme un bouton plutôt qu'un lien
-                        ->color('') // Couleur du bouton
+                        ->color('warning') // Couleur du bouton
                         ->url(fn (Order $record) => route('filament.client.resources.client.orders.edit', ['record' => $record->nocmd])),
                     Tables\Actions\Action::make('masquer')
                     ->label('Supprimer')
@@ -105,6 +113,25 @@ class RecentOrders extends BaseWidget
             ]);
     }
 
+    // CORRECTION: Méthode séparée pour la requête avec eager loading
+    protected function getTableQuery(): Builder
+    {
+        $panelId = Filament::getCurrentPanel()?->getId();
+        
+        $query = Order::query()
+            ->with(['address'])  // Eager loading de l'adresse
+            ->withCount('orderItems')  // Eager loading du count
+            ->latest()
+            ->limit(5);
+        
+        if ($panelId !== "admin") {
+            $query->where('user_id', auth()->id())
+                ->whereDate('created_at', Carbon::today())
+                ->where('status', 'En cours');
+        }
+        
+        return $query;
+    }
     public function getColumnSpan(): int | string
     {
         return 'full'; //  Prend toute la largeur

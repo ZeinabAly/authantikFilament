@@ -332,7 +332,7 @@
                 <div class="member-slide" data-index="0">
                     <div class="member-avatar" data-initials="MR">
                     <!-- <div class="member-avatar"> -->
-                    <img src="{{asset('storage/'.$employee->image)}}" alt="" class="w-full h-full object-cover rounded-full absolute z-4" />
+                    <img src="{{asset('storage/'.$employee->image)}}" alt="" class="w-full h-full object-cover rounded-full absolute z-4" loading="lazy" />
 
                     </div>
                     <div class="member-info">

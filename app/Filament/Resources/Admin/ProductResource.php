@@ -107,7 +107,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Product::latest())
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Image')
@@ -140,14 +140,18 @@ class ProductResource extends Resource
                     })
                     ->numeric(decimalPlaces: 0)
                     ->money('GNF'),
-                Tables\Columns\TextColumn::make('stock_status') 
+                Tables\Columns\TextColumn::make('platDuJour') 
                     ->label('Status')
                     ->toggleable()
                     ->sortable()
+                    ->color(fn (string $state): string => match ($state) {
+                        '1' => 'success',
+                        '0' => 'danger',
+                    })
                     ->formatStateUsing(function ($state) {
                         $options = [
-                            'instock' => 'Disponible',
-                            'outofstock' => 'Indisponible',
+                            '0' => 'Indisponible',
+                            '1' => 'Disponible',
                         ];
                         
                         return $options[$state] ?? $state;
@@ -158,17 +162,28 @@ class ProductResource extends Resource
                     ->label('Nom'),
                 Tables\Filters\Filter::make('description')
                     ->label('Description'),
+                Tables\Filters\SelectFilter::make('platDuJour')
+                    ->label('Disponible')
+                    ->options([
+                        '0' => 'Non',
+                        '1' => 'Oui',
+                    ]),
+                Tables\Filters\SelectFilter::make('sousCategory')
+                    ->label('Sous catégorie')
+                    ->relationship('sousCategory', 'name')
+                    ->searchable()
+                    ->preload(),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\RestoreAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                 ])
             ])
             ->bulkActions([
@@ -179,6 +194,13 @@ class ProductResource extends Resource
             ->recordUrl(
                 fn ($record) => static::getUrl('view', ['record' => $record])
             );
+    }
+
+    // Eager loading de la sous-catégorie
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['sousCategory']);
     }
 
     public static function getRelations(): array

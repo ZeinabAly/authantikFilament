@@ -87,7 +87,7 @@ class SliderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Slider::latest())
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Image')

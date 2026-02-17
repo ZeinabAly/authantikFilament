@@ -72,9 +72,9 @@
         </div>
 
         <div class="images">
-            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="">
-            <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="">
-            <img src="{{asset('assets/images/pageIndex/Poulet-Yassa.jpg')}}" alt="">
+            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="image1_page_contact" loading="lazy">
+            <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image2_page_contact" loading="lazy">
+            <img src="{{asset('assets/images/pageIndex/Poulet-Yassa.jpg')}}" alt="image3_page_contact" loading="lazy">
         </div>
     </section>
     <!-- FIN DINNER AVEC ELEGANCE -->

@@ -106,7 +106,7 @@
         <div class="header">
             <div class="header-left">
                 <div class="logo">
-                    <img src="{{ public_path('logoAuth.png') }}">
+                    <img src="{{ public_path('logoAuth.png') }}" loading="lazy">
                 </div>
                 <div class="company-info">
                 <div class="bold">AUTHANTIK</div>

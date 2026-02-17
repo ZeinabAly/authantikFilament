@@ -23,7 +23,7 @@
                             <!-- Preview box -->
                             <div id="previewContainer" class="previewContainer">
                                 @if(auth()->user()->image)
-                                    <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Photo actuelle" class="object-cover" />
+                                    <img src="{{ asset('storage/' . auth()->user()->image) }}" alt="Photo actuelle" class="object-cover" loading="lazy" />
                                 @else
                                     <span class="text-gray-400 text-sm">Aperçu</span>
                                 @endif

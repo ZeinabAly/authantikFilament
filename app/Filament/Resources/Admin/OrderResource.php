@@ -118,7 +118,7 @@ class OrderResource extends Resource
     {
         return $table   
             ->query(
-                Order::latest()
+                Order::latest()->limit(20)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('nocmd') 
@@ -155,6 +155,20 @@ class OrderResource extends Resource
                     ->money('GNF'),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'En cours' => 'En cours',
+                        'Livrée' => 'Livrée',
+                        'Annulée' => 'Annulée',
+                    ]),
+                Tables\Filters\SelectFilter::make('lieu')
+                    ->label('Lieu')
+                    ->options([
+                        'Sur place' => 'Sur place',
+                        'A emporter' => 'A emporter',
+                        'A livrer' => 'A livrer',
+                    ]),
                 Tables\Filters\Filter::make('nocmd')
                         ->label('NoCMD'),
                 Tables\Filters\Filter::make('name')
@@ -168,7 +182,8 @@ class OrderResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
+                    Tables\Actions\EditAction::make(),
                     // ->before(function ($record) {
                     //     // Avant suppression, on renseigne l'utilisateur
                     //     $record->supprimé_par = auth()->id();
@@ -188,12 +203,14 @@ class OrderResource extends Resource
             ])
             ->recordUrl(
                 fn ($record) => static::getUrl('view', ['record' => $record])
-            );
+            )
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->with(['address'])
             ->withCount('orderItems');
     }
 

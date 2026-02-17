@@ -21,9 +21,9 @@
         </div>
 
         <div class="images">
-            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="">
-            <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="">
-            <img src="{{asset('assets/images/pageIndex/Poulet-Yassa.jpg')}}" alt="">
+            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="image1_page_reservation" loading="lazy">
+            <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image2_page_reservation" loading="lazy">
+            <img src="{{asset('assets/images/pageIndex/Poulet-Yassa.jpg')}}" alt="image3_page_reservation" loading="lazy">
         </div>
     </div>
     <!-- FIN DINNER AVEC ELEGANCE -->
@@ -43,7 +43,7 @@
     <!-- SECTION2: Contact -->
      <div class="contact mb-5">
         <div class="image">
-            <img src="{{asset('assets/images/pageIndex/hero-slider-1.jpg')}}" alt="">
+            <img src="{{asset('assets/images/pageIndex/hero-slider-1.jpg')}}" alt="section_contact" loading="lazy">
         </div>
         <div class="contact-infos">
             <div class="mt-5">

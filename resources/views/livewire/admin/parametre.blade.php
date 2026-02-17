@@ -724,7 +724,7 @@
                     <div class="restaurant-preview">
                         <div class="logo-preview">
                             @if($settings->logo_path)
-                                <img src="{{ $settings->logo_url }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                <img src="{{ $settings->logo_url }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" loading="lazy">
                             @else
                                 <i class="fas fa-utensils"></i>
                             @endif

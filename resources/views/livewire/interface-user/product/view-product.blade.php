@@ -34,19 +34,19 @@
             <!-- Les petites images -->
             <div class="petitesImagesContent">
                 <button wire:click="displayImage('{{$product->image}}')">
-                    <img src="{{asset('storage/'.$product->image)}}" alt="image principale {{$product->name}}" class="petiteImage">
+                    <img src="{{asset('storage/'.$product->image)}}" alt="image principale {{$product->name}}" class="petiteImage" loading="lazy">
                 </button>
                 @if($product->images)
                     @foreach($product->images as $img)
                         <button wire:click="displayImage('{{$img}}')">
-                            <img src="{{asset('storage/'.$img)}}" alt="gallery image" class="petiteImage">
+                            <img src="{{asset('storage/'.$img)}}" alt="gallery image" class="petiteImage" loading="lazy">
                         </button>
                     @endforeach 
                 @endif
             </div>
 
             <div class="imgPrincipaleContent">
-                <img src="{{asset('storage/'. $imageView)}}" alt="image principale {{$product->name}}" class="imgPrincipale">
+                <img src="{{asset('storage/'. $imageView)}}" alt="image principale {{$product->name}}" class="imgPrincipale" loading="lazy">
             </div>
         </div>
         <div class="details">
@@ -57,7 +57,7 @@
                     <s class="text-gray-400">{{str_replace(',','.',number_format($product->regular_price, 0))}}</s> <span class="text-[--color2-yellow]">{{str_replace(',','.',number_format($product->sale_price, 0))}} GNF</span>
                 @else
                     <p class="text-[--color2-yellow]">
-                    {{str_replace(',','.',number_format($product->regular_price, 0))}} GNF
+                        {{ $product->prix_format }}
                     </p>
                 @endif
                 </div>
@@ -147,7 +147,7 @@
                 <div class="swiper-slide bg-[#fff] product-slide relative w-[220px] rounded-md shadow-md shadow-black/10 py-5">
 
                     <div class="productImgContent">
-                        <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}">
+                        <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}" loading="lazy">
                     </div>
                     
                     <div class="content relative mt-[10px]">
@@ -161,7 +161,7 @@
                                 <s class="text-gray-400">{{str_replace(',','.',number_format($product->regular_price, 0))}}</s> <span class="text-[--color2-yellow]">{{str_replace(',','.',number_format($product->sale_price, 0))}} GNF</span>
                             @else
                                 <p class="text-[--color2-yellow]">
-                                {{str_replace(',','.',number_format($product->regular_price, 0))}} GNF
+                                    {{ $product->prix_format }}
                                 </p>
                             @endif
                             </span>

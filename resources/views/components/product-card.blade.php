@@ -17,7 +17,7 @@
     </div>
 
     <div class="productImgContent">
-        <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}">
+        <img src="{{asset('storage/'. $product->image)}}" alt="{{$product->name}}" loading="lazy">
     </div>
     
     <div class="content relative mt-[10px]">
@@ -31,7 +31,7 @@
                 <s class="text-gray-400">{{str_replace(',','.',number_format($product->regular_price, 0))}}</s> <span class="text-[--color2-yellow]">{{str_replace(',','.',number_format($product->sale_price, 0))}} GNF</span>
             @else
                 <p class="text-[--color2-yellow]">
-                {{str_replace(',','.',number_format($product->regular_price, 0))}} GNF
+                    {{ $product->prix_format }}
                 </p>
             @endif
             </span>

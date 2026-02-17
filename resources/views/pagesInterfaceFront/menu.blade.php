@@ -14,7 +14,7 @@
     <!-- Banniere -->
     <div class="bgMenuBanner relative w-[100%] h-[250px] md:h-[330px]">
       <div class="w-[100%] h-[100%] relative">
-          <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" alt="image banniere menu" class="h-full w-full object-cover">
+          <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" alt="image banniere menu" class="h-full w-full object-cover" loading="lazy">
       </div>
       
       <div class="w-[100%] h-[100%] pt-5 absolute top-0 bg-black/80 flex items-center justify-center text-center">

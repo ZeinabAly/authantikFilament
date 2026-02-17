@@ -71,7 +71,7 @@ class ReservationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Reservation::latest())
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name') 
                     ->label('Nom')
@@ -102,21 +102,26 @@ class ReservationResource extends Resource
                 Tables\Columns\TextColumn::make('details') 
                     ->label('Note')
                     ->toggleable()
+                    ->default("Aucune")
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('name')
-                    ->label('Nom'),
+                Tables\Filters\Filter::make('date_future')
+                    ->label('Réservations à venir')
+                    ->query(fn (Builder $query): Builder => $query->where('date', '>=', now())),
+                Tables\Filters\Filter::make('date_passee')
+                    ->label('Réservations passées')
+                    ->query(fn (Builder $query): Builder => $query->where('date', '<', now())),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\RestoreAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                 ])
             ])
             ->bulkActions([

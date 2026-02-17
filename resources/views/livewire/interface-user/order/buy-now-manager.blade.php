@@ -6,7 +6,7 @@
                 <!-- Image et nom -->
                 <div class="mb-4 mb-7 flex gap-3 items-center">
                     <div class="">
-                        <img src="{{asset('storage/'. $product->image)}}" alt="image produit" class="w-[150px] h-[150px] object-cover rounded-sm">
+                        <img src="{{asset('storage/'. $product->image)}}" alt="image produit" class="w-[150px] h-[150px] object-cover rounded-sm" loading="lazy">
                     </div>
                     <div class="">
                         <p class="font-bold text-lg">{{$product->name}}</p>
@@ -48,7 +48,7 @@
             <!-- AFFICHAGE DU PRODUIT -->
 
             <div class="name_image">
-                <img src="{{asset('storage/'. $product->image)}}" alt="">
+                <img src="{{asset('storage/'. $product->image)}}" alt="{{ $product->image }}" loading="lazy">
                 <div class="flex flex-col gap-2">
                     <span>{{$product->name}}</span>
                     <span class="money price font-bold">

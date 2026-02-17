@@ -49,15 +49,15 @@ class CategoryResource extends Resource
                         ->maxLength(255),
                     Forms\Components\FileUpload::make('image')
                         ->label('Image')
-                        // ->image()
-                        // ->directory('uploads/categories') 
-                        // ->disk('public') 
-                        // ->imageEditor()
-                        // ->imageEditorAspectRatios([
-                        //     '16:9',
-                        //     '4:3',
-                        //     '1:1',
-                        // ]),
+                        ->image()
+                        ->directory('uploads/categories') 
+                        ->disk('public') 
+                        ->imageEditor()
+                        ->imageEditorAspectRatios([
+                            '16:9',
+                            '4:3',
+                            '1:1',
+                        ]),
                 ])->columns(2)
             ]);
     }
@@ -89,6 +89,7 @@ class CategoryResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->sortable()
+                    ->default("Aucune")
                     ->limit(30),
             ])
             ->filters([
@@ -100,12 +101,12 @@ class CategoryResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                     Tables\Actions\RestoreAction::make()
-                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager'])),
+                        ->visible(fn ($record) => auth()->user()->hasAnyRole(['Admin', 'Manager', 'super_admin'])),
                 ])
             ])
             ->bulkActions([

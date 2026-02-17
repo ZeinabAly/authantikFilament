@@ -43,7 +43,7 @@
             <div class="profile-content">
 
                 <div class="profile-image-content w-[150px] h-[150px]">
-                    <img src="{{asset('uploads/usersImages')}}/{{$user->image}}" class="w-[150px] h-[150px]" alt="Photo de profil user" />
+                    <img src="{{asset('uploads/usersImages')}}/{{$user->image}}" class="w-[150px] h-[150px]" alt="Photo de profil user" loading="lazy" />
                 </div>
 
                 <div class="profile-info">

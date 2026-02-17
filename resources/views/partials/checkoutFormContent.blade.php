@@ -42,21 +42,21 @@
             <div class="" wire:click="getModePayemeent('liquide')">
                 <input type="radio" checked name="modePayement" id="cash">
                 <label for="cash" class="flexCenter gap-2">
-                    <img src="{{asset('assets/images/modesPayementsIcons/liquideGnfIcone.jpg')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover">
+                    <img src="{{asset('assets/images/modesPayementsIcons/liquideGnfIcone.jpg')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover" loading="lazy">
                     <span>En espèce</span>
                 </label>
             </div>
             <div class="" wire:click="getModePayemeent('OM')">
                 <input type="radio" name="modePayement" id="OM">
                 <label for="OM" class="flexCenter gap-2">
-                    <img src="{{asset('assets/images/modesPayementsIcons/orangeMoneyIcone.png')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover">
+                    <img src="{{asset('assets/images/modesPayementsIcons/orangeMoneyIcone.png')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover" loading="lazy">
                     <span>Orange Money</span>
                 </label>
             </div>
             <div class="" wire:click="getModePayemeent('MM')">
                 <input type="radio" name="modePayement" id="MM">
                 <label for="MM" class="flexCenter gap-2">
-                    <img src="{{asset('assets/images/modesPayementsIcons/moneyIcone.png')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover">
+                    <img src="{{asset('assets/images/modesPayementsIcons/moneyIcone.png')}}" alt="icone orange money" class="w-6 h-6 rounded-full object-cover" loading="lazy">
                     <span>Mobile Money</span>
                 </label>
             </div>

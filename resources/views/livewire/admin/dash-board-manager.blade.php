@@ -50,19 +50,7 @@
                 <div class="px-3">
                     <h3 class="platJourTitre">Tous les plats</h3>
                     
-                    <!-- btnRechercher -->
-                    <div class="zoneSearchContent">
-                        <div class="">
-                            <div class="searchBox">
-                                <div class="divIconSearch">
-                                    <x-icon name="btn-search2"/>
-                                </div>
-                                <input type="text" wire:model.live.debounce.100ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
-                            </div>
-    
-                        </div>
-                    </div>
-    
+                    
                     <!-- Fin zone recheche -->
                     <div class="">
                         <div class="titre2Content">
@@ -97,6 +85,20 @@
                             <h2 class="titre2">Les plats</h2>
                             <span>Cliquer sur ajouter pour ajouter le plat aux plats du jour</span>
                         </div>
+                        <!-- btnRechercher -->
+                        
+                        <div class="zoneSearchContent">
+                            <div class="">
+                                <div class="searchBox">
+                                    <div class="divIconSearch">
+                                        <x-icon name="btn-search2"/>
+                                    </div>
+                                    <input type="text" wire:model.live.debounce.100ms="search" id="table-search" class="inputSearch" placeholder="Rechercher ...">
+                                </div>
+        
+                            </div>
+                        </div>
+    
                         <div class="platsContent">
                             @forelse($products as $product)
                                 <div class="productDiv">

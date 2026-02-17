@@ -11,16 +11,14 @@
             
             <a href="{{route('home.index')}}">
                 @if (!empty($settings->logo_path) && Storage::disk('public')->exists($settings->logo_path))
-                    <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[150px]">
+                    <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[150px]" loading="lazy">
                 @else
-                    <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[10px]">
+                    <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[10px]" loading="lazy">
                 @endif
             </a>
         </div>
 
-        <div class="">
-
-        </div>
+    
         <div class="open">
     
 
@@ -46,32 +44,32 @@
                 <span class="text-4xl">&times;</span>
             </div>
             <div class="navbar-logo mt-[30px] mb-[20px]">
-                <a href="route('home.index')">
+                <a href="{{ route('home.index') }}">
                     @if (!empty($settings->logo_path) && Storage::disk('public')->exists($settings->logo_path))
-                        <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[120px]">
+                        <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[120px]" loading="lazy">
                     @else
-                        <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[120px]">
+                        <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[120px]" loading="lazy">
                     @endif
                 </a>
             </div>
             <nav class="navigation">
                 <ul class="navbar-list">
                     <li class="navbar-item">
-                        <a href="route('home.index')" class="Route::is('home.index') || Route::is('dashboard') ? 'navbar-active' : 'navbarlink'">
+                        <a href="{{ route('home.index') }}" class="{{ Route::is('home.index') || Route::is('dashboard') ? 'navbar-active' : 'navbarlink' }}">
                             <span>Accueil</span>
                         </a>
                     </li>
                     <li class="navbar-item">
-                    <a href="{{route('home.menu')}}" class="{{Route::is('home.menu') ? 'navbar-active' : 'navbarlink'}}">Menu</a>
+                    <a href="{{route('home.menu')}}" class="{{ Route::is('home.menu') ? 'navbar-active' : 'navbarlink' }}">Menu</a>
                     </li>
                     <li class="navbar-item">
-                    <a href="{{route('home.reservation')}}" class="{{Route::is('reservation.index') ? 'navbar-active' : 'navbarlink'}}">Reservation</a>
+                    <a href="{{route('home.reservation')}}" class="{{ Route::is('reservation.index') ? 'navbar-active' : 'navbarlink' }}">Reservation</a>
                     </li>
                     <li class="navbar-item">
-                    <a href="{{route('home.about')}}" class="{{Route::is('home.about') ? 'navbar-active' : 'navbarlink'}}">A propos</a>
+                    <a href="{{route('home.about')}}" class="{{ Route::is('home.about') ? 'navbar-active' : 'navbarlink' }}">A propos</a>
                     </li>
                     <li class="navbar-item">
-                    <a href="{{route('home.contact')}}" class="{{Route::is('home.contact') ? 'navbar-active' : 'navbarlink'}}">Contact</a>
+                    <a href="{{route('home.contact')}}" class="{{Route::is('home.contact') ? 'navbar-active' : 'navbarlink' }}">Contact</a>
                     </li>
                 </ul>
             </nav>
@@ -119,11 +117,11 @@
                     </li>
                     <!-- logo -->
                     <div class="logo">
-                        <a href="{{route('home.index')}}">
+                        <a href="{{ route('home.index') }}">
                         @if (!empty($settings->logo_path) && Storage::disk('public')->exists($settings->logo_path))
-                            <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[150px]">
+                            <img src="{{ asset('storage/' . $settings->logo_path) }}" alt="logo" class="w-[150px]" loading="lazy">
                         @else
-                            <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[150px]">
+                            <img src="{{ asset('logoAuth.png') }}" alt="logo par défaut" class="w-[150px]" loading="lazy">
                         @endif
                         </a>
                     </div>

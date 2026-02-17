@@ -1,7 +1,8 @@
 <div class="modes">
     @if (session()->has('error'))
         <!-- Messages d'erreur -->
-        <div class="py-3 px-3 min-w-[300px] bg-white text-red-500 shadow-md font-semibold text-sm fixed z-[10000] top-0 right-0 flex items-center gap-2">
+        <div x-data="{show: true}" x-show="show" x-cloak class="py-3 px-3 min-w-[300px] bg-white text-red-500 shadow-md font-semibold text-sm fixed z-[10000] top-0 right-0 flex items-center gap-2">
+            <button @click="show = false">×</button>
             <x-icon name="warning" fill="#f20"/>
             {{ session('error') }}
         </div>
@@ -40,7 +41,7 @@
             
             @foreach(Cart::instance('cart')->content() as $item)
             <div class="name_image">
-                <img src="{{asset('storage/'. $item->model->image)}}" alt="">
+                <img src="{{asset('storage/'. $item->model->image)}}" alt="{{ $item->name }}" loading="lazy">
                 <div class="flex flex-col gap-2">
                     <span>{{$item->name}}</span>
                     <span class="money price font-bold">

@@ -39,13 +39,13 @@
     LES IGNORE ET PREND LES SLIDERS PAR DEFAUT -->
     
     <ul class="hero-slider" data-hero-slider>
-
+        
         @if($sliders->count() >= 2 )
             @foreach($sliders as $key => $slider)
             <li class="slider-item active" data-hero-slider-item>
 
                 <div class="slider-bg">
-                    <img src="{{asset('storage/'.$slider->image)}}" alt="image banniere {{$key}}" class="img-cover">
+                    <img src="{{asset('storage/'.$slider->image)}}" alt="image banniere {{$key}}" class="img-cover" loading="lazy">
                 </div>
 
                 <div class="cover">
@@ -80,7 +80,7 @@
             <li class="slider-item active" data-hero-slider-item>
 
                 <div class="slider-bg">
-                    <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image foutou banane" class="img-cover">
+                    <img src="{{asset('assets/images/pageIndex/Foutou_banane_sauce_graine.jpeg')}}" alt="image foutou banane" class="img-cover" loading="lazy">
                 </div>
 
                 <div class="cover">
@@ -107,7 +107,7 @@
             <li class="slider-item" data-hero-slider-item>
 
                 <div class="slider-bg">
-                    <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" width="1880" height="950" alt="" class="img-cover">
+                    <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" width="1880" height="950" alt="" class="img-cover" loading="lazy">
                 </div>
 
                 <div class="cover">
@@ -134,7 +134,7 @@
             <li class="slider-item" data-hero-slider-item>
 
                 <div class="slider-bg">
-                    <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" width="1880" height="950" alt="" class="img-cover">
+                    <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" width="1880" height="950" alt="" class="img-cover" loading="lazy">
                 </div>
 
                 <div class="cover">
@@ -195,7 +195,7 @@
             </button>
         </div>
         <div class="w-[100%] shadow-lg revealRight hidden md:block">
-            <img src="{{asset('assets/images/pageIndex/cuisine.jpg')}}" alt="cuisine" class="w-[100%] h-[100%] object-cover rounded-sm">
+            <img src="{{asset('assets/images/pageIndex/cuisine.jpg')}}" alt="cuisine" class="w-[100%] h-[100%] object-cover rounded-sm" loading="lazy">
         </div>
     </div>
 </section>
@@ -235,8 +235,8 @@
 <section class="w-[95%] md:w-[90%] lg:w-[80%] mx-auto my-7">
     <div class="w-[100%] grid grid-cols-1 md:grid-cols-2 gap-[20px] justify-center">
         <div class="w-[100%] flex gap-[7px]">
-            <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" alt="cuisine" class="w-[49%] h-[100%] shadow-lg object-cover rounded-sm from-top ">
-            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="cuisine" class="w-[49%] h-[100%] shadow-lg object-cover rounded-sm from-bottom">
+            <img src="{{asset('assets/images/pageIndex/tori.jpg')}}" alt="cuisine" class="w-[49%] h-[100%] shadow-lg object-cover rounded-sm from-top " loading="lazy">
+            <img src="{{asset('assets/images/pageIndex/cotelettes.jpg')}}" alt="cuisine" class="w-[49%] h-[100%] shadow-lg object-cover rounded-sm from-bottom" loading="lazy">
         </div>
         <div class="w-[100%] py-5 border-[4px] border-[var(--color2-yellow)] text-center shadow-lg rounded-sm revealRight bg-white">
             <h2 class="text-yellow1 "><span class="allura text-4xl font-semibold">Expérience</span> <br /><span class="text-black font-bold text-[20px]">CULINAIRE</span></h2>
@@ -258,7 +258,7 @@
     @foreach($categories as $category)
     <a href="{{route('home.menu', ['categories' => $category->name ])}}" class="bg-[#fff] product-slide relative rounded-md shadow-md shadow-black/10 revealTop">
         <div class="productImgContent">
-            <img src="{{asset('storage/'.$category->image)}}" alt="{{$category->name}}">
+            <img src="{{asset('storage/'.$category->image)}}" alt="{{$category->name}}" loading="lazy">
         </div>
         
         <div class="content relative mt-[10px] md:mt-[20px]">
@@ -358,12 +358,13 @@
 <section class="sectionVideosFacebook">
     <h3 class="text-center text-4xl"><span class="text-black font-bold">Découvrez nos vidéos</span> <br /> <span class="allura font-semibold text-[--color2-yellow]">Facebook</span></h3>
     <p class="mb-10 text-center md:max-w-[70%] max-w-[90%] mx-auto text-semibold">Plongez dans notre univers à travers une sélection de vidéos exclusives directement issues de notre page Facebook. Pour ne rien manquer de nos actualités, événements et coulisses, n’hésitez pas à visiter notre page Facebook et à nous suivre !</p>
+    
     <div class="videosGrid">
-        @foreach($settings->facebookVideos as $video)
-        <div class="video-wrapper">
-            {!! $video !!}
-        </div>  
-        @endforeach    
+        @if($settings?->facebookVideos)
+            @foreach($settings->facebookVideos as $video)
+                <div class="video-wrapper">{!! $video !!}</div>
+            @endforeach
+        @endif   
     </div>
 
 </section>

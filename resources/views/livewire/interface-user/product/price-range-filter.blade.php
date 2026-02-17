@@ -138,7 +138,7 @@
                     <a href="route('menu.product.details', ['product_slug' => $fproduct->slug]) }}">
                     <div class="flex gap-2 items-center border-b-2 border-gray-700 pb-2">
                         <div class="">
-                        <img src="{{asset(''storage/'. $fproduct->image)}}" alt="{{ $fproduct->name }}" class="w-[80px] h-[75px] object-cover rounded-sm shadow-md border-[1px]  border-gray-300" >
+                        <img src="{{asset('storage/'. $fproduct->image)}}" alt="{{ $fproduct->name }}" class="w-[80px] h-[75px] object-cover rounded-sm shadow-md border-[1px]  border-gray-300" loading="lazy">
                         </div>
                         <div class="leading-[25px]">
                         <p class="font-bold">{{ $fproduct->name }}</p>
